@@ -1,31 +1,28 @@
-﻿*Unidad 3. Widgets*
-
-Unidad 3. Widgets
+﻿
+# Unidad 3. Widgets
 
 En esta unidad empezamos con la programación de interfaces gráficas con Flutter. Flutter sigue una **filosofía declarativa** a la hora de crear interfaces, a diferencia de la filosofía imperativa tradicional. El concepto alrededor del cual girará todo el desarrollo de interfaces en Flutter es el *widget*, que representará básicamente un componente gráfico. En los siguientes apartados veremos los diferentes tipos de widgets y algunos de los más importante o comunes.
 
-![Forma
+![Flutter](./images/imagen1.jpeg)
 
-Descripción generada automáticamente con confianza media](Aspose.Words.6afd18e1-1b6b-4967-aff2-ff1b52208d70.001.jpeg)
+[*1. Introducción a los Widgets*](#_apartado1)
 
-[*1. Introducción a los Widgets*](#_toc178414142)*
+[*2. Manos a la obra. Del Hola Mundo al Contador*](#_apartado2)
 
-[*2.*	*Manos a la obra. Del Hola Mundo al Contador*](#_toc178414143)
+[*3.*	*El ciclo de vida de los widgets*](#_apartado3)
 
-[*3.*	*El ciclo de vida de los widgets*](#_toc178414144)
+[*4. Widgets Básicos*](#_apartado4)
 
-[*4.*	*Widgets Básicos*](#_toc178414145)
+[*5. Widgets básicos. Contenedores y diseños*](#_apartado5)
 
-[*5.*	*Widgets básicos. Contenedores y diseños*](#_toc178414146)
+[*6. Trabajando con recursos*](#_apartado6)
 
-[*6.*	*Trabajando con recursos*](#_toc178414147)
-
-[*7.*	*Trabajando con temas*](#_toc178414148)
+[*7. Trabajando con temas*](#_apartado7)
 
 
 
 
-# <a name="_toc178414142"></a>1. Introducción a los Widgets
+# <a name="_apartado1"></a>1. Introducción a los Widgets
 
 ## Introducción. Interfaces declarativas e imperativas.
 
@@ -33,137 +30,109 @@ El desarrollo tradicional de interfaces de usuario se ha basado en un estilo imp
 
 En contraposición a esta visión, el paradigma declarativo, presente en el mundo de la programación desde la década de 1950, propone un mayor nivel de abstracción, y se centra en el *qué* y no en el *cómo*. Aplicado al diseño de interfaces, la idea es que nos centremos en *describir* el estado *actual* de la interfaz, y dejemos para el framework la representación del mismo y las transiciones entre estados. Es decir, la interfaz de usuario se genera en función del estado que queremos representar:
 
-![Interfície en funció de l'estat. Font: esflutter.dev, sota llicència CC by 4.0](Aspose.Words.6afd18e1-1b6b-4967-aff2-ff1b52208d70.002.png)
+![Interfície en funció de l'estat. Font: esflutter.dev, sota llicència CC by 4.0](./images/imagen2.png)
 
 La tendencia actual en el desarrollo de interfaces de usuario hacia interfaces declarativas surgió con frameworks como *React*, que introdujo los ficheros JSX, donde convivía código Javascript con HTML. Posteriormente, fue *Flutter* quien entró en acción en la Google I/O en 2017, y este cambio también ha llegado a Android nativo, con *Jetpack Compose* y las interfaces *componibles*, en iOS, con *SwiftUI*, e incluso en entornos como Unity, con *UIWidget*.
 
-### **Pensando de forma declarativa**
+### Pensando de forma declarativa
 
 Este cambio de tendencia requiere que cambiemos la forma de pensar a la hora de manipular las interfaces de usuario, y la introducción de una sintaxis declarativa para las mismas. Para ello haremos uso de una característica bien conocida de Dart: El paso de argumentos con nombre.
 
-Veamos un ejemplo simplificado. Imaginemos que queremos poner un texto de *Hola Mundo* centrado en pantalla. A grandes rasgos, con Android, por ejemplo tendríamos en el fichero de descripción de la interfaz el siguiente elemento de tipo ***TextView***:
+Veamos un ejemplo simplificado. Imaginemos que queremos poner un texto de *Hola Mundo* centrado en pantalla. A grandes rasgos, con Android, por ejemplo tendríamos en el fichero de descripción de la interfaz el siguiente elemento de tipo `TextView`:
 
+```xml
 <TextView
+  android:id="@+id∕miTextView" android:layout\_width="wrap_content" android:layout\_height="wrap_content" app:layout\_constraintBottom\_toBottomOf="parent" app:layout\_constraintEnd\_toEndOf="parent" app:layout\_constraintStart\_toStartOf="parent" app:layout\_constraintTop\_toTopOf="parent" ∕>
+```
 
-android:id="@+id∕miTextView" android:layout\_width="wrap\_content" android:layout\_height="wrap\_content" app:layout\_constraintBottom\_toBottomOf="parent" app:layout\_constraintEnd\_toEndOf="parent" app:layout\_constraintStart\_toStartOf="parent" app:layout\_constraintTop\_toTopOf="parent" ∕>
+En el código de la aplicación, cuando inicializamos la interfaz, deberíamos buscar este `TextView`, haciendo uso del método `findViewById`, que devuelve un objeto de tipo `View`, que es quien representa los elementos gráficos, hacer un casting de esta vista a un `TextView`, y finalmente, acceder a la propiedad texto del `TextView` y modificarla. En Kotlin esto se haría con el siguiente código:
 
-En el código de la aplicación, cuando inicializamos la interfaz, deberíamos buscar este TextView, haciendo uso del método findViewById, que devuelve un objeto de tipo *View*, que es quien representa los elementos gráficos, hacer un casting de esta vista a un *TextView*, y finalmente, acceder a la propiedad texto del *TextView* y modificarla. En Kotlin esto se haría con el siguiente código:
-
+```kotlin
 var elMeuTextView=findViewById<TextView>(R.id.miTextView) elMeuTextView.text="Hola Món"
+```
 
 Si nos encontramos en desarrollo web, podríamos tener el siguiente elemento de tipo div en el código HTML (ya con las propiedades CSS añadidas para centrar este contenedor en horizontal y vertical):
 
+```css
 <div id="Contenidor"><∕div>
+```
 
 Que deberíamos manipular de forma parecida desde código Javascript para añadirle contenido, es decir, buscar el elemento a la interfaz, y modificarlo:
 
+```javascript
 let contenidor = document.getElementById("Contenidor"); contenidor.innerHTML = "Hola món!"
+```
 
-Pues bien, el planteamiento de este problema de forma declarativa sería: Quiero un texto "Hola Mundo" centrado en pantalla. En código, esto se traduciría en algo parecido a lo siguiente:
+Pues bien, el planteamiento de este problema **de forma declarativa** sería: *Quiero un texto "Hola Mundo" centrado en pantalla*. En código, esto se traduciría en algo parecido a lo siguiente:
 
+```dart
 Center(
-
-`  `child: Text(
-
-`    `'Hola Món'
-
-`    `)
-
+    child: Text(
+        'Hola Món'
+    )
 )
+```
 
 Con lo que definimos un contenedor que centra los elementos, y dentro del cual tenemos un texto *Hola Mundo*. 
 
 Si prestamos un poco de atención al código, veremos que no estamos introduciendo nada nuevo, sino que estamos utilizando constructores con parámetros posicionales y por nombre de diferente manera:
 
-- El constructor del elemento Center recibe un único argumento con nombre: child, que indica qué elemento tiene dentro. 
-- Este elemento interno es un Text, que recibe a su constructor como único argumento el texto *Hola Mundo*.
+- El constructor del elemento `Center` recibe un único argumento con nombre: `child`, que indica qué elemento tiene dentro. 
+- Este elemento interno es un `Text`, que recibe a su constructor como único argumento el texto *Hola Mundo*.
 
+[Article Start thinking declaratively](https://docs.flutter.dev/data-and-backend/state-mgmt/declarative), de la documentació de Flutter
 
+<div style="border: 1px solid black; padding: 10px;">
 
+Disponemos de más informarción en los siguientes artículos:
 
+- Artículo [Start thinking declaratively](https://docs.flutter.dev/data-and-backend/state-mgmt/declarative), de la documentación de Flutter
 
+- Article [Introduction to declarative UI](https://docs.flutter.dev/get-started/flutter-for/declarative), de la documentació de Flutter.
+    
+- Artículo [Flutter: La imposición del Declarative UI o UI as Code](https://medium.com/comunidad-flutter/flutter-la-imposici%C3%B3n-del-declarative-ui-o-del-ui-as-code-5e5ec099ba84), en Medium
+  
+- Artículo [Programación imperativa vs declarativa: Google Jetpack Compose](https://www.deloitte.com/es/es/services/consulting/blogs/todo-tecnologia/programacion-imperativa-vs-declarativa-google-jetpack-compose.html)
 
+</div>
 
-
-
-
-![](Aspose.Words.6afd18e1-1b6b-4967-aff2-ff1b52208d70.003.png)
 
 ## Conceptos
 
 ### **Widgets**
 El concepto fundamental en torno al cual gira todo el desarrollo de Flutter es el de *widget*. De hecho, en Flutter, salvo nuestras propias clases para mantener información y los modelos de datos, todo serán *widgets*.
 
-Pero, ¿qué son pues los *widgets*? Se trata de **clases de Dart cuyos constructores admiten tanto argumentos posicionales como argumentos con nombre, y que nos sirven para representar los elementos de nuestras interfaces**. En el ejemplo del apartado anterior, hemos presentado ya dos tipos de Widgets: Center, un *widget* de tipo contenedor y Text.
+Pero, ¿qué son entonces los *widgets*? Se trata de **clases de Dart cuyos constructores admiten tanto argumentos posicionales como argumentos con nombre, y que nos sirven para representar los elementos de nuestras interfaces**. En el ejemplo del apartado anterior, hemos presentado ya dos tipos de Widgets: `Center`, un *widget* de tipo contenedor y `Text`.
 
 Los *widgets*, además, pueden componerse con el fin de crear una estructura en forma de árbol que representa la interfaz, y pueden ser widgets sin estado (*Stateless*) o con estado (*Stateful*), en función de si el widget necesita un estado asociado que pueda estar sometido a cambios. Por ejemplo, un botón o un texto estático, que no cambian, y pueden declararse como constantes, serían buenos candidatos para ser un widget sin estado, mientras que un componente que vaya a muestra el resultado de un llamamiento asíncrono, sería candidato a ser un widget con estado. Una diferencia importante entre ambos tipos es que los widgets con estado tienen la capacidad de *redibujarse* ellos mismos ante cualquier cambio de estado, mientras que los widgets sin estado no pueden hacerlo.
 
 ### **El árbol de Widgets**
+
 Como acabamos de comentar, los widgets de una aplicación pueden componerse, de manera que se genere una relación jerárquica en forma de árbol. Podemos ver pues una aplicación en Flutter como un gran árbol que contiene todos sus widgets. Si en algún momento se produce un cambio en el estado de alguno de los widgets, el propio Flutter es quien se encarga de regenerar el subárbol afectado y redibujar la interfaz.
 
 Vemos, a modo de ejemplo el código de una interfaz básica compuesta por una barra de aplicación, un cuerpo central y un botón de acción flotante, junto con el resultado de la ejecución y el árbol de widgets correspondiente:
 
-![Exemple d'interfície bàsica](Aspose.Words.6afd18e1-1b6b-4967-aff2-ff1b52208d70.004.png)
+![Interfaz basica](./images/imagen3.png)
 
-Sin entrar en detalles que veremos posteriormente, vemos como el widget principal y la raíz del árbol de widgets es un widget de tipo MaterialApp. Dentro de éste, el componente home define otro widget de tipo Scaffold, que a su vez tiene tres nodos hijos más: el widget Appbar, en la propiedad appBar; el widget de tipo contenedor Center, en la propiedad body y el widget FloatingActionButton en la propiedad floatingActionButton. Al mismo tiempo, estos últimos nodos tienen también como nodos hijos diferentes widgets de tipo Text o Icon.
+Sin entrar en detalles que veremos posteriormente, vemos como el widget principal y la raíz del árbol de widgets es un widget de tipo `MaterialApp`. Dentro de éste, el componente `home` define otro widget de tipo `Scaffold`, que a su vez tiene tres nodos hijos más: el widget `Appbar`, en la propiedad `appBar`; el widget de tipo contenedor `Center`, en la propiedad `body` y el widget `FloatingActionButton` en la propiedad `floatingActionButton`. Al mismo tiempo, estos últimos nodos tienen también como nodos hijos diferentes widgets de tipo `Text` o `Icon`.
 
 Como podemos imaginar, a medida que vamos añadiendo widgets a nuestra interfaz este árbol se irá haciendo más y más grande. En cuanto a la representación, es Flutter quien se encarga de generar y mantener este árbol, así como de realizar las animaciones correspondientes en cada cambio de estado, y por tanto de estructurar el árbol.
 
 Uno de los aspectos más complejos que encontraremos a la hora de trabajar con Flutter será cómo gestionar la información y hacerla llegar de unas partes del árbol a otras, sobre todo si éstas se encuentran en ramas diferentes. 
 
 En *el siguiente gist* podéis encontrar este código funcionando: 
+[https://dartpad.dev/embed-flutter.html?id=a61b6f2bdc57458f6f7e074d031d3c77](https://dartpad.dev/embed-flutter.html?id=a61b6f2bdc57458f6f7e074d031d3c77)
 
-- <https://dartpad.dev/embed-flutter.html?id=9ea7b34384268a68e11cb8750eecf9b0>
-
-class MyApp extends StatelessWidget {
-
-`  `const MyApp({super.key});
-
-`  `@override
-
-`  `Widget build(BuildContext context) {
-
-`    `return MaterialApp(
-
-`      `title: 'App Material',
-
-`      `home: Scaffold(
-
-`        `appBar: AppBar(
-
-`          `title: const Text(
-
-`            `'Barra d\'aplicació',
-
-`          `),
-
-`        `),
-
-`        `body: const Center(
-
-`          `child: Text('Hola Món'),
-
-`        `),
-
-`        `floatingActionButton: FloatingActionButton(
-
-`          `onPressed: () {},
-
-`          `child: const Icon(Icons.add),
-
-`        `),
-
-`      `),
-
-`    `);
-
-`  `}
-
-}
+<iframe
+  src="https://dartpad.dev/embed-inline.html?id=a61b6f2bdc57458f6f7e074d031d3c77"
+  width="100%"
+  height="500px"
+  frameborder="0">
+</iframe>
 
 
 
-2. # ` `<a name="_toc178414143"></a>Manos a la obra. Del Hola Mundo al Contador
+# <a name="_apartado2"></a>2. Manos a la obra. Del Hola Mundo al Contador
 
 Pasamos ya a la creación de nuestro primer proyecto con *Flutter*. Empezaremos con un sencillo *Hola Mundo* y veremos cómo podemos ir incorporándole widgets hasta convertirlo en una aplicación que gestiona un sencillo contador de clics, como la app de ejemplo de Flutter.
 
@@ -171,29 +140,37 @@ Pasamos ya a la creación de nuestro primer proyecto con *Flutter*. Empezaremos 
 
 En la primera unidad ya vimos cómo crear un proyecto con Flutter, tanto desde VSCode como desde la línea de órdenes. Recordemos los pasos:
 
-- **Opcio 1. Creación del proyecto de VSCode**
-  - Tomamos Ctrl+Shift+P para abrir la paleta de órdenes, empezamos a escribir para buscar el orden *"Flutter: New Project"*, y configuramos nuestro proyecto con la siguiente configuración:
-  - *¿Qué plantilla de Flutter?*:Aplicación
+- **Opción 1. Creación del proyecto de VSCode**
+  
+  - Tomamos `Ctrl+Shift+P` para abrir la paleta de órdenes, empezamos a escribir para buscar el orden *"Flutter: New Project"*, y configuramos nuestro proyecto con la siguiente configuración:
+  
+  - *¿Qué plantilla de Flutter?*:Application
+  
   - Ubicación de la carpeta del proyecto: La que vosotros deseáis por guardar los proyectos de Flutter.
-  - *Project Name*: *hola\_mon* (Recordemos que como todo proyecto Dart, no puede contener mayúsculas, pero sí el símbolo \_ ).
-- Si consultamos la salida para el proyecto hola\_mon en el VSCode, veremos que se ha lanzado lo siguiente: 
+  
+  - *Project Name*: *hola_mon* (Recordemos que como todo proyecto Dart, no puede contener mayúsculas, pero sí el símbolo `_` ).
+  
+- Si consultamos la salida para el proyecto hola_mon en el VSCode, veremos que se ha lanzado lo siguiente: 
 
-![Interfaz de usuario gráfica, Texto, Aplicación, Correo electrónico
-
-Descripción generada automáticamente](Aspose.Words.6afd18e1-1b6b-4967-aff2-ff1b52208d70.005.png)
+![Terminal Creació proyecto](./images/imagen4.png)
 
 - **Opción 2. Creación desde el proyecto desde la línea de órdenes**
-  - <a name="__codelineno-0-1"></a>Desde una terminal, nos ubicamos en el directorio donde tenemos nuestros proyectos, y lanzamos la orden:
 
-flutter create --overwrite hola\_mon
+  - Desde una terminal, nos ubicamos en el directorio donde tenemos nuestros proyectos, y lanzamos la orden:
 
-- Como vemos, hemos indicado el nombre del proyecto, en lugar de ., para que se nos genere el directorio hola\_mon para el proyecto.
+```
+flutter create --overwrite hola_mon
+```
+
+  - Como vemos, hemos indicado el nombre del proyecto, en lugar de ., para que se nos genere el directorio hola_mon para el proyecto.
 
 Haya sido desde VSCode o desde consola, se nos ha generado un proyecto nuevo, con toda su estructura y para múltiples plataformas, como *android*, *ios*, *linux*, *macos*, *web* o *windows*.
 
-<a name="__codelineno-1-1"></a>Recuerde que por defecto se nos genera el proyecto para todas las plataformas posibles. Para restringir la aplicación sólo a unas plataformas concretas, haríamos uso de la opción --platforms. Por ejemplo:
+Recuerde que por defecto se nos genera el proyecto para todas las plataformas posibles. Para restringir la aplicación sólo a unas plataformas concretas, haríamos uso de la opción --platforms. Por ejemplo:
 
-$ flutter create --platforms linux,android,web hola\_mon
+```
+flutter create --platforms linux,android,web hola_mon
+```
 
 Observe que no es necesario especificar la plantilla app de forma explícita porque es la plantilla predeterminada.
 
@@ -202,23 +179,21 @@ Observe que no es necesario especificar la plantilla app de forma explícita por
 
 Recuerde que en la primera unidad también vimos cómo lanzar las aplicaciones Flutter, bien desde la línea de órdenes (ya sea una terminal del sistema como la integrada en el propio VSCode), como desde la paleta de órdenes de VSCode.
 
-Para seleccionar el dispositivo donde ejecutar la aplicación, desde la paleta de órdenes (Ctrl+Shift+P) buscaremos el orden *Flutter: Select Device*, que nos permite elegir un dispositivo. Además, en la parte inferior derecha de la ventana de VSCode se nos muestra el dispositivo que tenemos configurado como predeterminado, y nos deja seleccionar también el dispositivo:
+Para seleccionar el dispositivo donde ejecutar la aplicación, desde la paleta de órdenes (`Ctrl+Shift+P`) buscaremos el orden *Flutter: Select Device*, que nos permite elegir un dispositivo. Además, en la parte inferior derecha de la ventana de VSCode se nos muestra el dispositivo que tenemos configurado como predeterminado, y nos deja seleccionar también el dispositivo:
 
-![Imagen que contiene Icono
-
-Descripción generada automáticamente](Aspose.Words.6afd18e1-1b6b-4967-aff2-ff1b52208d70.006.png)
+![Dispositivo](./images/imagen5.png)
 
 Una vez tenemos seleccionado el dispositivo podemos ejecutar la aplicación y depurarla con la tecla **F5.**
 
 Una vez esté en ejecución, notaremos que se está depurando la aplicación porque se nos muestran en la parte superior los botones para la depuración, la barra de estado ha cambiado a color rojo, y se nos activa también la pestaña de depuración en la parte derecha, así como la consola de depuración.
 
-![Interfaz de usuario gráfica, Aplicación
-
-Descripción generada automáticamente](Aspose.Words.6afd18e1-1b6b-4967-aff2-ff1b52208d70.007.png)
+![Depuracion](./images/imagen6.png)
 
 Por otro lado, con el fin de ejecutar el proyecto desde la terminal, lo haremos, desde dentro del directorio de la aplicación con la orden:
 
+```
 flutter run
+```
 
 Si no tenemos ningún dispositivo en funcionamiento, se nos preguntará en qué dispositivo queremos lanzar la aplicación.
 
@@ -226,226 +201,193 @@ Si no tenemos ningún dispositivo en funcionamiento, se nos preguntará en qué 
 
 La aplicación predeterminada que nos genera Flutter es una aplicación de contador, que combina diferentes widgets, tanto con estado como sin estado. Aunque esta aplicación nos servirá para ver muchas cosas, empezaremos con un código más sencillo, un *Hola Mundo*, que iremos haciendo crecer poco a poco.
 
-Así pues, lo primero que haremos, será abrir el fichero lib/main.dart, y reemplazar todo su contenido por el siguiente código:
+Así pues, lo primero que haremos, será abrir el fichero `lib/main.dart`, y reemplazar todo su contenido por el siguiente código:
 
+```dart
 import 'package:flutter/material.dart';
 
 void main() {
-
-`  `runApp(
-
-`    `const Text(
-
-`      `'Hola Món',
-
-`      `textDirection: TextDirection.ltr,
-
-`    `),
-
-`  `);
-
+  runApp(
+    const Text(
+      'Hola Mundo',
+      textDirection: TextDirection.ltr,
+    ),
+  );
 }
-
+```
 
 El funcionamiento de este programa es el siguiente:
 
-- Recordemos que una aplicación dart siempre busca ejecutar la función main, que en este caso, no recibe ningún argumento.
-- Dentro del main se invoca a runApp, que es quien se encarga de ejecutar la aplicación Flutter.
-- La función runApp recibe como único argumento un objeto de tipo *Widget*, que será el principal uso de la aplicación, el que debe renderizar. En este caso se trata de un *Texto*, con el contenido *Hola Mundo* (primer argumento posicional), y que se muestra de izquierda a derecha (argumento opcional con nombre *textoDirection* con valor *TextDirection.ltr*). Sin este argumento con nombre, nos da el siguiente error porque no sabe cómo renderizar el texto:
+- Recordemos que una aplicación dart siempre busca ejecutar la función `main`, que en este caso, no recibe ningún argumento.
+  
+- Dentro del `main` se invoca a `runApp`, que es quien se encarga de ejecutar la aplicación Flutter.
+  
+- La función `runApp` recibe como único argumento un objeto de tipo *Widget*, que será el principal uso de la aplicación, el que debe renderizar. En este caso se trata de un `Text`, con el contenido *Hola Mundo* (primer argumento posicional), y que se muestra de izquierda a derecha (argumento opcional con nombre *textoDirection* con valor `TextDirection.ltr`). Sin este argumento con nombre, nos da el siguiente error porque no sabe cómo renderizar el texto:
 
-![Texto
+![No Directionaly](Aspose.Words.6afd18e1-1b6b-4967-aff2-ff1b52208d70.008.png)
 
-Descripción generada automáticamente](Aspose.Words.6afd18e1-1b6b-4967-aff2-ff1b52208d70.008.png)
-
-Observamos que el widget Text se ha definido como constante, con const. En caso de no hacerlo así se nos mostraría el aviso *Prefer const with constante constructores*. En Flutter, los widgets que no van a ser modificados durante la ejecución (en este caso se trata de un texto creado directamente a partir de una cadena), conviene definirlos como constantes. De esta manera, indicamos a Flutter que un widget o un subárbol del árbol de widgets no debe reconstruirse, mejorando así la eficiencia en el renderizado.
+Observamos que el widget `Text` se ha definido como constante, con `const`. En caso de no hacerlo así se nos mostraría el aviso *Prefer const with constante constructores*. En Flutter, los widgets que no van a ser modificados durante la ejecución (en este caso se trata de un texto creado directamente a partir de una cadena), conviene definirlos como constantes. De esta manera, indicamos a Flutter que un widget o un subárbol del árbol de widgets no debe reconstruirse, mejorando así la eficiencia en el renderizado.
 
 La aplicación que hemos creado muestra el texto de *hola mundo* en la parte superior izquierda, por lo que, si lo ejecutamos desde un dispositivo móvil, aparece bajo la barra de notificaciones del sistema:
 
-![Forma
-
-Descripción generada automáticamente con confianza media](Aspose.Words.6afd18e1-1b6b-4967-aff2-ff1b52208d70.009.png)
+![Ejecucion](./images/imagen8.png)
 
 En algunos dispositivos móviles, según la configuración de la barra, es posible que este texto ni siquiera esté visible. 
 
-Para centrar el texto, lo que haremos es incorporarlo dentro de un Widget de tipo Center. Podemos hacerlo directamente o **haciendo uso de las acciones de código que nos proporciona el plugin de Flutter para VSCode.** Para ver estas acciones, podemos hacer clic en la bombilla amarilla que aparece en el código, en la misma línea que se ubica el widget Text, o bien, situando el cursor encima del mismo y tomando Ctrl+.:
+Para centrar el texto, lo que haremos es incorporarlo dentro de un Widget de tipo `Center`. Podemos hacerlo directamente o **haciendo uso de las acciones de código que nos proporciona el plugin de Flutter para VSCode.** Para ver estas acciones, podemos hacer clic en la bombilla amarilla que aparece en el código, en la misma línea que se ubica el widget Text, o bien, situando el cursor encima del mismo y tomando Ctrl+.:
 
-![Interfaz de usuario gráfica, Texto, Aplicación
-
-Descripción generada automáticamente](Aspose.Words.6afd18e1-1b6b-4967-aff2-ff1b52208d70.010.png)
+![Wrap](./images/imagen9.png)
 
 Como vemos, en la sección de *Más Acciones* se nos permite cubrir, o mejor *envolver* (*Wrap*) este widget con otro widget de tipo **contenedor**.
 
 Una vez en el menú de las acciones de código, seleccionaremos la opción *Wrap with Center*, de manera que el código resultante sea el siguiente:
 
+```dart
 import 'package:flutter/material.dart';
 
 void main() {
-
-`  `runApp(
-
-`    `Center(
-
-`      `child: const Text(
-
-`        `'Hola Món',
-
-`        `textDirection: TextDirection.ltr,
-
-`      `),
-
-`    `),
-
-`  `);
-
+  runApp(
+    Center(
+      child: const Text(
+        'Hola Mundo',
+        textDirection: TextDirection.ltr,
+      ),
+    ),
+  );
 }
+```
 
-Este código nos mostrará de nuevo el Warning *"Use const..."*, ya que el Widget *Center* que acabamos de introducir tampoco cambiará durante la ejecución de la aplicación y, por tanto, debe declararse como constante:
+Este código nos mostrará de nuevo el Warning *"Use const..."*, ya que el Widget `Center` que acabamos de introducir tampoco cambiará durante la ejecución de la aplicación y, por tanto, debe declararse como constante:
+
+```dart
+import 'package:flutter/material.dart';
 
 void main() {
-
-`  `runApp(
-
-`    `const Center(
-
-`      `child: Text(
-
-`        `'Hola Món',
-
-`        `textDirection: TextDirection.ltr,
-
-`      `),
-
-`    `),
-
-`  `);
-
+  runApp(
+    const Center(
+      child: Text(
+        'Hola Mundo',
+        textDirection: TextDirection.ltr,
+      ),
+    ),
+  );
 }
+```
 
-Como vemos, hemos eliminado también el const de delante del Texto, ya que cuando definimos un *Widget* como constante, los widgets que descienden de él en el árbol de widgets también lo serán. En este caso, si no eliminamos el const del Texto, se nos mostrará un nuevo Warning *Unnecessary 'const' keyword*. Así pues, la palabra const debe declararse lo más arriba posible en el árbol de widgets.
+Como vemos, hemos eliminado también el `const` de delante del Texto, ya que cuando definimos un *Widget* como constante, los widgets que descienden de él en el árbol de widgets también lo serán. En este caso, si no eliminamos el `const` del `Text`, se nos mostrará un nuevo Warning *Unnecessary 'const' keyword*. Así pues, la palabra `const` debe declararse lo más arriba posible en el árbol de widgets.
+
+Podemos verlo aquí:
+![Const](./images/wrapWithCenter.gif)
+
 
 Con ello, ya tendremos el texto centrado en la pantalla.
 
 ### **Creando nuestro widget**
 
-La función runApp que invocamos desde la función main se encarga de establecer el principal uso de la aplicación y vincularlo a la pantalla.
+La función `runApp` que invocamos desde la función `main` se encarga de establecer el principal uso de la aplicación y vincularlo a la pantalla.
 
 Lo que hemos hecho hasta ahora es definir este widget directamente en la llamada, pero generalmente, lo que se hace es definirlo de manera independiente, como un widget personalizado.
 
-Para crear un widget personalizado, es necesario crear una clase que descienda bien de la clase abstracta StatefulWidget si queremos que siga un **widget con estado**, o bien de la clase abstracta StatelessWidget, si queremos que sea un **widget sin estado**.
+Para crear un widget personalizado, es necesario crear una clase que descienda bien de la clase abstracta `StatefulWidget` si queremos que siga un **widget con estado**, o bien de la clase abstracta `StatelessWidget`, si queremos que sea un **widget sin estado**.
 
-Para definir el widget MyApp como un widget sin estado declararíamos la clase:
+Para definir el widget `MyApp` como un widget sin estado declararíamos la clase:
 
+```dart
 class MyApp extends StatelessWidget {}
+```
 
-Esta declaración de la clase, tal y como está, nos da el error *non\_abstract\_class\_inherits\_abstract\_member*. Para ver la descripción del error dejamos el puntero del ratón encima, y se nos mostrará una ventana parecida a ésta:
+Esta declaración de la clase, tal y como está, nos da el error *non_abstract_class_inherits_abstract_member*. Para ver la descripción del error dejamos el puntero del ratón encima, y se nos mostrará una ventana parecida a ésta:
 
-![Texto
-
-Descripción generada automáticamente](Aspose.Words.6afd18e1-1b6b-4967-aff2-ff1b52208d70.011.png)
+![Error](./images/imagen10.png)
 
 Como vemos, nos dice que, si extendemos una clase de la clase *StatelessWidget*, debemos proporcionar una implementación al método *build*. Si seleccionamos la opción de *Corrección rápida (Quick Fix)* se nos mostrará un nuevo diálogo con las posibles correcciones. Seleccionaremos la primera *Create 1 missing Override*.
 
-![Imagen que contiene Aplicación
-
-Descripción generada automáticamente](Aspose.Words.6afd18e1-1b6b-4967-aff2-ff1b52208d70.012.png)
+![Override](./images/imagen11.png)
 
 El código generado será:
 
+```dart
 class MyApp extends StatelessWidget {
-
-`  `@override
-
-`  `Widget build(BuildContext context) {
-
-`    `// TODO: implement build
-
-`    `throw UnimplementedError();
-
-`  `}
-
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
+  }
 }
+```
 
-Como vemos, el método build es un método que devuelve un Widget, y como su nombre indica, será el método que *construirá* éste. 
+Como vemos, el método `build` es un método que devuelve un `Widget`, y como su nombre indica, será el método que *construirá* éste. 
 
-Observamos también que este método recibe un argumento context de tipo BuildContext. Vamos a pararnos un poco en este concepto.
+Observamos también que este método recibe un argumento `context` de tipo `BuildContext`. Vamos a pararnos un poco en este concepto.
 
 ¿Qué es el contexto?
 
 Cuando hablamos del contexto en general hacemos referencia a la situación en que ocurre cierto acontecimiento. En Android, por ejemplo, este hace referencia al estado actual de una aplicación u objeto, a partir del cual podemos obtener cierta información sobre la aplicación, y nos permite acceder a determinados recursos, bases de datos o preferencias.
 
-En Flutter, el BuildContext literalmente sería el *contexto de construcción*, es decir, el estado de la aplicación en el momento de construir el widget. Este estado viene representado por el camino en el árbol desde la raíz hasta el *nodo* que estamos creando, de manera que, mediante este camino, podemos obtener datos de los nodos superiores.
+En Flutter, el `BuildContext` literalmente sería el *contexto de construcción*, es decir, el estado de la aplicación en el momento de construir el widget. Este estado viene representado por el camino en el árbol desde la raíz hasta el *nodo* que estamos creando, de manera que, mediante este camino, podemos obtener datos de los nodos superiores.
 
-Dispone de más información sobre el contexto en los siguientes artículos:
+<div style="border: 1px solid black; padding: 10px;">
 
-Sobre el BuildContext: [What is BuildContext in Flutter?](https://www.educative.io/answers/what-is-buildcontext-in-flutter)
+Disponemos de más información sobre el contexto en los siguientes artículos:
 
-Sobre el context en Android: [Article Context in Android : Application Context vs Activity Context](https://www.oodlestechnologies.com/dev-blog/context-in-android-:-application-context-vs-activity-context/)
+- Sobre el BuildContext: [What is BuildContext in Flutter?](https://www.educative.io/answers/what-is-buildcontext-in-flutter)
 
+- Sobre el context en Android: [Article Context in Android : Application Context vs Activity Context](https://www.oodlestechnologies.com/dev-blog/context-in-android-:-application-context-vs-activity-context/)
+</div>
 
-Siguiendo con nuestro ejemplo práctico, ahora habría que añadir el código para construir el soporte principal de la aplicación dentro de este método build. Este método, como hemos dicho, construirá la interfaz principal en función de otros Widgets. Concretamente, devolverá el Center que estábamos proporcionándole directamente a runApp:
+Siguiendo con nuestro ejemplo práctico, ahora habría que añadir el código para construir el soporte principal de la aplicación dentro de este método `build`. Este método, como hemos dicho, construirá la interfaz principal en función de otros Widgets. Concretamente, devolverá el `Center` que estábamos proporcionándole directamente a `runApp`:
 
+```dart
 class MyApp extends StatelessWidget {
-
-`  `@override
-
-`  `Widget build(BuildContext context) {
-
-`    `return const Center(
-
-`        `child: Text(
-
-`          `'Hola Món', 
-
-`          `textDirection: TextDirection.ltr
-
-`        `)
-
-`      `);
-
-`  `}
-
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+        child: Text(
+          'Hola Mundo', 
+          textDirection: TextDirection.ltr
+        )
+      );
+  }
 }
+```
 
-Además, ahora deberemos modificar el método main y proporcionarle al método runApp una instancia de nuestro widget:
+Además, ahora deberemos modificar el método `main` y proporcionarle al método `runApp` una instancia de nuestro widget:
 
+```dart
 void main() {
-
-`  `Widget widgetPrincipal = MyApp();
-
-`  `runApp(widgetPrincipal);
-
+  Widget widgetPrincipal = MyApp();
+  runApp(widgetPrincipal);
 }
+```
 
+Que podemos simplificar con:
 
-Que podem simplificar amb:
-
+```dart
 void main() {
-
-`  `runApp(MyApp());
-
+  runApp(MyApp());
 }
+```
 
-E incluso, expresar el método main como función flecha:
+E incluso, expresar el método `main` como función flecha:
 
+```dart
 void main() => runApp(MyApp());
+```
 
-Observad que para crea la instancia de *MyApp* solo es necesario llamar al constructor, sin hacer uso de la palabra new. De hecho, si lo hacemos nos mostraría el aviso *Unnecessary new keywod*.
+Observad que para crea la instancia de `MyApp` solo es necesario llamar al constructor, sin hacer uso de la palabra `new`. De hecho, si lo hacemos nos mostraría el aviso *Unnecessary new keyword*.
 
-Con esto ya hemos creado nuestra primera clase de tipo Widget y la hemos utilizado como widget principal de la aplicación. Sin embargo, sigue apareciéndonos un aviso sobre la clase MyApp. Si nos situamos encima, veremos que este aviso nos indica Use key in widget constructors.
+Con esto ya hemos creado nuestra primera clase de tipo Widget y la hemos utilizado como widget principal de la aplicación. Sin embargo, sigue apareciéndonos un aviso sobre la clase `MyApp`. Si nos situamos encima, veremos que este aviso nos indica Use key in widget constructors.
 
-![Interfaz de usuario gráfica, Texto, Aplicación
-
-Descripción generada automáticamente](Aspose.Words.6afd18e1-1b6b-4967-aff2-ff1b52208d70.013.png)
+![Constructores](./images/imagen12.png)
 
 Si aceptamos la sugerencia de corrección rápida *Add key to constructores*:
 
-![Interfaz de usuario gráfica, Texto, Aplicación
-
-Descripción generada automáticamente](Aspose.Words.6afd18e1-1b6b-4967-aff2-ff1b52208d70.014.png)
+![Sugerencia](./images/imagen13.png)
 
 Nos creará un constructor en nuestro widget con una clave opcional:
-
+```dart
 const MyApp({super.key});
+```
 
 Esta clave se utilizará con el fin de identificar de manera más eficiente el widget dentro del árbol, de forma parecida a como se usaría un *id* en las vistas de Kotlin o en HTML.
 
@@ -453,366 +395,292 @@ Esta nueva corrección nos generará otro aviso de tipo *Prefer const with const
 
 Finalmente, nuestro código quedaría como:
 
+```dart
+import 'package:flutter/material.dart';
+
 void main() {
-
-`  `runApp(const MyApp());
-
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
-`  `const MyApp({super.key});
-
-`  `@override
-
-`  `Widget build(BuildContext context) {
-
-`    `return const Center(
-
-`        `child: Text(
-
-`          `'Hola Món', 
-
-`          `textDirection: TextDirection.ltr
-
-`        `)
-
-`      `);
-
-`  `}
-
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+        child: Text('Hola Mundo', textDirection: TextDirection.ltr));
+  }
 }
+```
+
 ### **La acción de código *Extract Widget***
 Una acción de código muy interesante, y que nos será de gran utilidad cuando los widgets que vamos creando vayan creciendo es la de extracción de widgets. Esta acción nos permitirá extraer un nuevo widget a partir de una parte del árbol que estamos construyendo.
 
 Para aplicarlo al ejemplo que estamos haciendo, volvemos al código inicial donde todavía no habíamos generado nuestro widget personalizado:
 
+```dart
 void main() {
-
-`  `runApp(
-
-`    `const Center(
-
-`      `child: Text(
-
-`        `'Hola Món',
-
-`        `textDirection: TextDirection.ltr,
-
-`      `),
-
-`    `),
-
-`  `);
-
+  runApp(
+    const Center(
+      child: Text(
+        'Hola Mundo',
+        textDirection: TextDirection.ltr,
+      ),
+    ),
+  );
 }
+```
 
 Y ubicamos el cursor encima del Widget Center. Veremos que se nos muestra a la izquierda la bombilla para mostrar las acciones de código. Hacemos clic en ella (o con *Ctrl+.*), y en el menú contextual podemos seleccionar la opción *Extract Widget*.
 
-![Interfaz de usuario gráfica, Texto, Aplicación
-
-Descripción generada automáticamente](Aspose.Words.6afd18e1-1b6b-4967-aff2-ff1b52208d70.015.png)
+![Extract Widget](./images/imagen14.png)
 
 Que nos mostrará un diálogo para añadir el nombre del widget. Escribimos MyApp:
 
-![](Aspose.Words.6afd18e1-1b6b-4967-aff2-ff1b52208d70.016.png)
+![MyApp](./images/imagen15.png)
 
-Y automáticamente nos generará todo el código para nosotros, a lo que sólo nos hará falta indicar el *const* ante MyApp:
+Y automáticamente nos generará todo el código para nosotros, a lo que sólo nos hará falta indicar el `const` ante `MyApp`:
 
+```dart
 void main() {
-
-`  `runApp(
-
-`    `MyApp(),
-
-`  `);
-
+  runApp(
+    MyApp(),
+  );
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({
+    super.key,
+  });
 
-`  `const MyApp({
-
-`    `super.key,
-
-`  `});
-
-`  `@override
-
-`  `Widget build(BuildContext context) {
-
-`    `return const Center(
-
-`      `child: Text(
-
-`        `'Hola Món',
-
-`        `textDirection: TextDirection.ltr,
-
-`      `),
-
-`    `);
-
-`  `}
-
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: Text(
+        'Hola Mundo',
+        textDirection: TextDirection.ltr,
+      ),
+    );
+  }
 }
+```
 
-![Texto
+Podemos verlo en esta animación:
 
-Descripción generada automáticamente con confianza media](Aspose.Words.6afd18e1-1b6b-4967-aff2-ff1b52208d70.017.gif)
+![Extract Wigeget](./images/ExtractWidget.gif)
 
 ### **Creación de Widgets personalizados y parametrizados**
 
-Como sabemos, un widget es también una clase, de manera que podemos declarar en ella tantas propiedades como necesitamos, y además, proporcionarle valor mediante su constructor.
+Como sabemos, un *widget* es también una clase, de manera que podemos declarar en ella tantas propiedades como necesitamos, y además, proporcionarle valor mediante su constructor.
 
-Por ejemplo, vamos a hacer un widget sin estado muy sencillo, al que definimos una propiedad llamada propietatText. El método build que construye el widget, simplemente devolverá un widget de tipo Text con el valor de la propiedad de texto:
+Por ejemplo, vamos a hacer un widget sin estado muy sencillo, en el que definimos una propiedad llamada `propietatText`. El método `build` que construye el widget, simplemente devolverá un widget de tipo `Text` con el valor de la propiedad de texto:
 
-class ElMeuWidgetPersonalitzat extends StatelessWidget {
+```dart
+class MiWidgetPersonalizado extends StatelessWidget {
+  final String? propietatText;
+  const MiWidgetPersonalizado({required this.propietatText, super.key});
 
-`  `final String? propietatText;
-
-`  `const ElMeuWidgetPersonalitzat({required this.propietatText, super.key});
-
-`  `@override
-
-`  `Widget build(BuildContext context) {
-
-`    `return Text("$propietatText");
-
-`  `}
-
+  @override
+  Widget build(BuildContext context) {
+    return Text("$propietatText");
+  }
 }
+```
 
-Observemos que la variable propietatText se ha definido como *final*, para poder definir al constructor como constante, de manera que el renderizado sea más eficiente. Si esta propiedad pudiera variar en el futuro, no podríamos definirla como *final* y el constructor no se podría definir como const. 
+Observemos que la variable `propietatText` se ha definido como `final`, para poder definir al constructor como constante, de manera que el renderizado sea más eficiente. Si esta propiedad pudiera variar en el futuro, no podríamos definirla como `final` y el constructor no se podría definir como `const`. 
 
-Veamos también que la propiedad propietatText se inicializa en el propio constructor, de forma simplificada, y como argumento con nombre, junto con la clave (key) del widget, y que se nos incorpora automáticamente si generamos el widget a partir de los *snippets*. Aunque es posible eliminar la clave del constructor, Flutter nos recomienda siempre utilizar una.
+Veamos también que la propiedad `propietatText` se inicializa en el propio constructor, de forma simplificada, y como argumento con nombre, junto con la clave (`key`) del widget, y que se nos incorpora automáticamente si generamos el widget a partir de los *snippets*. Aunque es posible eliminar la clave del constructor, Flutter nos recomienda siempre utilizar una.
 
 Con el fin de hacer uso de este widget, simplemente invocaríamos a su constructor tantas veces como fuera necesario, proporcionándole el valor de la propiedad. Por ejemplo, para incorporar un par de widgets en forma de columna, haríamos:
 
+``dart
 Column(
-
-`  `children: const [
-
-`    `ElMeuWidgetPersonalitzat(propietatText: "Text 1"),
-
-`    `ElMeuWidgetPersonalitzat(propietatText: "Text 2"),
-
-`  `],
-
+  children: const [
+    MiWidgetPersonalizado(propietatText: "Text 1"),
+    MiWidgetPersonalizado(propietatText: "Text 2"),
+  ],
 )
+```
 
-Como veis, sólo hay que proporcionar la propiedad propiedad. La clave key será generada por el propio Flutter en función del tipo del widget y otros factores. 
+Como veis, sólo hay que proporcionar la propiedad `propietatText`. La clave `key` será generada por el propio Flutter en función del tipo del widget y otros factores. 
 
 Si lo deseamos, también podemos proporcionar nosotros esta clave, mediante el constructor Key y proporcionándole un string:
 
+```dart
 Column(
-
-`  `children: const [
-
-`    `ElMeuWidgetPersonalitzat(
-
-`        `propietatText: "Text 1", key: Key("clau 1")),
-
-`    `ElMeuWidgetPersonalitzat(
-
-`        `propietatText: "Text 2", key: Key("clau 2")),
-
-`  `],
-
+  children: const [
+    MiWidgetPersonalizado(
+        propietatText: "Text 1", key: Key("clau 1")),
+    MiWidgetPersonalizado(
+        propietatText: "Text 2", key: Key("clau 2")),
+  ],
 )
+```
 
-Como veréis, en este widget Column, hemos utilizado la palabra children en lugar de child, y además, le proporcionamos una lista de widgets, en lugar de uno solo. Esta es la forma que tienen de trabajar los varones que admiten múltiples widgets hijos, como es esta *Column*, que organiza los varones uno bajo del otro. Con estos widgets, aunque sólo haya un hijo, habrá que indicar el parámetro children en lugar de child y pasarle la lista de valores.
+Como veréis, en este widget `Column`, hemos utilizado la palabra `children` en lugar de `child`, y además, le proporcionamos una lista de widgets, en lugar de uno solo. Esta es la forma que tienen de trabajar los widgets que admiten múltiples widgets hijos, como es esta `Column`, que organiza los widgets uno bajo del otro. Con estos widgets, aunque sólo haya un hijo, habrá que indicar el parámetro children en lugar de child y pasarle la lista de valores.
 
 ## Aplicaciones Material Design
 
 Material Design es un sistema de diseño creado por Google en 2014, que incluye guías de diseño para mejorar la experiencia de usuario e implementaciones de componentes de interfaces, aplicables tanto para Android como para Flutter y la web.
 
-En nuestros proyectos, hemos incluido la librería de componentes de Material, pero no hemos generado una aplicación *Material* como tal. Para ello, Flutter nos ofrece el widget MaterialApp, que nos sirve como base para aplicaciones de tipo *Material*, ofreciéndonos una serie de elementos de interfaz y de estilo comunes en este tipo de aplicaciones.
+En nuestros proyectos, hemos incluido la librería de componentes de Material, pero no hemos generado una aplicación *Material* como tal. Para ello, Flutter nos ofrece el widget `MaterialApp`, que nos sirve como base para aplicaciones de tipo *Material*, ofreciéndonos una serie de elementos de interfaz y de estilo comunes en este tipo de aplicaciones.
 
 Entre las diferentes propiedades del widget MaterialApp, destacamos:
 
 - **theme**: que nos sirve para definir el tema de la aplicación. En versiones de Flutter previas a la 3.16 (noviembre de 2023) se utilizaba Material 2, con un tema basados en tonalidades de azul. A partir de la versión 3.16, se hace uso de Material 3 de manera predeterminada, con un tema más minimalista si cabe. Además, con la llegada de Material You, se puede personalizar el tema de la aplicación con colores dinámicos que se generan a partir del fondo de pantalla del usuario.
+  
 - **debugShowCheckedModeBanner**: Un booleano que nos indicará si queremos mostrar el banner de depuración que nos aparece en la parte superior derecha de las aplicaciones, y que de manera predeterminada toma el valor *true*. Si queremos eliminar este banner, solo tenemos que establecer a *false* esta propiedad.
+  
 - **title**: Con el nombre de la aplicación que se mostrará al usuario.
+  
 - **home**: Que define el punto de entrada a la aplicación. Profundizaremos más en esta propiedad cuando veamos rutas a la siguiente unidad.
 
 El plugin *Flutter Snippets* incluye un *snippet* para generar una aplicación *Material* básica. Si borramos el contenido que teníamos y escribimos la abreviación *mateapp*, podremos seleccionar este snippet:
 
-![Texto
-
-Descripción generada automáticamente con confianza media](Aspose.Words.6afd18e1-1b6b-4967-aff2-ff1b52208d70.018.png)
+![MaterialApp](./images/imagen16.png)
 
 Que nos generará todo el esqueleto de la aplicación:
 
+```dart
 import 'package:flutter/material.dart';
 
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
-`  `const MyApp({super.key});
-
-`  `@override
-
-`  `Widget build(BuildContext context) {
-
-`    `return MaterialApp(
-
-`      `title: 'Material App',
-
-`      `home: Scaffold(
-
-`        `appBar: AppBar(
-
-`          `title: const Text('Material App Bar'),
-
-`        `),
-
-`        `body: const Center(
-
-`          `child: Text('Hello World'),
-
-`        `),
-
-`      `),
-
-`    `);
-
-`  `}
-
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Material App',
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Material App Bar'),
+        ),
+        body: const Center(
+          child: Text('Hello World'),
+        ),
+      ),
+    );
+  }
 }
+```
+
+Podemos verlo en esta animación:
+![MaterialAppAnimacion](./images/mateapp.gif)
 
 ### **El widget Scaffold**
 
-Como vemos, la aplicación Material que hemos generado con el snippet incluye el título de la aplicación (title: 'Material App') y el punto de entrada a la misma (home: Scaffold(...)). 
+Como vemos, la aplicación Material que hemos generado con el snippet incluye el título de la aplicación (`title: 'Material App'`) y el punto de entrada a la misma (`home: Scaffold(...)`). 
 
-Este widget *Scaffold* que utiliza como punto de entrada implementa la estructura de diseño visual básico de Material Design, y proporciona varias APIs para gestionar la navegación. Por defecto, como ya anticipamos en el apartado introductorio, este Scaffold contiene de manera predeterminada los dos elementos siguientes:
+Este widget `Scaffold` que utiliza como punto de entrada implementa la estructura de diseño visual básico de Material Design, y proporciona varias APIs para gestionar la navegación. Por defecto, como ya anticipamos en el apartado introductorio, este `Scaffold` contiene de manera predeterminada los dos elementos siguientes:
 
-- appBar: Con la barra superior de la aplicación, y que consiste en un widget de tipo AppBar. Este widget admite muchas personalizaciones, aunque acá, de momento, sólo se añade el título.
-- body: Con el cuerpo o contenido principal de la aplicación, que contiene por defecto un contenedor de tipo Center con un Texto.
+- `appBar`: Con la barra superior de la aplicación, y que consiste en un widget de tipo `AppBar`. Este widget admite muchas personalizaciones, aunque aquí, de momento, sólo se añade el título.
+  
+- `body`: Con el cuerpo o contenido principal de la aplicación, que contiene por defecto un contenedor de tipo `Center` con un `Text`.
 
-Como vemos, para adaptar esta estructura a nuestro ejemplo, solo tendremos que cambiar el texto *Hello Wolrd* por *Hola Mundo!*. Además, al tratarse de una aplicación *MaterialApp*, ésta ya define en el estilo los textos con la propiedad textDirection, de manera que ya no será necesario establecer esta propiedad de manera explícita. En este ejemplo, también hemos modificado el texto de la barra superior, con el contenido *"Texto de la barra"*.
+Como vemos, para adaptar esta estructura a nuestro ejemplo, solo tendremos que cambiar el texto *Hello World* por *Hola Mundo!*. Además, al tratarse de una aplicación `MaterialApp`, ésta ya define en el estilo los textos con la propiedad `textDirection`, de manera que ya no será necesario establecer esta propiedad de manera explícita. En este ejemplo, también hemos modificado el texto de la barra superior, con el contenido *"Texto de la barra"*.
 
 Así pues, nuestro código podría quedar de la siguiente forma:
 
+```dart
 import 'package:flutter/material.dart';
 
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
-`  `const MyApp({super.key});
-
-`  `@override
-
-`  `Widget build(BuildContext context) {
-
-`    `return MaterialApp(
-
-`      `title: 'Aplicació Material',
-
-`      `home: Scaffold(
-
-`        `appBar: AppBar(
-
-`          `title: const Text('Text de la barra'),
-
-`        `),
-
-`        `body: const Center(
-
-`          `child: Text('Hola Món'),
-
-`        `),
-
-`      `),
-
-`    `);
-
-`  `}
-
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Aplicación Material',
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Texto de la barra'),
+        ),
+        body: const Center(
+          child: Text('Hola Mundo'),
+        ),
+      ),
+    );
+  }
 }
+```
 
-![Imagen que contiene Gráfico
+![Ejecucion](./images/imagen17.png)
 
-Descripción generada automáticamente](Aspose.Words.6afd18e1-1b6b-4967-aff2-ff1b52208d70.019.png)
+Como podemos observar, nos aparece la etiqueta *Debug en* la parte superior derecha. Si queremos que ésta no se muestre, haremos uso del parámetro `debugShowCheckedModeBanner` del widget `MaterialApp` de la siguiente manera:
 
-Como podemos observar, nos aparece la etiqueta *Debug en* la parte superior derecha. Si queremos que ésta no se muestre, haremos uso del parámetro debugShowCheckedModeBanner del widget MaterialApp de la siguiente manera:
-
-`    `return MaterialApp(
-
-`      `title: 'Aplicació Material',
-
-`      `debugShowCheckedModeBanner: false,
-
-`      `home: Scaffold(…))
+```dart
+MaterialApp(
+      title: 'Aplicación Material',
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(..))
+```
 
 Recordemos que los parámetros que proporcionamos al constructor son parámetros por nombre, no posicionales, de manera que no importa el orden en que añadimos estos.
+
+<div style="border: 1px solid black; padding: 10px;">
 
 - [Documentación oficial sobre Material en Flutter](https://docs.flutter.dev/ui/widgets/material)
 - Artículo [Building user interfaces with Flutter](https://docs.flutter.dev/ui), de la documentación oficial de Flutter.
 - Referencia de la [clase MaterialApp en la API de Flutter](https://api.flutter.dev/flutter/material/MaterialApp-class.html)
 - Sitio Web de [Material Design](https://m3.material.io/)
+  
+</div>
 
 ## Organizando el código
 
 Hasta ahora hemos estado utilizando un único fichero para todo el código de nuestra aplicación, que gestiona la parte lógica, el estado o el aspecto. Lo más recomendable, sobre todo cuando la aplicación crece es organizar el código fuente en diferentes ficheros y carpetas, según su funcionalidad. De esta manera, nuestras aplicaciones serán fáciles de mantener y apropiadas para trabajar en equipo.
 
-Una práctica habitual es crear una carpeta screens dentro del directorio lib del proyecto para ubicar las diferentes *pantallas* de la aplicación. Para ello, podemos hacerlo bien desde la terminal, o creando una nueva carpeta a través de la vista de ficheros de VSCode.
+Una práctica habitual es crear una carpeta `screens` dentro del directorio `lib` del proyecto para ubicar las diferentes *pantallas* de la aplicación. Para ello, podemos hacerlo bien desde la terminal, o creando una nueva carpeta a través de la vista de ficheros de VSCode.
 
-Recordemos que el código fuente de nuestra aplicación se ubica en el directorio lib, y dentro del mismo, podemos crear tantos ficheros y carpetas como deseamos, de forma libre, o siguiendo algún patrón arquitectónico (MVC, MVVM, BLoC, Clean, etc.).
+Recordemos que el código fuente de nuestra aplicación se ubica en el directorio `lib`, y dentro del mismo, podemos crear tantos ficheros y carpetas como deseamos, de forma libre, o siguiendo algún patrón arquitectónico (MVC, MVVM, BLoC, Clean, etc.).
 
-En nuestro ejemplo, estamos haciendo una primera organización del código sencilla, de manera que solo hemos creado una carpeta para las pantallas que hemos anomentado screens, pero podría haberse llamado de cualquier otra manera, como views o ui por ejemplo.
+En nuestro ejemplo, estamos haciendo una primera organización del código sencilla, de manera que solo hemos creado una carpeta para las pantallas que hemos llamado `screens`, pero podría haberse llamado de cualquier otra manera, como `views` o `ui` por ejemplo.
 
-Dins la carpeta **lib/screens**, crearem un fitxer per a la pantalla d'inici, que anomenarem, per exemple **home\_screen.dart**, i al que afegirem la classe MyApp que havíem creat, renomenant-la com a HomeScreen. Quedaría:
+En la carpeta `lib/screens`, crearemos un fichero para la pantalla de inicio, que llamaremos, ejemplo `home_screen.dart`, y a la que añadiremos la clase `MyApp` que habíamos creado renombrándoloa por `HomeScreen`. Quedaría:
+
+```dart
+/* 
+Fichero lib/home_screen.dart
+Contiene la pantalla de inicio de la aplicación
+*/
 
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
 
-`  `const HomeScreen({super.key});
-
-`  `@override
-
-`  `Widget build(BuildContext context) {
-
-`    `return MaterialApp(
-
-`      `title: 'Aplicació Material',
-
-`      `debugShowCheckedModeBanner: false,
-
-`      `home: Scaffold(
-
-`        `appBar: AppBar(
-
-`          `title: const Text('Text de la barra'),
-
-`        `),
-
-`        `body: const Center(
-
-`          `child: Text('Hola Món'),
-
-`        `),
-
-`      `),
-
-`    `);
-
-`  `}
-
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Aplicación Material',
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Texto de la barra'),
+        ),
+        body: const Center(
+          child: Text('Hola Mundo'),
+        ),
+      ),
+    );
+  }
 }
+```
 
-Y dejaríamos el fichero **lib/main.dart** con el código:
+Y dejaríamos el fichero `lib/main.dart` con el código:
 
+```dart
 import 'package:flutter/material.dart';
-
-import 'package:hola\_mon/screens/home\_screen.dart';
+import 'package:hola_mon/screens/home_screen.dart';
 
 void main() => runApp(const HomeScreen());
+```
 
-Como podremos comprobar, si reemplazamos **MyApp()** por **HomeScreen()** nos importa automáticamente el fichero **home\_screen.dart**. Hay que notar que en la ruta al fichero incluye el nombre del paquete hola\_mon, y la subcarpeta screens, pero no la carpeta lib, ya que se entiende que es ahí donde se ubica el código.
+Como podremos comprobar, si reemplazamos `MyApp()` por `HomeScreen()` nos importa automáticamente el fichero `home_screen.dart`. Hay que notar que en la ruta al fichero incluye el nombre del paquete `hola_mon`, y la subcarpeta screens, pero no la carpeta lib, ya que se entiende que es ahí donde se ubica el código.
 
 ## Convirtiendo el Hola Mundo en la App de contador
 
@@ -821,175 +689,134 @@ Vamos a pasar ya de este sencillo *Hola Mundo* a crear la aplicación de Contado
 
 Para añadir el número de *clicks* debemos introducir antes un tipo especial de widgets, los *contenedores*, que sirven para organizar un conjunto de *widgets* atendiendo a diferentes tipos de organización (*layout*). Estos *widgets de diseño* suelen clasificarse en líneas generales en quienes tienen un único widget hijo, y que sirven para determinar cómo se muestra este, y los que tienen más de un widget hijo, que sirven para organizar diferentes widgets dentro de otro.
 
-El widget que usaremos pertenece a este segundo grupo y es el widget Column, que organiza diferentes widgets hijos en dirección vertical.
+El widget que usaremos pertenece a este segundo grupo y es el widget `Column`, que organiza diferentes widgets hijos en dirección vertical.
 
-La principal diferencia entre un widget contenedor **con un solo hijo** y quienes tienen **varios hijos** es que en los primeros definimos la propiedad **child**, con un único widget, y en los segundos la propiedad **children**, que se inicializa con una lista de widgets.
+La principal diferencia entre un widget contenedor **con un solo hijo** y quienes tienen **varios hijos** es que en los primeros definimos la propiedad `child`, con un único widget, y en los segundos la propiedad `children`, que se inicializa con una lista de widgets.
 
-Así pues, lo que vamos a hacer ahora es añadir este contenedor **Column** dentro del widget **Center** que ya teníamos, de manera que la columna quede centrada. Podemos hacerlo escribiendo directamente el código, o bien *envolviendo* el widget **Text** que teníamos como hijo con el contenedor **Column**. Para ello, nos ponemos de nuevo encima del texto, y hacemos clic en la bombilla para ver el menú contextual y escoger la opción *Wrap with Column*. Cuando lo hagamos, nos añadirá el widget Column, con la propiedad children, y como valor de ésta una lista con el Text. 
+Así pues, lo que vamos a hacer ahora es añadir este contenedor `Column` dentro del widget `Center` que ya teníamos, de manera que la columna quede centrada. Podemos hacerlo escribiendo directamente el código, o bien *envolviendo* el widget `Text` que teníamos como hijo con el contenedor `Column`. Para ello, nos ponemos de nuevo encima del texto, y hacemos clic en la bombilla para ver el menú contextual y escoger la opción *Wrap with Column*. Cuando lo hagamos, nos añadirá el widget `Column`, con la propiedad `children`, y como valor de ésta una lista con el `Text`. 
 
-![Interfaz de usuario gráfica, Texto, Aplicación
-
-Descripción generada automáticamente](Aspose.Words.6afd18e1-1b6b-4967-aff2-ff1b52208d70.020.png)
+![Wrap Column](./images/imagen18.png)
 
 Con ello, sólo nos queda modificar el primer texto, y añadir un segundo con el valor del contador. El código quedaría así:
 
+```dart
 body: const Center(
-
-`  `child: Column(
-
-`    `children: [
-
-`      `Text('Hola Món'),
-
-`      `Text('0'),
-
-`    `],
-
-`  `),
-
-),
+  child: Column(
+    children: [
+      Text('Hola Mundo'),
+      Text('0'),
+    ],
+  ),
+)
+```
 
 El resultado de este código nos mostrará los dos textos alineados en forma de columna, pero quizás no es el resultado que deseábamos, ya que lo hace en la parte superior de la pantalla:
 
-![Interfaz de usuario gráfica
+![Arriba](./images/imagen19.png)
 
-Descripción generada automáticamente con confianza baja](Aspose.Words.6afd18e1-1b6b-4967-aff2-ff1b52208d70.021.png)
+Esto se debe a que el widget de la columna sí está centrado, pero ocupa todo el espacio disponible del widget `Center`, y dentro de éste, está apilando los widgets de arriba hacia abajo. Esta forma de organizar los widgets y el espacio restante dentro de la columna se puede realizar de diversas maneras mediante la propiedad `mainAxisAlignment` del widget `Column`. Por ejemplo, y para centrar los widgets:
 
-Esto se debe a que el widget de la columna sí está centrado, pero ocupa todo el espacio disponible del widget **Center**, y dentro de éste, está apilando los widgets de arriba hacia abajo. Esta forma de organizar los widgets y el espacio restante dentro de la columna se puede realizar de diversas maneras mediante la propiedad **mainAxisAlignment** del widget **Column**. Por ejemplo, y para centrar los widgets:
+```dart
+Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    ...
+)
+```
 
-child: Column(
-
-`  `mainAxisAlignment: MainAxisAlignment.center,
-
-**MainAxisAlignement** (con mayúscula) es un enumerado (enum) que contiene los posibles valores para esta propiedad. Además de **center** tenemos valores como **start** (valor por omisión), **end**, **spaceAround**, **spaceBetween** o **spaceEvenly**.
+`MainAxisAlignement` (con mayúscula) es un enumerado (`enum`) que contiene los posibles valores para esta propiedad. Además de `center` tenemos valores como `start` (valor por omisión), `end`, `spaceAround`, `spaceBetween` o `spaceEvenly`.
 
 Gráficamente, estos valores tienen el siguiente efecto:
 
-![Interfaz de usuario gráfica, Aplicación
-
-Descripción generada automáticamente](Aspose.Words.6afd18e1-1b6b-4967-aff2-ff1b52208d70.022.png)
+![MainAxis](./images/imagen20.png)
 
 ### **Modificando las propiedades de los textos**
 
-El widget **Text** requiere un primer argumento posicional, con el texto a mostrar, pero también admite después varios argumentos con nombre que sirven para definir las propiedades del texto. Una de estas propiedades es **style** que sirve para establecer el estilo, y viene definido por la clase **TextStyle**, en la que podemos definir varias propiedades. Una de estas propiedades es **fontSize**, que determinará el tamaño de la fuente en píxeles.
+El widget `Text` requiere un primer argumento posicional, con el texto a mostrar, pero también admite después varios argumentos con nombre que sirven para definir las propiedades del texto. Una de estas propiedades es `style` que sirve para establecer el estilo, y viene definido por la clase `TextStyle`, en la que podemos definir varias propiedades. Una de estas propiedades es `fontSize`, que determinará el tamaño de la fuente en píxeles.
 
 Nuestro texto podría quedar de la siguiente manera:
 
+```dart
 Text(
-
-`  `'0',
-
-`  `style: TextStyle(fontSize: 50),
-
-),
+    '0',
+    style: TextStyle(fontSize: 50),
+)
+```
 
 ### **Añadiendo el botón de acción flotante**
 
-Para incrementar el contador, vamos a hacer uso de un botón de acción flotante (*Floating Action Button*). El widget *Scaffold*, que nos proporciona el diseño básico de una aplicación *Material*, además de los argumentos con nombre **appBar** y **body**, admite, entre otros más, el argumento **floatingActionButton**. Este argumento puede ser cualquier widget, pero generalmente será un objeto de tipo ***FloatingActionButton***, definido en la librería Material.
+Para incrementar el contador, vamos a hacer uso de un botón de acción flotante (*Floating Action Button*). El widget `Scaffold`, que nos proporciona el diseño básico de una aplicación `Material`, además de los argumentos con nombre `appBar` y `body`, admite, entre otros más, el argumento `floatingActionButton`. Este argumento puede ser cualquier widget, pero generalmente será un objeto de tipo `FloatingActionButton`, definido en la librería `Material`.
 
-Este botón necesitará una propiedad **onPressed**, que contendrá una función anónima de *callback* (o función flecha) que se ejecutará cada vez que se haga *click* en él. Si este método no contuviera código, podríamos definir el botón como constante. 
+Este botón necesitará una propiedad `onPressed`, que contendrá una función anónima de `callback` (o función flecha) que se ejecutará cada vez que se haga *click* en él. Si este método no contuviera código, podríamos definir el botón como constante. 
 
-Con el fin de especificar el contenido del botón, disponemos de la propiedad **child** que generalmente contendrá un widget de tipo **Icon**, que requiere un primer argumento posicional con el icono a mostrar. En nuestro caso, utilizaremos el icono Icons.add, que añade el símbolo "+". El código resultante, de momento con el callback vacío será:
+Con el fin de especificar el contenido del botón, disponemos de la propiedad `child` que generalmente contendrá un widget de tipo `Icon`, que requiere un primer argumento posicional con el icono a mostrar. En nuestro caso, utilizaremos el icono `Icons.add`, que añade el símbolo "+". El código resultante, de momento con el callback vacío será:
 
+```dart
 Scaffold(
+        appBar: ...,
+        body: ...,
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => {},
+          child: const Icon(Icons.add),
+        ),
+      ),
+```
 
-`  `appBar: ...
-
-`  `body: ...
-
-`  `floatingActionButton: FloatingActionButton(
-
-`    `onPressed: () => {},
-
-`    `child: const Icon(Icons.add),
-
-`    `),
-
-),
 
 Bien, con esto ya tenemos el diseño completo del contador. Ahora nos quedará añadir la funcionalidad.
 
 
 ### **Añadiendo funcionalidad al contador. Primeros problemas.**
 
-La funcionalidad será bastante sencilla, y consistirá en definir una variable que almacene el valor del contador e incrementar este valor cada vez que se haga *click* en el botón de acción flotante. Además, habría que cambiar el texto "0" para que mostrara este valor. El código quedaría con los siguientes cambios (veamos que hemos tenido que cambiar algunos **const** porque ahora ya hay un elemento que no será constante ):
+La funcionalidad será bastante sencilla, y consistirá en definir una variable que almacene el valor del contador e incrementar este valor cada vez que se haga *click* en el botón de acción flotante. Además, habría que cambiar el texto "0" para que mostrara este valor. El código quedaría con los siguientes cambios (veamos que hemos tenido que cambiar algunos `const` porque ahora ya hay un elemento que no será constante ):
 
-`  `@override
+```dart
+ @override
+  Widget build(BuildContext context) {
+    int contador = 0;
 
-`  `Widget build(BuildContext context) {
+    return MaterialApp(
+      ...
+      home: Scaffold(
+        appBar:...,
+        body: Center(
+          child: Column(...
+            children: [
+              const Text('Valor del contador'),
+              Text(
+                '$contador',
+                style: const TextStyle(fontSize: 50),
+              )
+            ],
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            comptador++;
+            debugPrint('[LOG]: Actualizando contador a $contador');
+          },
+          child: const Icon(Icons.add),
+        ),
+      ),
+    );
+  }
+```
 
-`    `int contador = 0;
-
-`    `return MaterialApp(
-
-`      `title: 'Aplicació Material',
-
-`      `debugShowCheckedModeBanner: false,
-
-`      `home: Scaffold(
-
-`        `appBar: AppBar(
-
-`          `title: const Text('Text de la barra'),
-
-`        `),
-
-`        `body:  Center(
-
-`          `child: Column(
-
-`            `mainAxisAlignment: MainAxisAlignment.center,
-
-`            `children: [
-
-`              `const Text('Hola Món'),
-
-`            `Text(
-
-`              `'$contador',
-
-`              `style: const TextStyle(fontSize: 50),
-
-`            `),
-
-`            `],
-
-`          `),
-
-`        `),
-
-`        `floatingActionButton: FloatingActionButton(
-
-`          `onPressed: () {
-
-`            `contador++;
-
-`            `debugPrint('[LOG]: Actualizando contador a $contador');
-
-`          `},
-
-`          `child: const Icon(Icons.add),
-
-`          `),
-
-`      `),
-
-`    `);
-
-`  `}
 
 Vemos algunos detalles de este código:
 
-- Hemos definido el contador en el método **build** del widget.
-- Hemos tenido que eliminar el **const** del elemento **Column**, ya que ahora sólo será constante el primer Text y el estilo del segundo.
-- Hemos añadido el valor del contador en el segundo Texto, haciendo uso de la interpolación de Strings (añadiendo la variable dentro de un string e interpolándola con el $).
-- Hemos incorporado el código para incrementar el contador al método **onPressed**, y además, hemos añadido una orden **debugPrint** para mostrar las actualizaciones por la consola. Además, como ahora hay dos instrucciones dentro del callback, en lugar de una función flecha, hemos expresado el callback como función anónima.
+- Hemos definido el contador en el método `build` del widget.
+  
+- Hemos tenido que eliminar el `const` del elemento `Column`, ya que ahora sólo será constante el primer `Text` y el estilo del segundo.
+  
+- Hemos añadido el valor del contador en el segundo `Text`, haciendo uso de la interpolación de Strings (añadiendo la variable dentro de un string e interpolándola con el `$`).
+  
+- Hemos incorporado el código para incrementar el contador al método `onPressed`, y además, hemos añadido una orden `debugPrint` para mostrar las actualizaciones por la consola. Además, como ahora hay dos instrucciones dentro del callback, en lugar de una función flecha, hemos expresado el callback como función anónima.
 
 Si ahora volvemos a ejecutar nuestro programa veremos cómo, aunque el mensaje de *Log* que hemos añadido sí muestra correctamente el valor del contador, **éste no se actualiza a la interfaz**.
 
 ### **Widgets con estado y sin estado**
 
-Este comportamiento se debe a que hemos hecho uso de un widget sin estado (**HomeScreen** hereda de **StatelessWidget**), y tal y como comentamos en la introducción, los widgets sin estado no tienen la capacidad de redibujarse por ellos mismos.
+Este comportamiento se debe a que hemos hecho uso de un widget sin estado (`HomeScreen` hereda de `StatelessWidget`), y tal y como comentamos en la introducción, los widgets sin estado no tienen la capacidad de redibujarse por ellos mismos.
 
 La solución es hacer uso de un widget con estado, de manera que éste se pueda redibujar con cada modificación.
 
@@ -1007,93 +834,78 @@ Los widgets con estado, como su propio nombre indica, tienen la propiedad de est
 
 Antes de modificar nuestro código, vemos **qué estructura** presenta un widget con estado.
 
-El snippet **statefulW**, nos proporciona una plantilla básica para estos widgets, que podemos personalizar con el nombre que deseamos. 
+El snippet `statefulW`, nos proporciona una plantilla básica para estos widgets, que podemos personalizar con el nombre que deseamos. 
 
-![Interfaz de usuario gráfica, Texto, Aplicación
-
-Descripción generada automáticamente](Aspose.Words.6afd18e1-1b6b-4967-aff2-ff1b52208d70.023.png)
+![MyWidget](./images/myWidget.gif)
 
 El código que nos ha quedado después de renombrar este widget como MyWidget ha sido el siguiente:
 
+```dart
 class MyWidget extends StatefulWidget {
+  const MyWidget({super.key});
 
-`  `const MyWidget({super.key});
-
-`  `@override
-
-`  `State<MyWidget> createState() => \_MyWidgetState();
-
+  @override
+  State<MyWidget> createState() => _MyWidgetState();
 }
 
-class \_MyWidgetState extends State<MyWidget> {
-
-`  `@override
-
-`  `Widget build(BuildContext context) {
-
-`    `return Container();
-
-`  `}
-
+class _MyWidgetState extends State<MyWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
 }
-
+```
 
 Veamos algunos detalles:
 
-- En primer lugar, hay que notar que ahora estamos definiendo **dos clases**: Una para el widget en sí (**MyWidget**) y otra, que representa su estado (**\_MyWidgetState**). Notemos que esta segunda clase empieza con \_ para indicar que es privada.
-- La clase que define el widget (**MyWidget**) hereda ahora de **StatefulWidget**, indicando así que contiene un estado mutable. El constructor, al igual que a los widgets con estado, para poder referenciarse dentro del árbol de widgets, tendrá también una propiedad que será la clave (key)
-- La clase **MyWidget** ya no dispone del método **build**, sino que sobreescribe el método **createState()** de la clase **StatefulWidget**. Este método será invocado por el framework cuando el widget se inserta por primera vez en el árbol de widgets, y creará una instancia del estado **\_MyWidgetState()**. Esta instancia se reutilizará cada vez que se redibuje el widget.
-- La clase que representa el estado (**\_MyWidgetState**) será la encargada ahora de sobreescribir el método **build**, y por lo tanto de *redibujar* el widget.
+- En primer lugar, hay que notar que ahora estamos definiendo **dos clases**: Una para el widget en sí (`MyWidget`) y otra, que representa su estado (`_MyWidgetState`). Notemos que esta segunda clase empieza con `_` para indicar que es privada.
+  
+- La clase que define el widget (`MyWidget`) hereda ahora de `StatefulWidget`, indicando así que contiene un estado mutable. El constructor, al igual que a los widgets con estado, para poder referenciarse dentro del árbol de widgets, tendrá también una propiedad que será la clave (`key`)
 
-Bien, vamos ahora a modificar nuestro código, y para ello, disponemos de una acción de código que nos ayudará a convertir un widget sin estado a un widget con estado. Si nos ubicamos encima la definición de la clase **HomeScreen** y hacemos uso de la bombilla que aparece al lado, o directamente hacemos click en Ctrl+., nos mostrará esta opción:
+- La clase `MyWidget` ya no dispone del método `build`, sino que sobreescribe el método `createState()` de la clase `StatefulWidget`. Este método será invocado por el framework cuando el widget se inserta por primera vez en el árbol de widgets, y creará una instancia del estado `_MyWidgetState()`. Esta instancia se reutilizará cada vez que se redibuje el widget.
+  
+- La clase que representa el estado (`_MyWidgetState`) será la encargada ahora de sobreescribir el método `build`, y por lo tanto de *redibujar* el widget.
 
-![Interfaz de usuario gráfica, Texto, Aplicación, Chat o mensaje de texto
+Bien, vamos ahora a modificar nuestro código, y para ello, disponemos de una acción de código que nos ayudará a convertir un widget sin estado a un widget con estado. Si nos ubicamos encima la definición de la clase `HomeScreen` y hacemos uso de la bombilla que aparece al lado, o directamente hacemos click en `Ctrl + .`, nos mostrará esta opción:
 
-Descripción generada automáticamente](Aspose.Words.6afd18e1-1b6b-4967-aff2-ff1b52208d70.024.png)
+![ConverToStateFul](./images/imagen21.png)
 
 Así pues, hacemos este cambio y **añadimos el contador, ahora sí como propiedad de la misma clase**, en lugar de definirla dentro del método build:
 
-`  `class \_HomeScreenState extends State<HomeScreen> {
+```dart
+class _HomeScreenState extends State<HomeScreen> {
 
-`    `int contador = 0;
+  int contador = 0;
 
-`    `@override
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(...)
+    ..
+  }
+```
 
-`    `Widget build(BuildContext context) {
+Si ejecutamos ahora la aplicación, veremos que tampoco se modifica la interfaz. Esto se debe a que todavía nos queda un último detalle, y es **notificarle a Flutter que hemos modificado el estado interno del widget**, y que, por lo tanto, debe redibujar éste. Esto se consigue con la función `setState()`, a la que le proporcionamos una función anónima con el código que modifica el estado. El código resultante para, tanto, para el evento onPressed del *Floating Action Button* quedará de la siguiente forma:
 
-`    `return MaterialApp(
-
-...
-
-Si ejecutamos ahora la aplicación, veremos que tampoco se modifica la interfaz. Esto se debe a que todavía nos queda un último detalle, y es **notificarle a Flutter que hemos modificado el estado interno del widget**, y que, por lo tanto, debe redibujar éste. Esto se consigue con la función **setState()**, a la que le proporcionamos una función anónima con el código que modifica el estado. El código resultante para, tanto, para el evento onPressed del *Floating Action Button* quedará de la siguiente forma:
-
-`  `floatingActionButton: FloatingActionButton(
-
-`    `onPressed: () {
-
-`      `setState(() {
-
-`        `contador++;              
-
-`      `});
-
-`      `debugPrint('[LOG]: Actualizando contador a $contador');
-
-`    `},
+```dart
+onPressed: () {
+   setState(() {
+        contador++;
+    });
+    print('[LOG]: Actualizando contador a $contador');
+}
+```
 
 Con esto, finalmente ya tenemos nuestra aplicación de contador funcionando.
 
 También podríamos haber hecho los cambios fuera de la función anónima de setState:
 
-`  `floatingActionButton: FloatingActionButton(
-
-`    `onPressed: () {
-
-`      `contador++;              
-
-`      `debugPrint('[LOG]: Actualizando contador a $contador');
-
-`      `setState(() {});
+```dart
+onPressed: () {
+    contador++;
+    print('[LOG]: Actualizando contador a $contador');
+  setState(() {});
+}
+```
 
 **En ressum**
 
@@ -1102,30 +914,31 @@ En este apartado, hemos visto de forma práctica cómo crear un proyecto nuevo c
 Con esto, y a pesar de no haber entrado aún en profundidad con los widgets, hemos aprendido algunas cosas interesantes, como:
 
 - Crear proyectos Flutter, tanto desde la línea de órdenes como desde VSCode, así como especificar plataformas concretas para la aplicación,
+  
 - Ejecutar nuestro proyecto, tanto desde la línea de órdenes como desde VSCode,
-- Las funciones main y runApp en un proyecto Flutter.
+- Las funciones `main` y `runApp` en un proyecto Flutter.
 - Cuando tenemos que utilizar widgets como constantes o no.
 - Cómo crear widgets personalizados mediante *snippets*.
-- Qué es el *BuildContext* y qué relación tiene con el árbol de Widgets.
+- Qué es el `BuildContext` y qué relación tiene con el árbol de Widgets.
 - Cómo extraer con VSCode un widget de una estructura anidada como widget personalizado.
 - La estructura de una aplicación *Material Design*,
-- L'estructura del widget *Scaffold*,
+- L'estructura del widget `Scaffold`,
 - Cómo organizar el código en carpetas,
-- Cómo organizar contenido en columnas con el widget *Column*,
+- Cómo organizar contenido en columnas con el widget `Column`,
 - Añadir un botón de acción flotante e implementar su funcionalidad,
-- La diferencia entre widget *Stateless* y *Stateful*, y cómo definir el estado,
+- La diferencia entre widget `Stateless` y `Stateful`, y cómo definir el estado,
 
-**Ejercicio voluntario**
+## Ejercicio voluntario
 
 **Añade otro botón para decrementar el contador y otro para resetear su valor a 0.**
 
-`	`**Claves para la resolución**:
+- Claves para la resolución:
 
-- El componente *floatingActionButton* del Scaffold no necesariamente debe tener un compopnent de tipo FloatingActionButton, sino que puede contener, por ejemplo un contenedor de tipo *Row* o *Column*, y dentro de él podemos añadir varios botones.
-- Si deseas modificar la posición del componente *floatingActionButton*, podéis utilizar la propiedad del Scaffold floatingActionButtonLocation, cuyos posibles valores se encuentran en FloatingActionButtonLocation.\*.
+  - El componente `floatingActionButton` del `Scaffold` no necesariamente debe tener un componente de tipo `FloatingActionButton`, sino que puede contener, por ejemplo un contenedor de tipo `Row` o `Column`, y dentro de él podemos añadir varios botones.
+  - Si deseas modificar la posición del componente `floatingActionButton`, podéis utilizar la propiedad del `Scaffold` `floatingActionButtonLocation`, cuyos posibles valores se encuentran en `FloatingActionButtonLocation`.
 
 
-2. # <a name="_toc178414144"></a>El ciclo de vida de los widgets
+1. # <a name="_toc178414144"></a>El ciclo de vida de los widgets
 
 ## Los widgets y el estado
 
