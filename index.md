@@ -1376,12 +1376,22 @@ ScaffoldMessenger.of(context).showMaterialBanner(
 
 Para cerrar el aviso haremos:
 
+```dart
 ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+```
 
-Veamos su funcionamiento en el siguiente Gist: <https://dartpad.dev/?id=303dbbd97f6b30f1ddf4994b88ab4d80>.
+En *el siguiente gist* podéis encontrar este código funcionando: 
+[https://dartpad.dev/embed-flutter.html?id=a61b6f2bdc57458f6f87200d943251ba529418b352d3148f3d7e074d031d3c77](https://dartpad.dev/embed-flutter.html?id=87200d943251ba529418b352d3148f3d)
+
+<iframe
+  src="https://dartpad.dev/embed-inline.html?id=87200d943251ba529418b352d3148f3d"
+  width="100%"
+  height="500px"
+  frameborder="0">
+</iframe>
 
 
-1. # <a name="_toc178414146"></a>Widgets básicos. Contenedores y diseños
+# <a name="_apartado5"></a>5. Widgets básicos. Contenedores y diseños
 
 Flutter ofrece muchísimos widgets para organizar el contenido. Si consultamos la [documentación sobre widgets de tipo *Layout*](https://docs.flutter.dev/development/ui/widgets/layout), veremos que estos se organizan en aquellos contenedores que pueden tener un elemento hijo (*Single-child layout widgets*), más de un hijo (*Multi-child layout widgets*) y aquellos que permiten realizar desplazamiento (*Sliver widgets*).
 
@@ -1390,102 +1400,92 @@ Vamos a ver algunos de los contenedores más comunes, centrándonos en los dos p
 ## Widgets contenedores con un único hijo
 
 Estos widgets permiten crear contenedores para un único hijo, con diferentes propiedades.
+
 ### **Container**
 
-El widget **Container** crea un elemento visual rectangular, para rodear otros widgets y aplicarles estilos. Podemos hacer uso del widget **BoxDecoration** para incorporarle el color de fondo, y personalizar sus bordes o la sombra. También podemos incorporar márgenes o restricciones aplicadas al tamaño.
+El widget `Container` crea un elemento visual rectangular, para rodear otros widgets y aplicarles estilos. Podemos hacer uso del widget `BoxDecoration` para incorporarle el color de fondo, y personalizar sus bordes o la sombra. También podemos incorporar márgenes o restricciones aplicadas al tamaño.
 
 Vemos un ejemplo donde creamos un contenedor de 300x200 (tamaño en píxeles lógicos, independientes del dispositivo), al que le añadimos color de fondo, radio, sombra y bordes mediante un widget de tipo *BoxDecoration*, con diferentes propiedades, y ajustamos el *padding* (espacio entre el borde y el contenido), el *margin* (espacio entre el contenedor y el widget que lo contiene),  así como una transformación consistente en una rotación.
 
+```dart
 Container(
-
-`  `width: 300,
-
-`  `height: 200,
-
-`  `decoration: BoxDecoration(
-
-`      `color: Colors.amber,
-
-`      `borderRadius: BorderRadius.circular(10),
-
-`      `boxShadow: const [
-
-`          `BoxShadow(
-
-`              `blurRadius: 5.0,
-
-`                  `offset: Offset(5,5),
-
-`                  `)
-
-`                `],
-
-`      `border: Border.all(
-
-`          `color: Colors.blueAccent,
-
-`          `width: 5,
-
-`          `),
-
-`      `),
-
-`  `padding: const EdgeInsets.all(20.0),
-
-`  `margin: const EdgeInsets.all(100.0),
-
-`  `transform: Matrix4.rotationZ(-0.1),
-
-`  `child: const Text('Hola des d\'un contenidor')
-
+  width: 300,
+  height: 200,
+  decoration: BoxDecoration(
+      color: Colors.amber,
+      borderRadius: BorderRadius.circular(10),
+      boxShadow: const [
+          BoxShadow(
+              blurRadius: 5.0,
+                  offset: Offset(5,5),
+                  )
+                ],
+      border: Border.all(
+          color: Colors.blueAccent,
+          width: 5,
+          ),
+      ),
+  padding: const EdgeInsets.all(20.0),
+  margin: const EdgeInsets.all(100.0),
+  transform: Matrix4.rotationZ(-0.1),
+  child: const Text('Hola desde un contenedor')
 )
+```
 
-Veamos su funcionamiento en el gist <https://dartpad.dev/?id=db28fb4ff1834ef248bd6d2e31ab1c83>.
+En *el siguiente gist* podéis encontrar este código funcionando: 
+[https://dartpad.dev/embed-flutter.html?id=af9984930d71bd598f2c234f46f7644b](https://dartpad.dev/embed-flutter.html?id=af9984930d71bd598f2c234f46f7644b)
 
-EdgeInsets
+<iframe
+  src="https://dartpad.dev/embed-inline.html?id=af9984930d71bd598f2c234f46f7644b"
+  width="100%"
+  height="500px"
+  frameborder="0">
+</iframe>
 
-En el ejemplo anterior hemos utilizado un widget **EdgeInsets** para especificar las propiedades padding y margin del contenedor. Como podemos intuir, este widget sirve para especificar desplazamientos en términos de los ejes visuales: left, top, right, y bottom. Si queremos respetar el sentido de la escritura, podemos hacer uso de EdgeInsetsDirectional, que hace uso de start, top, end, y bottom. Podemos especificar todos los ejes con EdgeInsets.all, ejes simétricos con EdgeInsets.symetric, o sólo un eje con EdgeInsets.only.
+
+**EdgeInsets**
+
+En el ejemplo anterior hemos utilizado un widget `EdgeInsets` para especificar las propiedades `padding` y `margin` del contenedor. Como podemos intuir, este widget sirve para especificar desplazamientos en términos de los ejes visuales: `left`, `top`, `right`, y `bottom`. Si queremos respetar el sentido de la escritura, podemos hacer uso de `EdgeInsetsDirectional`, que hace uso de `start`, `top`, `end`, y `bottom`. Podemos especificar todos los ejes con `EdgeInsets.all`, ejes simétricos con `EdgeInsets.symetric`, o sólo un eje con `EdgeInsets.only`.
 
 ### **SizedBox**
 
-Se trata de una caja con unas dimensiones específicas, determinadas por las propiedades width y height, y que puede contener además un elemento hijo (child) que se adaptará a estas dimensiones. Algunos widgets, como puedan ser la pantalla de la aplicación o los propios SizedBox obligan a los hijos a ocupar todo el espacio disponible, por lo que un SizedBox que esté ubicado directamente en la pantalla o dentro de otro SizedBox ignorará estos valores de alto y ancho. 
+Se trata de una caja con unas dimensiones específicas, determinadas por las propiedades `width` y `height`, y que puede contener además un elemento hijo (`child`) que se adaptará a estas dimensiones. Algunos widgets, como puedan ser la pantalla de la aplicación o los propios SizedBox obligan a los hijos a ocupar todo el espacio disponible, por lo que un SizedBox que esté ubicado directamente en la pantalla o dentro de otro SizedBox ignorará estos valores de alto y ancho. 
 
 El siguiente código, por ejemplo, crea un *SizedBox* de 300x300 de color rojo, y dentro de uno de 20x20 de color azul. Como podemos ver, estas dimensiones de 20x20 son ignoradas, y el *SizedBox* de dentro ocupa todo el espacio posible del padre.
 
+```dart
 SizedBox(
-
-`    `width: 300,
-
-`    `height: 300,
-
-`    `child: DecoratedBox(
-
-`        `decoration: BoxDecoration(color: Colors.red),
-
-`        `child: SizedBox(
-
-`            `width: 20,
-
-`            `height: 20,
-
-`            `child: DecoratedBox(
-
-`                `decoration: BoxDecoration(color: Colors.blue),
-
-`            `),
-
-`        `),
-
-`    `),
-
+    width: 300,
+    height: 300,
+    child: DecoratedBox(
+        decoration: BoxDecoration(color: Colors.red),
+        child: SizedBox(
+            width: 20,
+            height: 20,
+            child: DecoratedBox(
+                decoration: BoxDecoration(color: Colors.blue),
+            ),
+        ),
+    ),
 )
+```
 
-Veamos su funcionamiento en el gist <https://dartpad.dev/?id=36da11c612f5f3c1626a8e90e9fbf27a>.
+En *el siguiente gist* podéis encontrar este código funcionando: 
+[https://dartpad.dev/embed-flutter.html?id=126b91ef9e0c94a9f66d3e51b720ae56](https://dartpad.dev/embed-flutter.html?id=126b91ef9e0c94a9f66d3e51b720ae56)
+
+<iframe
+  src="https://dartpad.dev/embed-inline.html?id=126b91ef9e0c94a9f66d3e51b720ae56"
+  width="100%"
+  height="500px"
+  frameborder="0">
+</iframe>
+
 
 ### **Otros widgets contenedores con un único hijo**
 Otros widgets de este tipo son:
 
 - **Center**: Como ya hemos visto, se trata de un widget que centra a su hijo dentro de él. En principio, este widget se expande a todo el contenido de su padre. 
+  
 - **Expanded**: Se trata de un widget utilizado dentro de otros widgets de tipo Row, Column o Flex de manera que se expande con el fin de ocupar todo el espacio disponible a lo largo del eje principal (horizontal para una fila y vertical para una columna). Si existen varios widgets *Expanded* dentro del mismo Row o Column, el espacio disponible se distribuye entre ellos en función de un valor *flex*.
 - [Referència de la classe Center](https://api.flutter.dev/flutter/widgets/Center-class.html)
 - [Referència de la classe Expanded](https://api.flutter.dev/flutter/widgets/Expanded-class.html)
@@ -1498,109 +1498,115 @@ Este tipo de widgets nos sirven para organizar varios widgets hijos dentro de un
 
 Los widgets Row y Column nos permiten crear diseños flexibles, tanto en horizontal (*Row*) como en vertical (*Column*). Su diseño se basa en el modelo de layout flexbox de CSS para la web. Veamos un ejemplo:
 
-Column(                                                     // (1)
-
-`    `children: [
-
-`    `Container(color: Colors.red, height: 50),               // (2) 
-
-`    `Expanded(                                               // (3)
-
-`        `child: Row(                                         // (4)
-
-`        `children: <Widget>[
-
-`        `Container(color: Colors.green, width: 50),          // (5)
-
-`        `Container(color: Colors.blue, width: 100),          // (6)
-
-`        `Expanded(child: Container(color: Colors.orange))    // (7)
-
-`        `],
-
-`    `)),
-
-`    `Container(height: 100, color: Colors.yellow)            // (8)
-
-`    `],
-
+```dart
+Column(                                                     // (1)
+    children: [
+    Container(color: Colors.red, height: 50),               // (2) 
+    Expanded(                                               // (3)
+        child: Row(                                         // (4)
+        children: <Widget>[
+        Container(color: Colors.green, width: 50),          // (5)
+        Container(color: Colors.blue, width: 100),          // (6)
+        Expanded(child: Container(color: Colors.orange))    // (7)
+        ],
+    )),
+    Container(height: 100, color: Colors.yellow)            // (8)
+    ],
 )
+```
 
-![Imagen que contiene Gráfico
-
-Descripción generada automáticamente](Aspose.Words.6afd18e1-1b6b-4967-aff2-ff1b52208d70.031.png)
+![Row y Column](./images/imagen31.png)
 
 ### **ListView**
 
 Este contenedor nos permite mostrar una lista de elementos desplazable de forma horizontal o vertical. Se trata de uno de los widgets más utilizados para múltiples fines. Veamos un ejemplo:
 
+```dart
 ListView(
-
-`  `children: <Widget>[
-
-`    `Text('Element 1 de la llista'),
-
-`    `Text('Element 2 de la llista'),
-
-`    `Text('Element 3 de la llista'),
-
-`  `],
-
+  children: <Widget>[
+    Text('Elemento 1 de la lista'),
+    Text('Elemento 2 de la lista'),
+    Text('Elemento 3 de la lista'),
+  ],
 )
+```
 
-Podéis ver un ejemplo con *Rows*, *Columns* y *Expanded*, junto con el *ListView* al siguiente Gist: <https://dartpad.dev/?id=a968e17566919fe46d17889b9dedb203>.
+
+Podéis ver un ejemplo con *Rows*, *Columns* y *Expanded*, junto con el *ListView* en el siguiente Gist: 
+[https://dartpad.dev/embed-flutter.html?id=b9a246da643bf1ab46ab93b78c8e0995](https://dartpad.dev/embed-flutter.html?id=b9a246da643bf1ab46ab93b78c8e0995)
+
+<iframe
+  src="https://dartpad.dev/embed-inline.html?id=b9a246da643bf1ab46ab93b78c8e0995"
+  width="100%"
+  height="500px"
+  frameborder="0">
+</iframe>
+
 
 
 ### **El constructor ListView.builder()**
 
-El componente ListView muestra toda su potencia con el constructor con nombre **ListView.builder()**, que nos permite generar un ListView a partir de una lista de valores, que puede ser, incluso infinita.
+El componente ListView muestra toda su potencia con el constructor con nombre `ListView.builder()`, que nos permite generar un `ListView` a partir de una lista de valores, que puede ser, incluso infinita.
 
-Este constructor requiere la propiedad **itemBuilder**, que consiste en una función anónima que devuelve la composición de cada elemento de la lista. Además, también es importante, aunque no estrictamente necesario, proporcionar un valor a la propiedad **itemCount**, con la que informamos al ListView del número de ítems, para mejorar el rendimiento en el desplazamiento de la lista.
+Este constructor requiere la propiedad `itemBuilder`, que consiste en una función anónima que devuelve la composición de cada elemento de la lista. Además, también es importante, aunque no estrictamente necesario, proporcionar un valor a la propiedad `itemCount`, con la que informamos al `ListView` del número de ítems, para mejorar el rendimiento en el desplazamiento de la lista.
 
-La importancia de este constructor es tal, que disponemos, incluso de un snippet específico para él: listViewB, el cual nos genera el siguiente esqueleto:
+La importancia de este constructor es tal, que disponemos, incluso de un snippet específico para él: `listViewB`, el cual nos genera el siguiente esqueleto:
 
+```dart
 ListView.builder(
+    itemCount: 1,
+    itemBuilder: (BuildContext context, int index) {
+      return ;
+    },
+  ),
+```
 
-`    `itemCount: 1,
-
-`    `itemBuilder: (BuildContext context, int index) {
-
-`      `return ;
-
-`    `},
-
-),
-
-Como vemos, este incorpora tanto el **itemCount** como el **itemBuilder**. Observe, además que este último recibe, tanto un **buildContext** como un índice, que indicará la posición en la lista que se va a dibujar.
+Como vemos, este incorpora tanto el `itemCount` como el `itemBuilder`. Observe, además que este último recibe, tanto un `buildContext` como un índice, que indicará la posición en la lista que se va a dibujar.
 
 Veámoslo mejor con un ejemplo. Disponemos de la lista:
 
-List<String> items = ["Element 1", "Element 2", "Element 3"];
+```dart
+List<String> items = ["Elemento 1", "Elemento 2", "Elemento 3"];
+```
 
 Con el fin de generar un ListView a partir de ella, haríamos:
 
+```dart
 ListView.builder(
-
-`    `itemCount: items.length,
-
-`    `itemBuilder: (BuildContext context, int index) {
-
-`        `return Text(items[index]);
-
-`    `},
-
-`  `);
-
+    itemCount: items.length,
+    itemBuilder: (BuildContext context, int index) {
+    return Text(items[index]);
+    },
+  );
 }
+```
 
-Como podéis comprobar, la propiedad **itemCount** se establece con la longitud de la lista (**items.length**), y el **itemBuilder** se crea como una función anónima que devuelve el texto correspondiente a la posición marcada por el índice dentro de la lista de items.
+Como podéis comprobar, la propiedad `itemCount` se establece con la longitud de la lista (`items.length`), y el `itemBuilder` se crea como una función anónima que devuelve el texto correspondiente a la posición marcada por el índice dentro de la lista de items.
 
-Podemos verlo en funcionamiento en el gist: <https://dartpad.dev/?id=cee848e88260754981d105dc8a432ef8>.
+En *el siguiente gist* podemos ver el funcionamiento del widget: 
+[https://dartpad.dev/embed-flutter.html?id=ddd29d915a523e3648f54750585c990d](https://dartpad.dev/embed-flutter.html?id=ddd29d915a523e3648f54750585c990d)
+
+<iframe
+  src="https://dartpad.dev/embed-inline.html?id=ddd29d915a523e3648f54750585c990d"
+  width="100%"
+  height="500px"
+  frameborder="0">
+</iframe>
 
 ### **Stack**
-El widget Stack permite superponer los widgets, unos sobre otros, en el orden en que estos se renderizan. Para posicionar los widgets en relación a los bordes, podemos utilizar el widget Positioned. Estos widgets se basan en el modelo de *layout* de posicionamiento absoluto del CSS para la web.
 
-En el siguiente *gist* tenemos un ejemplo de uso: <https://dartpad.dev/?id=69fb4966a5ccdc9e67dc51138a793d4e>.
+El widget Stack permite superponer los widgets, unos sobre otros, en el orden en que estos se renderizan. Para posicionar los widgets en relación a los bordes, podemos utilizar el widget `Positioned`. Estos widgets se basan en el modelo de *layout* de posicionamiento absoluto del CSS para la web.
+
+En *el siguiente gist* podemos ver el funcionamiento del widget: 
+[https://dartpad.dev/embed-flutter.html?id=ddf76ce3a827b70c4aea94ee8902020d](https://dartpad.dev/embed-flutter.html?id=ddf76ce3a827b70c4aea94ee8902020d)
+
+<iframe
+  src="https://dartpad.dev/embed-inline.html?id=ddf76ce3a827b70c4aea94ee8902020d"
+  width="100%"
+  height="500px"
+  frameborder="0">
+</iframe>
+
 
 Documentación general sobre diseño.
 
@@ -1615,53 +1621,52 @@ Anteriormente hemos visto el componente ListView con el fin de mostrar una lista
 
 Cuando hacemos uso de contenedores de tipo *Row*, y sobre todo *Column*, que contienen varios elementos para contener una vista, es fácil que estos rebosen por los márgenes del área visible, y se produzcan errores en el renderizado, del tipo: *A RenderFlex overflowed by X pixels on the bottom*, mostrando un recuadro rayado bastante característico:
 
-![](Aspose.Words.6afd18e1-1b6b-4967-aff2-ff1b52208d70.032.png)
+![Overflow](./images/imagen32.png)
 
-Para evitar estas situaciones, podemos hacer uso del widget **SingleChildScrollView** para rodear un widget contenedor, como pueda ser un **Row** o un **Column**. Este widget proporcionará la capacidad de desplazamiento de que no disponen el *Row* o el *Column*. Podríamos decir que la combinación de SingleChildSCrollView y el widget Column podría ser equivalente a un ListView.
+Para evitar estas situaciones, podemos hacer uso del widget `SingleChildScrollView` para rodear un widget contenedor, como pueda ser un `Row` o un `Column`. Este widget proporcionará la capacidad de desplazamiento de que no disponen el *Row* o el *Column*. Podríamos decir que la combinación de `SingleChildSCrollView` y el widget `Column` podría ser equivalente a un `ListView
 
+```dart
 SingleChildScrollView(
+    child: Column(
+        children: [
+                ...
+              ],
+        ),
+    )
+```
 
-`    `child: Column(
-
-`        `children: [
-
-...
-
-`              `],
-
-`        `),
-
-`    `)
+En este gif podemos ver su funcionamiento:
+![SingleChildScrollView](./images/SingleChildScrollView.gif)
 
 SingleChildScrollView class. <https://api.flutter.dev/flutter/widgets/SingleChildScrollView-class.html>
 
 
 ## Otros widgets de Material Design
+
 ### **El widget Divider**
 
 Este widget no se trata de ningún tipo de contenedor, sino de un widget específico de la librería Material, diseñado para servir como separador de widgets. Sus propiedades son:
 
-- **height**: Para especificar el alto del divisor. Su valor por omisión es de 16 puntos lógicos.
-- **thickness**: Define el grosor de la línea divisoria. Su valor por defecto es 0.0, el cual equivale a un píxel dependiendo del dispositivo.
-- **indent**: Define el espacio que se deja al principio de la línea,
-- **endIndent**: Define el espacio que se deja al final de la línea
-- **color**: Especifica el color de la línia.
+- `height`: Para especificar el alto del divisor. Su valor por omisión es de 16 puntos lógicos.
 
-Veiem un xicotet exemple d'ús:
+- `thickness`: Define el grosor de la línea divisoria. Su valor por defecto es 0.0, el cual equivale a un píxel dependiendo del dispositivo.
+  
+- `indent`: Define el espacio que se deja al principio de la línea,
+- `endIndent`: Define el espacio que se deja al final de la línea
+- `color`: Especifica el color de la línia.
 
+Veamos un pequeño ejemplo:
+
+```dart
 Divider( 
-
-`  `height: 100,    // Alt del divisor. El seu valor predeterminat és 16
-
-`  `thickness: 13,   // Gruix de la línia divisòria. El seu valor predeterminat és 0
-
-`  `indent: 150,    // Espai que es deixa per davant
-
-`  `endIndent: 20,  // Espai que es deixa per darrere
-
-`  `color: Colors.amber // Espai de la línia
-
+  height: 100,    // Alto del  divisor. Su valor predeterminado es 16
+  thickness: 13,   // Grueso de la linea divisoria. Su valor predeterminado es 0
+  indent: 150,    // Espacio que se deja por delante
+  endIndent: 20,  // Espacio que se deja por detrás
+  color: Colors.amber // Color de la línea
 )
+```
+
 
 ### **El widget ListTile**
 
@@ -1671,36 +1676,31 @@ La parte de texto consiste en un título que ocupará la primera línea, un subt
 
 Las principales propiedades de este widget son las siguientes:
 
-- **title**: Un widget, generalmente un texto, que será el contenido principal de este elemento de lista.
-- **subtitle**: Un widget, generalmente de tipo texto, con el contenido secundario del elemento de lista.
-- **isThreeLine**: Un valor lógico que indica si el subtítulo ocupará una tercera línea. Por omisión, su valor es falso. En caso de modificarlo a cierto, se añadirá un espacio adicional al final del subtítulo para que quepa esta tercera línea.
-- **leading**: Un widget que se mostrará ante el título, generalmente un icono o una imagen.
-- **trailing**: Un widget que se mostrará al final del título, generalmente un icono, una imagen o algún tipo de botón.
-- **visualDensity**: Especifica, mediante el enumerado **VisualDensity** como de compacto se mostrará el contenido. Sus valores más comunes serán **VisualDensity.comfortable**, **VisualDensity.compact** o **VisualDensity.standard**.
+- `title`: Un widget, generalmente un `Text`, que será el contenido principal de este elemento de lista.
+  
+- `subtitle`: Un widget, generalmente de tipo `Text`, con el contenido secundario del elemento de lista.
+- `isThreeLine`: Un valor lógico que indica si el subtítulo ocupará una tercera línea. Por omisión, su valor es falso. En caso de modificarlo a cierto, se añadirá un espacio adicional al final del subtítulo para que quepa esta tercera línea.
+- `leading`: Un widget que se mostrará ante el título, generalmente un icono o una imagen.
+- `trailing`: Un widget que se mostrará al final del título, generalmente un icono, una imagen o algún tipo de botón.
+- `visualDensity`: Especifica, mediante el enumerado `VisualDensity` como de compacto se mostrará el contenido. Sus valores más comunes serán `VisualDensity.comfortable`, `VisualDensity.compact` o `VisualDensity.standard`.
 
 Veamos el siguiente ejemplo y el widget resultante:
 
+```dart
 ListTile(
-
-`  `title: Text("Títol"),
-
-`  `isThreeLine: false,
-
-`  `subtitle: const Text('Subtítol'),
-
-`  `leading: const Icon(Icons.people),
-
-`  `trailing: const Icon(Icons.menu),
-
-`  `visualDensity: VisualDensity.standard)
-
+  title: Text("Títol"),
+  isThreeLine: false,
+  subtitle: const Text('Subtítol'),
+  leading: const Icon(Icons.people),
+  trailing: const Icon(Icons.menu),
+  visualDensity: VisualDensity.standard)
 )
+```
 
-![Patrón de fondo
-
-Descripción generada automáticamente](Aspose.Words.6afd18e1-1b6b-4967-aff2-ff1b52208d70.033.png)
+![Listtile](./images/imagen33.png)
 
 - [Referència de la classe ListTile](https://api.flutter.dev/flutter/material/ListTile-class.html)
+- 
 
 ### **El widget Card**
 
@@ -1708,91 +1708,39 @@ Las tarjetas o ***Cards*** son un componente de las especificaciones de diseño 
 
 Gráficamente, se trata de un contenedor con los bordes ligeramente redondeados y una sombra con elevación.
 
-Algunas de las propiedades que podemos añadir a su constructor son color para el color de fondo de la tarjeta, **shadowColor**, para el color de la sombra, o **elevation**, para especificar la elevación (lo que afecta a la sombra que proyecta).
+Algunas de las propiedades que podemos añadir a su constructor son color para el color de fondo de la tarjeta, `shadowColor`, para el color de la sombra, o `elevation`, para especificar la elevación (lo que afecta a la sombra que proyecta).
 
 Vemos un par de ejemplos con tarjetas combinadas con otros elementos, como los ListTiles, imágenes o botones:
 
+```dart
 Card(
-
-`  `elevation: 5,
-
-`  `child: Column(
-
-`    `children: const <Widget>[
-
-`      `ListTile(
-
-`        `title: Text("Títol"),
-
-`        `subtitle: Text('Subtítol'),
-
-`        `leading: Icon(Icons.people),
-
-`      `),
-
-`    `],
-
-`  `),
-
+  elevation: 5,
+  child: Column(children: [
+    Image.network("https://picsum.photos/500/200"),
+    const ListTile(
+        title: Text("Títol de la targeta"),
+        subtitle: Text('Subtítol de la targeta'),
+        ),
+    Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: <Widget>[
+        TextButton(
+          child: const Text('Acció 1'),
+          onPressed: () {},
+        ),
+        const SizedBox(width: 8),
+        TextButton(
+          child: const Text('Acció 2'),
+          onPressed: () {},
+        ),
+        const SizedBox(width: 8),
+      ],
+    ),
+  ]),
 )
+```
+![Card](./images/imagen35.png)
 
-![Imagen que contiene Tabla
-
-Descripción generada automáticamente](Aspose.Words.6afd18e1-1b6b-4967-aff2-ff1b52208d70.034.png)
-
-Card(
-
-`  `elevation: 5,
-
-`  `child: Column(children: [
-
-`    `Image.network("https://picsum.photos/500/200"),
-
-`    `const ListTile(
-
-`        `title: Text("Títol de la targeta"),
-
-`        `subtitle: Text('Subtítol de la targeta'),
-
-`        `),
-
-`    `Row(
-
-`      `mainAxisAlignment: MainAxisAlignment.end,
-
-`      `children: <Widget>[
-
-`        `TextButton(
-
-`          `child: const Text('Acció 1'),
-
-`          `onPressed: () {},
-
-`        `),
-
-`        `const SizedBox(width: 8),
-
-`        `TextButton(
-
-`          `child: const Text('Acció 2'),
-
-`          `onPressed: () {},
-
-`        `),
-
-`        `const SizedBox(width: 8),
-
-`      `],
-
-`    `),
-
-`  `]),
-
-)
-
-![Interfaz de usuario gráfica, Aplicación
-
-Descripción generada automáticamente](Aspose.Words.6afd18e1-1b6b-4967-aff2-ff1b52208d70.035.png)
 
 ### **El widget CircleAvatar**
 
@@ -1800,86 +1748,73 @@ El widget CircleAvatar de la librería Material nos proporciona un contenedor co
 
 Algunas de las principales propiedades de este widget son:
 
-- **radius**: Para especificar el tamaño (el radio) del círculo. Su valor predeterminado es de 20 píxeles lógicos.
-- **ForegroundImage**: Especifica la imagen de primer plano. Si esta no se indica, se hace uso de backgroundImage.
-- **backgroundImage**: Especifica la imagen de fondo. Si no se indica, se utiliza backgroundColor.
-- **backgroundColor**: Especifica el color de fons.
-- **child**: Especifica el widget hijo, generalmente un texto.
+- `radius`: Para especificar el tamaño (el radio) del círculo. Su valor predeterminado es de 20 píxeles lógicos.
+- `ForegroundImage`: Especifica la imagen de primer plano. Si esta no se indica, se hace uso de backgroundImage.
+- `backgroundImage`: Especifica la imagen de fondo. Si no se indica, se utiliza backgroundColor.
+- `backgroundColor`: Especifica el color de fons.
+- `child`: Especifica el widget hijo, generalmente un texto.
 
 Veamos algunos ejemplos:
 
-- Un **CircleAvatar** con imagen y radio concreto:
+- Un `CircleAvatar` con imagen y radio concreto:
 
+```dart
 CircleAvatar(
-
-`    `radius: 110,
-
-`    `backgroundImage: NetworkImage("https://picsum.photos/400"),
-
+    radius: 110,
+    backgroundImage: NetworkImage("https://picsum.photos/400"),
 ),
-
+```
 - Un CircleAvatar amb color de fons i un text:
 
+```dart
 CircleAvatar(
-
-`    `backgroundColor: Colors.blue,
-
-`    `child: Text("JA"),
-
+    backgroundColor: Colors.blue,
+    child: Text("JA"),
 )
+```
 
 Un **CircleAvatar** dins un element **ListTile**:
 
+```dart
 ListTile(
-
-`   `leading: CircleAvatar(
-
-`       `backgroundColor: Colors.blue,
-
-`       `child: Text("HS"),
-
-`    `),
-
-`    `title: Text('Han Solo'),
-
+   leading: CircleAvatar(
+       backgroundColor: Colors.blue,
+       child: Text("HS"),
+    ),
+    title: Text('Han Solo'),
 )
+```
 
-<https://api.flutter.dev/flutter/material/CircleAvatar-class.html>
+[La clase CircleAvatar](https://api.flutter.dev/flutter/material/CircleAvatar-class.html)
 
 **Detección de gestos. El widget GestureDetector**
 
-Algunos widgets, como puedan ser los botones, ofrecen una respuesta a eventos por parte del usuario a través de propiedades como **onClick** u **onTap**, a las que especificamos con una función anónima o flecha la acción a realizar ante este evento.
+Algunos widgets, como puedan ser los botones, ofrecen una respuesta a eventos por parte del usuario a través de propiedades como `onClick` u `onTap`, a las que especificamos con una función anónima o flecha la acción a realizar ante este evento.
 
-Para aquellos elementos que no ofrecen esta posibilidad, tenemos la opción de rodearlos con un widget de tipo **GestureDetector**, o *Detector de gestos*, que nos permite esta interacción con el widget, declarando éste como nodo hijo.
+Para aquellos elementos que no ofrecen esta posibilidad, tenemos la opción de rodearlos con un widget de tipo `GestureDetector`, o *Detector de gestos*, que nos permite esta interacción con el widget, declarando éste como nodo hijo.
 
 Por ejemplo, podemos hacer uso de este widget para detectar un *click* en un *CircleAvatar* de la siguiente forma:
 
+```dart
 GestureDetector(
-
-`      `onTap: (() {
-
-`        `// Codi com a reacció al Tap
-
-`      `}),
-
-`      `child:  CircleAvatar(
-
-`        `radius: 110,
-
-`        `backgroundImage: NetworkImage("https://picsum.photos/400"),// Resta de disseny
-
-`    `),
-
+      onTap: (() {
+        // Codigo como reacción al Tap
+      }),
+      child:  CircleAvatar(
+        radius: 110,
+        backgroundImage: NetworkImage("https://picsum.photos/400"),// Resto del diseño
+    ),
 )
+```
 
-Hay que tener en cuenta que el constructor del **GestureDetector** no está definido como constante, de manera que no podemos definirlo como **const** o ubicarlos dentro de algún widget declarado también como const.
+Hay que tener en cuenta que el constructor del `GestureDetector` no está definido como constante, de manera que no podemos definirlo como `const` o ubicarlos dentro de algún widget declarado también como const.
 
 Por otro lado, este widget, además de detectar *Clicks* puede usarse para detectar otros eventos, como el *Swipe* o el *Drag*.
 
-<https://api.flutter.dev/flutter/widgets/GestureDetector-class.html>
+[https://api.flutter.dev/flutter/widgets/GestureDetector-class.html](https://api.flutter.dev/flutter/widgets/GestureDetector-class.html)
 
 
-2. # <a name="_toc178414147"></a>Trabajando con recursos
+1. # <a name="_toc178414147"></a>Trabajando con recursos
 
 Las aplicaciones, aparte del código fuente pueden incluir recursos de diversa naturaleza, como puedan ser iconos, imágenes, tipografías o ficheros, entre otros. Estos recursos suelen conocerse como ***assets***, y aunque pueden estar ubicados en cualquier ubicación de nuestro proyecto, generalmente los encontraremos en una carpeta llamada assets.
 
