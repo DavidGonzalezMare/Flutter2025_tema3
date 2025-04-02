@@ -1814,31 +1814,29 @@ Por otro lado, este widget, además de detectar *Clicks* puede usarse para detec
 [https://api.flutter.dev/flutter/widgets/GestureDetector-class.html](https://api.flutter.dev/flutter/widgets/GestureDetector-class.html)
 
 
-1. # <a name="_toc178414147"></a>Trabajando con recursos
+# <a name="_apartado6"></a>6. Trabajando con recursos
 
-Las aplicaciones, aparte del código fuente pueden incluir recursos de diversa naturaleza, como puedan ser iconos, imágenes, tipografías o ficheros, entre otros. Estos recursos suelen conocerse como ***assets***, y aunque pueden estar ubicados en cualquier ubicación de nuestro proyecto, generalmente los encontraremos en una carpeta llamada assets.
+Las aplicaciones, aparte del código fuente, pueden incluir recursos de diversa naturaleza, como puedan ser iconos, imágenes, tipografías o ficheros, entre otros. Estos recursos suelen conocerse como ***assets***, y aunque pueden estar ubicados en cualquier ubicación de nuestro proyecto, generalmente los encontraremos en una carpeta llamada assets.
 
 ## Trabajando con recursos
 
 ### **Especificación de recursos**
 
-Los recursos se especifican en el mismo fichero de configuración del proyecto **pubspec.yaml**, dentro de la subsección **assets** de la sección **flutter**, y enumeran los diferentes recursos requeridos por la aplicación en una lista. Esta lista contendrá la ruta relativa de cada recurso respecto al fichero **pubspec.yaml** -o lo que es lo mismo en la raíz del proyecto-, y puede tratarse bien de un fichero concreto, o bien en una carpeta. En este segundo caso, se cogerán como recursos todos los ficheros ubicados directamente en la carpeta, pero no en las subcarpetas. Así pues, habrá que añadir una entrada más a la lista por cada subdirectorio que deseamos incorporar.
+Los recursos se especifican en el mismo fichero de configuración del proyecto `pubspec.yaml`, dentro de la subsección `assets` de la sección `flutter`, y enumeran los diferentes recursos requeridos por la aplicación en una lista. Esta lista contendrá la ruta relativa de cada recurso respecto al fichero `pubspec.yaml` -o lo que es lo mismo en la raíz del proyecto-, y puede tratarse bien de un fichero concreto, o bien en una carpeta. En este segundo caso, se cogerán como recursos todos los ficheros ubicados directamente en la carpeta, pero no en las subcarpetas. Así pues, habrá que añadir una entrada más a la lista por cada subdirectorio que deseamos incorporar.
 
 Veámoslo con un ejemplo:
 
+```dart
 flutter:
+  assets:
+    - assets/config/config.json
+    - assets/icons/icon_1.png
+    - assets/images/
+    - assets/images/hi_res/
+```
 
-`  `assets:
 
-`    `- assets/config/config.json
-
-`    `- assets/icons/icon\_1.png
-
-`    `- assets/images/
-
-`    `- assets/images/hi\_res/
-
-En este ejemplo, se incorporan al proyecto como recursos los ficheros **assets/config/config.json**, **assets/icons/icon\_1.png**, así como todos los ficheros incluidos dentro de la carpeta **assets/images/**. Observe que, en este caso, para indicar el directorio, hemos añadido la / al final del nombre. Además, también hemos añadido la subcarpeta **hi\_res/**, ya que, a pesar de estar dentro de **images**, al tratarse de una carpeta, debe incluirse explícitamente.
+En este ejemplo, se incorporan al proyecto como recursos los ficheros `assets/config/config.json`, `assets/icons/icon_1.png`, así como todos los ficheros incluidos dentro de la carpeta `assets/images/`. Observe que, en este caso, para indicar el directorio, hemos añadido la / al final del nombre. Además, también hemos añadido la subcarpeta `hi_res/`, ya que, a pesar de estar dentro de `images`, al tratarse de una carpeta, debe incluirse explícitamente.
 
 Cuando se realiza la compilación del proyecto, los diferentes recursos se agrupan en un paquete de recursos (*Asset Bundle*), que es el que usan las aplicaciones en tiempo de ejecución. Así pues, realmente no importa ni el orden en que definimos los recursos, ni la carpeta real donde se ubican estos.
 
@@ -1847,113 +1845,95 @@ Cuando se realiza la compilación del proyecto, los diferentes recursos se agrup
 
 Una variante de un recurso es una versión diferente del mismo, preparada para mostrarse en un contexto diferente. Un caso bastante ejemplificador de variantes serían los iconos de la aplicación, que suelen ofrecerse en diferentes densidades, de manera que según la resolución del dispositivo se usa una imagen u otra.
 
-Para utilizar variantes hay que tener en cuenta cómo se realiza el proceso de empaquetado de recursos. Durante este proceso, cuando se indica la ruta de un recurso dentro de la sección **assets** del fichero ***pubspec.yaml***, se buscan todos los ficheros con el mismo nombre en subcarpetas adyacentes, de manera que se incorporan todos al empaquetado. La ruta al recurso que indicamos de forma explícita definirá el recurso principal (*main asset*), mientras que el resto serán variantes. Flutter hará uso de estas variantes con el fin de escoger las imágenes más apropiadas según la resolución. 
+Para utilizar variantes hay que tener en cuenta cómo se realiza el proceso de empaquetado de recursos. Durante este proceso, cuando se indica la ruta de un recurso dentro de la sección `assets` del fichero ***pubspec.yaml***, se buscan todos los ficheros con el mismo nombre en subcarpetas adyacentes, de manera que se incorporan todos al empaquetado. La ruta al recurso que indicamos de forma explícita definirá el recurso principal (*main asset*), mientras que el resto serán variantes. Flutter hará uso de estas variantes con el fin de escoger las imágenes más apropiadas según la resolución. 
 
 Veamos un ejemplo extraído de la misma documentación de Flutter. Disponemos de la siguiente estructura de carpetas:
 
+```
 ├── pubspec.yaml
-
 ├── graphics
-
 │   ├── background.png
-
 .   ├── dark
-
 .   │   └── background.png
+    └── my_icon.png
+```
 
-`    `└── my\_icon.png
+Y en el fichero `pubspec.yaml` definimos:
 
-Y en el fichero **pubspec.yaml** definimos:
-
+```yaml
 flutter:
+  assets:
+    - graphics/background.png
+```
 
-`  `assets:
+Tendremos el fichero `graphics/background.png` como recurso principal, mientras que `graphics/dark/background.png`, se incluye también como variante.
 
-`    `- graphics/background.png
+Si añadiéramos toda la carpeta de `graphics`:
 
-Tendremos el fichero **graphics/background.png** como recurso principal, mientras que **graphics/dark/background.png**, se incluye también como variante.
-
-Si añadiéramos toda la carpeta de **graphics**:
-
+```yaml
 flutter:
-
-`  `assets:
-
-`    `- graphics/
+  assets:
+    - graphics/
+```
 
 ### **Imágenes adaptables a la resolución**
 
 Cuando creamos aplicaciones que puedan ejecutarse en diferentes dispositivos, es habitual hacer uso de imágenes con diferente densidad de píxeles, de manera que se adapten a la resolución del dispositivo.
 
-Cuando accedemos a una imagen almacenada en los recursos con **AssetImage**, éste es capaz de determinar qué variante del recurso solicitado se aproxima más a la proporción de píxeles del dispositivo. Para ello, es necesario definir una estructura de directorios particular, que contenga las diferentes variantes de las imágenes a diferentes resoluciones.
+Cuando accedemos a una imagen almacenada en los recursos con `AssetImage`, éste es capaz de determinar qué variante del recurso solicitado se aproxima más a la proporción de píxeles del dispositivo. Para ello, es necesario definir una estructura de directorios particular, que contenga las diferentes variantes de las imágenes a diferentes resoluciones.
 
 Las resoluciones suelen especificarse como múltiplos de un tamaño de referencia, en formato "2x", "3x", etc. Con ello hacemos referencia a que las imágenes que se ubican se utilizarán en pantallas con el doble o triple de densidad que la pantalla de referencia.
 
 Veámoslo con un ejemplo práctico. Tenemos la siguiente estructura de ficheros dentro de la carpeta de recursos:
 
+```
 assets/
-
 └── images
-
-`    `├── logo.png        (dimensions 300x300px)
-
-`    `├── 2x
-
-`    `│   └── logo.png    (dimensions 600x600px)
-
-`    `└── 3x
-
-`        `└── logo.png    (dimensions 900x900px)
+    ├── logo.png        (dimensions 300x300px)
+    ├── 2x
+    │   └── logo.png    (dimensions 600x600px)
+    └── 3x
+        └── logo.png    (dimensions 900x900px)
+```
 
 Con el fin de definir el recurso, añadimos al fichero pubspec.yaml:
 
+```yaml
 flutter:
+  ...
+  assets:
+    ...
+    - assets/images/logo.png
+```
 
-...
-
-`  `assets:
-
-...
-
-`    `- assets/images/logo.png
-
-Con ello, el recurso será la imagen **assets/images/logo.png**, y se incorporarán como variantes **assets/images/2x/logo.png** y **assets/images/3x/logo.png**.
+Con ello, el recurso será la imagen `assets/images/logo.png`, y se incorporarán como variantes `assets/images/2x/logo.png` y `assets/images/3x/logo.png`.
 
 Añadamos ahora el siguiente código con el fin de construir el widget principal de nuestra aplicación:
 
+```dart
 @override
+  Widget build(BuildContext context) {
+    debugPrint("Relación Píxels lógicos por píxeles físicos: ${View.of(context).devicePixelRatio}");
+    debugPrint("Tamaño físico: ${View.of(context).physicalSize}");
+    debugPrint("Ancho: ${MediaQuery.of(context).size.width}");
+    debugPrint("Alto: ${MediaQuery.of(context).size.height}");
 
-`  `Widget build(BuildContext context) {
-
-`    `debugPrint("Relació Píxels lògics per píxel fisic: ${View.of(context).devicePixelRatio}");
-
-`    `debugPrint("Grandària física: ${View.of(context).physicalSize}");
-
-`    `debugPrint("Ample: ${MediaQuery.of(context).size.width}");
-
-`    `debugPrint("Alt: ${MediaQuery.of(context).size.height}");
-
-`    `return Center(
-
-`        `child: Image.asset(
-
-`      `"assets/images/logo.png",
-
-`    `));
-
+    return Center(
+        child: Image.asset(
+      "assets/images/logo.png",
+    ));
 }
+```
 
 De esta manera incorporamos una imagen centrada en pantalla con el logo. Los mensajes de depuración que hemos añadido por delante, nos sirven para mostrar información sobre la pantalla del dispositivo. Concretamente:
 
-- **View.of(context).devicePixelRatio**: La propiedad **devicePixelRatio** de la clase **View**, nos devuelve la relación entre el número de píxeles del dispositivo (píxeles físicos) por cada píxel lógico de la pantalla. Los píxeles lógicos también se conocen como píxeles independientes del dispositivo o la pantalla. En general suelen definirse 38 píxeles lógicos por centímetro del dispositivo (unos 96 píxeles lógicos por pulgada).
-- **View.of(context).physicalSize**: Nos devuelve las dimensiones del rectángulo sobre el que se está renderizando, expresado en píxeles físicos.
-- **size.width** y **size.height** obtenidos de MediaQuery.of(contexto), nos devuelve el alto y ancho del dispositivo en píxeles lógicos.
+- `View.of(context).devicePixelRatio`: La propiedad `devicePixelRatio` de la clase `View`, nos devuelve la relación entre el número de píxeles del dispositivo (píxeles físicos) por cada píxel lógico de la pantalla. Los píxeles lógicos también se conocen como píxeles independientes del dispositivo o la pantalla. En general suelen definirse 38 píxeles lógicos por centímetro del dispositivo (unos 96 píxeles lógicos por pulgada).
+- `View.of(context).physicalSize`: Nos devuelve las dimensiones del rectángulo sobre el que se está renderizando, expresado en píxeles físicos.
+- `size.width` y `size.height` obtenidos de MediaQuery.of(contexto), nos devuelve el alto y ancho del dispositivo en píxeles lógicos.
 
 Para ver el resultado, lanzamos la aplicación sobre el *Galaxy 9* que tenemos emulado y sobre el navegador, con zoom normal (100%) y con un zoom al 200%, obtendremos los siguientes resultados:
 
-![Imagen que contiene Interfaz de usuario gráfica
-
-Descripción generada automáticamente](Aspose.Words.6afd18e1-1b6b-4967-aff2-ff1b52208d70.036.png)
+![Tamaño recursos](./images/imagen36.png)
 
 Como vemos, el Galaxy S9 presenta una relación de aspecto con el dispositivo de 3.5, con una resolución de 1440x2792 píxeles físicos. Esto hace que la imagen que se muestre sea el logo con mayor resolución (3x). 
 
@@ -1967,23 +1947,25 @@ Por otro lado, si hacemos zoom sobre el navegador y ampliamos un 10%, la relaci�
 
 El hecho de que cada plataforma gestione los lanzadores de la aplicación de una manera particular implica tener que incorporar los iconos para el lanzador en el contenido nativo de cada plataforma (carpeta ios, android, etc).
 
-No obstante, disponemos del paquete flutter\_launch\_icons, que nos facilita esta tarea, y nos genera los iconos según una configuración preestablecida para cada sistema.
+No obstante, disponemos del paquete `flutter_launch_icons`, que nos facilita esta tarea, y nos genera los iconos según una configuración preestablecida para cada sistema.
 
 Para utilizar este paquete, seguiremos los siguientes pasos:
 
-- **Paso 1**. Añadimos la dependencia de desarrollo del paquete **flutter\_launch\_icons**, de la siguiente manera:
+- **Paso 1**. Añadimos la dependencia de desarrollo del paquete `flutter_launch_icons`, de la siguiente manera:
 
-$ flutter pub add dev:flutter\_launcher\_icons
+```
+flutter pub add dev:flutter_launcher_icons
+```
 
 Como vemos, para añadir una dependencia de desarrollo, precedemos a esta de dev:.
 
-La orden anterior nos modificará nuestro fichero **pubspec.yaml** con esta dependencia:
+La orden anterior nos modificará nuestro fichero `pubspec.yaml` con esta dependencia:
 
-dev\_dependencies:
-
-...
-
-`  `flutter\_launcher\_icons: ^0.13.1
+```yaml
+dev_dependencies:
+  ...
+  flutter_launcher_icons: ^0.13.1
+```
 
 Una vez añadida, descargaremos las dependencias con:
 
@@ -1991,75 +1973,63 @@ $ flutter pub get
 
 - **Paso 2**. Una vez tenemos la dependencia descargada, creamos el fichero de configuración. En [la misma web de la herramienta](https://pub.dev/packages/flutter_launcher_icons) y en [su Github](https://github.com/fluttercommunity/flutter_launcher_icons/) disponemos de ejemplos de configuración.
 
-Esta configuración puede bien incluirse en el mismo pubspec.yaml de nuestro proyecto, o bien en un fichero aparte: flutter\_launcher\_icons.yaml.
+Esta configuración puede bien incluirse en el mismo pubspec.yaml de nuestro proyecto, o bien en un fichero aparte: flutter_launcher_icons.yaml.
 
 Si no deseamos crear este fichero manualmente, podemos hacer uso de la orden:
-
-flutter pub run flutter\_launcher\_icons:generate
+```
+flutter pub run flutter_launcher_icons:generate
+```
 
 Una posible adaptación de la configuración propuesta, siguiendo la ubicación de los assets que teníamos podría ser:
 
-flutter\_launcher\_icons:
+```yaml
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: false
+  image_path: "assets/images/logo.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  web:
+    generate: true
+  windows:
+    generate: false
+  macos:
+    generate: false
+```
 
-`  `android: "launcher\_icon"
-
-`  `ios: false
-
-`  `image\_path: "assets/images/logo.png"
-
-`  `min\_sdk\_android: 21 # android min sdk min:16, default 21
-
-`  `web:
-
-`    `generate: true
-
-`  `windows:
-
-`    `generate: false
-
-`  `macos:
-
-`    `generate: false
 
 Siendo:
 
-- **android/ios**: Indica la plataforma para la que se generará el icono, tomando los valores true o false. También podemos indicar (como hemos hecho en el ejemplo con android) el nombre de fichero que tendrá el icono (launcher\_icon).
-- **image\_path**: Indica la ruta a la imagen. 
-- **min\_sdk\_android**: Especifica el valor mínim de l'SDK d'Android.
-- **web/windows/macos**: Indica propiedades específicas para cada una de estas plataformas. Entre ellas **generated**, para indicar si se generará o no el icono para la plataforma (el proyecto debe tenerla configurado).
+- `android/ios`: Indica la plataforma para la que se generará el icono, tomando los valores true o false. También podemos indicar (como hemos hecho en el ejemplo con android) el nombre de fichero que tendrá el icono (launcher_icon).
+
+- `image_path`: Indica la ruta a la imagen. 
+- `min_sdk_android`: Especifica el valor mínim de l'SDK d'Android.
+- `web/windows/macos`: Indica propiedades específicas para cada una de estas plataformas. Entre ellas **generated**, para indicar si se generará o no el icono para la plataforma (el proyecto debe tenerla configurado).
 
 Como se puede apreciar, esta herramienta inicialmente se diseñó para generar los iconos para Android e iOS, y posteriormente, se ha añadido el apoyo al resto de plataformas. Por este motivo, la generación de iconos para web y escritorio tiene una sintaxis diferente. También habéis observado que la librería no soporta todavía generación de iconos para Linux. En unidades posteriores veremos cómo generar un fichero .desktop para crear el lanzador con el icono personalizado.
 
 - **Paso 3.** Finalmente, lanzamos la extensión con el orden:
-
-$ dart run flutter\_launcher\_icons -f flutter\_launcher\_icons.yaml
+```
+dart run flutter_launcher_icons -f flutter_launcher_icons.yaml
+```
 
 El resultado que obtenemos es el siguiente (Como vemos, ignora la generación de las plataformas para las que hemos indicado que no se generan):
 
+```
 ════════════════════════════════════════════
-
-`  `FLUTTER LAUNCHER ICONS (v0.13.1)                               
-
+  FLUTTER LAUNCHER ICONS (v0.13.1)                               
 ═══════════════════════════════════════════
 
 • Creating default icons Android
-
 • Adding a new Android launcher icon
-
-Creating Icons for Web...              done
-
-Creating Icons for Windows...           
-
+Creating Icons for Web...              done
+Creating Icons for Windows...           
 ⚠ Windows config is not provided or windows.generate is false. Skipped...
-
 ⚠ Requirements failed for platform Windows. Skipped
-
-Creating Icons for MacOS...             
-
+Creating Icons for MacOS...             
 ⚠ Requirements failed for platform MacOS. Skipped
 
 ✓ Successfully generated launcher icons
-
+```
 
 ## Incorporando familias tipográficas como recurso
 
@@ -2069,176 +2039,106 @@ Estos recursos suelen ubicarse bien en una carpeta específica en la raíz del p
 
 A modo de ejemplo, descargamos las fuentes [Pacifico](https://fonts.google.com/specimen/Pacifico) y [Lato](https://fonts.google.com/specimen/Lato) de Google Fonts, las descomprimimos, y ubicamos los ficheros .ttf en la carpeta de *assets*, siguiendo la siguiente estructura:
 
+```
 assets/
-
 ├── fonts
-
-│   ├── Lato
-
-│   │   ├── Lato-BlackItalic.ttf
-
-│   │   ├── Lato-Black.ttf
-
-│   │   ├── Lato-BoldItalic.ttf
-
-│   │   ├── Lato-Bold.ttf
-
-│   │   ├── Lato-Italic.ttf
-
-│   │   ├── Lato-LightItalic.ttf
-
-│   │   ├── Lato-Light.ttf
-
-│   │   ├── Lato-Regular.ttf
-
-│   │   ├── Lato-ThinItalic.ttf
-
-│   │   └── Lato-Thin.ttf
-
-│   └── Pacifico
-
-│       └── Pacifico-Regular.ttf
-
+│   ├── Lato
+│   │   ├── Lato-BlackItalic.ttf
+│   │   ├── Lato-Black.ttf
+│   │   ├── Lato-BoldItalic.ttf
+│   │   ├── Lato-Bold.ttf
+│   │   ├── Lato-Italic.ttf
+│   │   ├── Lato-LightItalic.ttf
+│   │   ├── Lato-Light.ttf
+│   │   ├── Lato-Regular.ttf
+│   │   ├── Lato-ThinItalic.ttf
+│   │   └── Lato-Thin.ttf
+│   └── Pacifico
+│       └── Pacifico-Regular.ttf
 └── images
+    ├── 2x
+    │   └── logo.png
+    ├── 3x
+    │   └── logo.png
+    └── logo.png
+```
 
-`    `├── 2x
+Una vez tenemos las fuentes en nuestro proyecto, hay que configurar los `assets` en el fichero `pubspec.yaml`. Para ello añadiremos la subsección `fonts` dentro de la sección `flutter` de la configuración con el siguiente contenido:
 
-`    `│   └── logo.png
-
-`    `├── 3x
-
-`    `│   └── logo.png
-
-`    `└── logo.png
-
-Una vez tenemos las fuentes en nuestro proyecto, hay que configurar los **assets** en el fichero **pubspec.yaml**. Para ello añadiremos la subsección **fonts** dentro de la sección **flutter** de la configuración con el siguiente contenido:
-
+```yaml
 flutter:
+ ...
+  fonts:
+    - family: Pacifico
+      fonts:
+        - asset: assets/fonts/Pacifico/Pacifico-Regular.ttf
+    - family: Lato
+      fonts:
+        - asset: assets/fonts/Lato/Lato-Regular.ttf
+        - asset: assets/fonts/Lato/Lato-Italic.ttf
+          style: italic
+        - asset: assets/fonts/Lato/Lato-Black.ttf
+          weight: 900
+        - asset: assets/fonts/Lato/Lato-BlackItalic.ttf
+          weight: 900
+          style: italic
+        - asset: assets/fonts/Lato/Lato-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Lato/Lato-BoldItalic.ttf
+          weight: 700
+          style: italic
+        - asset: assets/fonts/Lato/Lato-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Lato/Lato-LightItalic.ttf
+          weight: 300
+          style: italic
+        - asset: assets/fonts/Lato/Lato-Thin.ttf
+          weight: 100
+        - asset: assets/fonts/Lato/Lato-ThinItalic.ttf
+          weight: 100
+          style: italic
+```
 
-...
+Como vemos, se especifica una lista de elementos de tipo `family`, donde se describe cada familia de letra. En ella le damos un nombre (`- family: Pacifico`, `- family: Lato`), que es el que utilizaremos en las propiedades de los textos.
 
-`  `fonts:
+Después, para cada familia, con la categoría fuentes, indicamos la ruta, desde la raíz a los diferentes ficheros de la fuente (`asset`), con diferentes grosores (`weight`) y estilos (`style`). En nuestro ejemplo, la fuente *Pacifico* solo tiene un fichero, pero para la fuente *Lato* hacemos uso de diferentes ficheros para especificar el estilo en cursiva o con grosores diferentes.
 
-`    `- family: Pacifico
+Podéis encontrar más información al respecto en el *Cookbook [Use a custom font](https://flutter.dev/custom-fonts/#from-packages)* de la documentación oficial de Flutter.
 
-`      `fonts:
+Con el fin de utilizar estas tipografías en nuestro proyecto, lo haremos a través de un widget `TextStyle`, como propiedad del `style` del Texto. Vemos cómo utilizarlo a un ejemplo completo, donde añadimos dos textos con diferente tipografía dentro de una columna, seguidamente del logotipo que hemos introducido anteriormente. Esta columna además estará dentro de un contenedor de tipo `Padding` para añadirle bordes, y dentro de un `Center`, para centrar el widget:
 
-`        `- asset: assets/fonts/Pacifico/Pacifico-Regular.ttf
-
-`    `- family: Lato
-
-`      `fonts:
-
-`        `- asset: assets/fonts/Lato/Lato-Regular.ttf
-
-`        `- asset: assets/fonts/Lato/Lato-Italic.ttf
-
-`          `style: italic
-
-`        `- asset: assets/fonts/Lato/Lato-Black.ttf
-
-`          `weight: 900
-
-`        `- asset: assets/fonts/Lato/Lato-BlackItalic.ttf
-
-`          `weight: 900
-
-`          `style: italic
-
-`        `- asset: assets/fonts/Lato/Lato-Bold.ttf
-
-`          `weight: 700
-
-`        `- asset: assets/fonts/Lato/Lato-BoldItalic.ttf
-
-`          `weight: 700
-
-`          `style: italic
-
-`        `- asset: assets/fonts/Lato/Lato-Light.ttf
-
-`          `weight: 300
-
-`        `- asset: assets/fonts/Lato/Lato-LightItalic.ttf
-
-`          `weight: 300
-
-`          `style: italic
-
-`        `- asset: assets/fonts/Lato/Lato-Thin.ttf
-
-`          `weight: 100
-
-`        `- asset: assets/fonts/Lato/Lato-ThinItalic.ttf
-
-`          `weight: 100
-
-`          `style: italic
-
-Como vemos, se especifica una lista de elementos de tipo **family**, donde se describe cada familia de letra. En ella le damos un nombre **(- family: Pacifico**, **- family: Lato**), que es el que utilizaremos en las propiedades de los textos.
-
-Después, para cada familia, con la categoría fuentes, indicamos la ruta, desde la raíz a los diferentes ficheros de la fuente (**asset**), con diferentes grosores (**weight**) y estilos (**style**). En nuestro ejemplo, la fuente *Pacifico* solo tiene un fichero, pero para la fuente *Lato* hacemos uso de diferentes ficheros para especificar el estilo en cursiva o con grosores diferentes.
-
-Podéis encontrar más información al respecto en el *Cookbook [Use a custom f](https://flutter.dev/custom-fonts/#from-packages)*ont de la documentación oficial de Flutter.
-
-Con el fin de utilizar estas tipografías en nuestro proyecto, lo haremos a través de un widget TextStyle, como propiedad del **style** del Texto. Vemos cómo utilizarlo a un ejemplo completo, donde añadimos dos textos con diferente tipografía dentro de una columna, seguidamente del logotipo que hemos introducido anteriormente. Esta columna además estará dentro de un contenedor de tipo **Padding** para añadirle bordes, y dentro de un Center, para centrar el widget:
-
+```dart
 Center(
-
-`  `child: Padding(
-
-`    `padding: const EdgeInsets.all(16.0),
-
-`    `child: Column(
-
-`      `mainAxisAlignment: MainAxisAlignment.center,
-
-`      `children: [
-
-`        `Image.asset(
-
-`          `"assets/images/logo.png",
-
-`        `),
-
-`        `const Text(
-
-`          `'Títol, amb font Pacifico',
-
-`          `style: TextStyle(
-
-`            `fontFamily: 'Pacifico',
-
-`            `fontSize: 40,
-
-`          `),
-
-`        `),
-
-`        `const Text(
-
-`          `'Text amb font Lato',
-
-`          `style: TextStyle(
-
-`              `fontFamily: 'Lato',
-
-`              `fontWeight: FontWeight.w500,
-
-`              `fontSize: 30),
-
-`      `),
-
-`    `],
-
-`    `),
-
-` `),
-
+  child: Padding(
+    padding: const EdgeInsets.all(16.0),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Image.asset(
+          "assets/images/logo.png",
+        ),
+        const Text(
+          'Título, con fuente Pacifico',
+          style: TextStyle(
+            fontFamily: 'Pacifico',
+            fontSize: 40,
+          ),
+        ),
+        const Text(
+          'Texto con fuente Lato',
+          style: TextStyle(
+              fontFamily: 'Lato',
+              fontWeight: FontWeight.w500,
+              fontSize: 30),
+      ),
+    ],
+    ),
+ ),
 );
+```
 
 
-2. # <a name="_toc178414148"></a>Trabajando con temas
+# <a name="_apartado7"></a>7. Trabajando con temas
 
 Hasta ahora, las aplicaciones que hemos generado o los ejemplos que hemos visto hacen uso del estilo o tema predeterminado de Flutter. Este tema, hasta Flutter 3.16 se basaba en Material 2, y se correspondía a un tema con tonalidades azules. A partir de Flutter 3.16, y el paso a Material 3, el tema predeterminado cambia a un nuevo conjunto de colores, fuentes e iconos, llamado *Tonal System*.
 
@@ -2253,65 +2153,62 @@ Por otro lado, a medida que vamos ubicando widgets widgets sobre el Scaffold, es
 
 ## La clase ThemeData
 
-La clase ThemeData es la clase que usa Flutter para definir los temas de la aplicación.
+La clase `ThemeData` es la clase que usa Flutter para definir los temas de la aplicación.
 
-Cuando definimos una aplicación **MaterialApp**, ésta admite en el constructor un parámetro **theme**, de tipo **ThemeData** con el tema a utilizar. Si no se especifica un **theme**, hará uso del tema predeterminado.
+Cuando definimos una aplicación `MaterialApp`, ésta admite en el constructor un parámetro `theme`, de tipo `ThemeData` con el tema a utilizar. Si no se especifica un `theme`, hará uso del tema predeterminado.
 
 El tema predeterminado de Material 3 es un tema dinámico, lo que significa que los colores del tema se adaptan al fondo del dispositivo. Por ejemplo, si el fondo del dispositivo es oscuro, los colores del tema serán más claros, y si el fondo es claro los colores del tema serán oscuros.
 
 ### **Definiendo un tema**
+
 Básicamente, hay dos maneras de definir un tema: 
 
-- De manera que comprenda a toda la aplicación (*App-Wide*), definiéndola directamente en el parámetro theme de la aplicación *Material*,
-- bien que se aplique para una parte concreta (widget) de la aplicación (*Theme Widget*), rodeando un widget con un widget de tipo **Theme**.
+- De manera que comprenda a toda la aplicación (*App-Wide*), definiéndola directamente en el parámetro `theme` de la aplicación *Material*,
+- bien que se aplique para una parte concreta (widget) de la aplicación (*Theme Widget*), rodeando un widget con un widget de tipo `Theme`.
 
-Para definir un tema, podríamos hacerlo directamente haciendo uso del constructor de **ThemeData**. Por ejemplo, para definir un tema que utilizara el color ***amber*** para la barra de la aplicación, y esta tonalidad más clara para el fondo, podríamos definir directamente:
+Para definir un tema, podríamos hacerlo directamente haciendo uso del constructor de `ThemeData`. Por ejemplo, para definir un tema que utilizara el color ***amber*** para la barra de la aplicación, y esta tonalidad más clara para el fondo, podríamos definir directamente:
 
+```dart
 ThemeData(
-
-`    `appBarTheme: const AppBarTheme(color: Colors.amber),
-
-`    `scaffoldBackgroundColor: Colors.amber[50],
-
-`    `)
+    appBarTheme: const AppBarTheme(color: Colors.amber),
+    scaffoldBackgroundColor: Colors.amber[50],
+    )
+```
 
 Si tuviéramos que definir un tema desde cero, habría que definir un gran número de propiedades para ajustar éste a nuestras necesidades. Flutter nos ofrece diversas facilidades y formas para generar temas basándonos, por ejemplo, en el tema actual o a partir de algún color principal.
 
-La clase **ThemeData** dispone de varios constructores con nombre, para ayudarnos a seleccionar o crear un tema. Por ejemplo, ThemeData.dark() y ThemeData.light() se usan para aplicar el tema predeterminado oscuro o claro para la aplicación. Si queremos que nuestra aplicación utilice el tema oscuro, haríamos:
+La clase `ThemeData` dispone de varios constructores con nombre, para ayudarnos a seleccionar o crear un tema. Por ejemplo, `ThemeData.dark()` y `ThemeData.light()` se usan para aplicar el tema predeterminado oscuro o claro para la aplicación. Si queremos que nuestra aplicación utilice el tema oscuro, haríamos:
 
+```dart
 MaterialApp(
-
-`    `theme: ThemeData.dark(),
-
-..
-
+    theme: ThemeData.dark(),
+    ..
 )
+```
 
 Por otro lado, también podemos hacer uso de los estilos predeterminados de Material2 deshabilitando la opción de Material3 que ahora viene predeterminada:
 
+```dart
 MaterialApp(
-
-`      `theme: ThemeData.light(useMaterial3: false),
-
+      theme: ThemeData.light(useMaterial3: false),
 )
+```
+
 
 ### **Adaptando un tema**
 
-Para no definir un tema desde cero, Flutter nos proporciona varias opciones interesantes. Una de ellas es realizar una copia de un tema y modificar sólo aquellas propiedades que deseamos cambiar. Para ello, hacemos uso del método **copyWith**.
+Para no definir un tema desde cero, Flutter nos proporciona varias opciones interesantes. Una de ellas es realizar una copia de un tema y modificar sólo aquellas propiedades que deseamos cambiar. Para ello, hacemos uso del método `copyWith`.
 
 Por ejemplo, para crear un tema a partir del tema claro original, pero con el color de la barra de la aplicación cambiado, haríamos:
 
+```dart
 MaterialApp(
-
-...
-
-`    `theme: ThemeData.light().copyWith(
-
-`        `appBarTheme: const AppBarTheme(color: Colors.amber),
-
-`    `),
-
+    ...
+    theme: ThemeData.light().copyWith(
+        appBarTheme: const AppBarTheme(color: Colors.amber),
+    ),
 )
+```
 
 Amb això, hem agafat el tema *light()* com a base i l'hem copiat, amb les modificacions que proporcionem com a argument dins el mètode **copyWith().**
 
@@ -2319,60 +2216,49 @@ Amb això, hem agafat el tema *light()* com a base i l'hem copiat, amb les modif
 
 Los componentes de Material hacen uso de las propiedades [*colorScheme*](https://api.flutter.dev/flutter/material/ColorScheme-class.html) (esquema de color) y *textTheme* para calcular los valores predeterminados para su aspecto visual.
 
-Para proporcionar un esquema de color, podemos, bien proporcionarlo directamente, o generar un esquema a partir de una semilla, mediante los parámetros *colorSchemeSeed* y *brightness*. Cuando hacemos uso de estas propiedades, se genera un esquema de color basado en las tonalidades establecidas, de manera que las combinaciones de colores tengan un contraste adecuado y cumplan con las pautas de accesibilidad. Para personalizar un esquema de color, podemos hacer uso del constructor [ColorScheme.fromSeed](https://api.flutter.dev/flutter/material/ColorScheme/ColorScheme.fromSeed.html), y luego realizar los ajustes que deseamos con **copyWith**.
+Para proporcionar un esquema de color, podemos, bien proporcionarlo directamente, o generar un esquema a partir de una semilla, mediante los parámetros *colorSchemeSeed* y *brightness*. Cuando hacemos uso de estas propiedades, se genera un esquema de color basado en las tonalidades establecidas, de manera que las combinaciones de colores tengan un contraste adecuado y cumplan con las pautas de accesibilidad. Para personalizar un esquema de color, podemos hacer uso del constructor [ColorScheme.fromSeed](https://api.flutter.dev/flutter/material/ColorScheme/ColorScheme.fromSeed.html), y luego realizar los ajustes que deseamos con `copyWith`.
 
 Una manera más sencilla de hacerlo, aunque puede no ser tan completa, es proporcionar una muestra para construir el esquema de colores a partir de una muestra (Swatch).
 
 Por ejemplo, para aplicar ahora el color *amber* que habíamos definido como color para la barra de la aplicación, como muestra de color principal en toda la aplicación, podríamos hacer:
 
+```dart
 MaterialApp(
-
-...
-
-`    `theme: ThemeData(
-
-`        `primarySwatch: Colors.amber,
-
-...
-
-`      `),
-
-`    `home: /\*...\*/,
-
+    ...
+    theme: ThemeData(
+        primarySwatch: Colors.amber,
+        ...
+      ),
+    home: /*...*/,
 );
+```
 
 Con ello, no sólo hemos modificado el color de fondo para la barra de la aplicación, sino también el color principal de los widgets. De esta manera se utilizan diferentes tonalidades del color principal en función del estado del widget. Además, también se generarán el resto de colores de manera que contrastan con este color principal. Por ejemplo, sin haber indicado nada, el color del título de la barra de la aplicación y los widgets, cambiarán a un color más oscuro.
 
 Otra forma de hacer uso de una semilla para generar el esquema de colores, también puede ser hacer uso del parámetro colorSchemeSeed a la hora de definir el ThemeData:
 
-
+```dart
 ThemeData(
-
-`  `colorSchemeSeed:  Colors.amber[50]
-
+  colorSchemeSeed:  Colors.amber[50]
 );
+```
 
 **Tipos de fuentes**
 
-El **ThemeData** también nos permite definir los aspectos tipográficos de nuestras aplicaciones. Para ello, podemos hacer uso de las propiedades **fontFamily** que especifica la letra tipográfica en general para la aplicación, y **textTheme**, que nos permite definir la temática para los diferentes textos.
+El `ThemeData` también nos permite definir los aspectos tipográficos de nuestras aplicaciones. Para ello, podemos hacer uso de las propiedades `fontFamily` que especifica la letra tipográfica en general para la aplicación, y `textTheme`, que nos permite definir la temática para los diferentes textos.
 
 Por ejemplo, podemos definir:
 
+```dart
 ThemeData(
-
-`  `fontFamily: 'Lato',
-
-`  `textTheme: const TextTheme(
-
-`    `displayLarge: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
-
-`    `titleLarge: TextStyle(fontSize: 36.0, fontFamily: 'Pacifico'),
-
-`    `bodyMedium: TextStyle(fontSize: 14.0),
-
-`  `),
-
+  fontFamily: 'Lato',
+  textTheme: const TextTheme(
+    displayLarge: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
+    titleLarge: TextStyle(fontSize: 36.0, fontFamily: 'Pacifico'),
+    bodyMedium: TextStyle(fontSize: 14.0),
+  ),
 );
+```
 
 Con ello hemos definido en general la fuente *Lato* para toda la aplicación, así como tres estilos de texto, para los estilos *displayLarge*, *titleLarge* y *bodyMedium*, con tamaños, grosores y tipografíes específicos. Para más información sobre las propiedades de los temas de texto podéis consultar [la documentación de la clase TextTheme oficial de Flutter](https://api.flutter.dev/flutter/material/TextTheme-class.html).
 
@@ -2382,57 +2268,53 @@ Para mantener el código lo más limpio posible, podemos definir los temas de ma
 
 Por ejemplo, definiríamos el tema como:
 
+```dart
 ThemeData TemaPersonalitzat = ThemeData(
-
-`  `primarySwatch: Colors.amber,
-
-`  `scaffoldBackgroundColor: Colors.yellow,
-
-`  `fontFamily: 'Lato',
-
-`  `textTheme: const TextTheme(
-
-`    `displayLarge: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
-
-`    `titleLarge: TextStyle(fontSize: 36.0, fontFamily: 'Pacifico'),
-
-`    `bodyMedium: TextStyle(fontSize: 14.0),
-
-`  `),
-
+  primarySwatch: Colors.amber,
+  scaffoldBackgroundColor: Colors.yellow,
+  fontFamily: 'Lato',
+  textTheme: const TextTheme(
+    displayLarge: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
+    titleLarge: TextStyle(fontSize: 36.0, fontFamily: 'Pacifico'),
+    bodyMedium: TextStyle(fontSize: 14.0),
+  ),
 );
+```
 
 Y hacer uso de él cuando definimos la aplicación Material:
 
+```dart
 MaterialApp(
-
-`    `title: 'Exemple de tema',
-
-`    `theme: TemaPersonalitzat,
-
-`    `home: /\*...\*/,
-
+    title: 'Ejemplo de tema',
+    theme: TemaPersonalitzat,
+    home: /*...*/,
 );
+```
 
-Por otro lado, si queremos aplicar el tema a un widget concreto, por ejemplo a un **ElevatedButton**, deberíamos rodear este con un widget **Theme** y especificar el tema con el argumento **data**:
+Por otro lado, si queremos aplicar el tema a un widget concreto, por ejemplo a un `ElevatedButton`, deberíamos rodear este con un widget `Theme` y especificar el tema con el argumento `data`:
 
+```dart
 Theme(
-
-`    `data: TemaPersonalitzat,
-
-`    `child: ElevatedButton(
-
-`        `onPressed: () {...},
-
-`        `child: const Text("Text del botó"),
-
-`    `),
-
+    data: TemaPersonalitzat,
+    child: ElevatedButton(
+        onPressed: () {...},
+        child: const Text("Texto del botón"),
+    ),
 )
+```
 
+// TO DO ...
 A modo de ejemplo, podéis consultar y modificar el siguiente gist  con algunas personalizaciones. Podéis descargaros el texto y utilizarlo en un proyecto vuestro para ver también el resultado del uso de fuentes:
 
-<https://dartpad.dev/?id=b66dec2aa78c8c6c51ae640370bee278>.
+[https://dartpad.dev/embed-flutter.html?id=f9966f04efa931ab83ac3b5b30542e45](https://dartpad.dev/embed-flutter.html?id=f9966f04efa931ab83ac3b5b30542e45)
+
+<iframe
+  src="https://dartpad.dev/embed-inline.html?id=f9966f04efa931ab83ac3b5b30542e45"
+  width="100%"
+  height="500px"
+  frameborder="0">
+</iframe>
+
 
 Podéis encontrar más información sobre la creación de temas en los siguientes enlaces:
 
@@ -2441,4 +2323,4 @@ Podéis encontrar más información sobre la creación de temas en los siguiente
 - Artículo [Material 3 for Flutter](https://medium.com/flutter/material-3-for-flutter-d417a8a65564)
 - Artículo [Migrating a Flutter app to Material 3](https://blog.codemagic.io/migrating-a-flutter-app-to-material-3/)
 
-71 *de 70*
+
