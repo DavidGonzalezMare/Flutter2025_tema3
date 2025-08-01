@@ -1,7 +1,10 @@
-﻿
+﻿![Union europea](./images/union_europea.jpeg)  ![Generalitat](./images/generalitat.jpeg) ![Mare Nostrum](./images/mare_nostrum.png)
+
+
 # Unidad 3. Widgets
 
-En esta unidad empezamos con la programación de interfaces gráficas con Flutter. Flutter sigue una **filosofía declarativa** a la hora de crear interfaces, a diferencia de la filosofía imperativa tradicional. El concepto alrededor del cual girará todo el desarrollo de interfaces en Flutter es el *widget*, que representará básicamente un componente gráfico. En los siguientes apartados veremos los diferentes tipos de widgets y algunos de los más importante o comunes.
+En esta unidad empezamos a trabajar con la programación de interfaces gráficas con Flutter.  
+Flutter sigue una **filosofía declarativa** a la hora de crear interfaces, a diferencia de la filosofía imperativa tradicional. El concepto alrededor del cual girará todo el desarrollo de interfaces en Flutter es el *widget*, que representará básicamente un componente gráfico. En los siguientes apartados veremos los diferentes tipos de widgets y algunos de los más importante o comunes.
 
 ![Flutter](./images/imagen1.jpeg)
 
@@ -26,11 +29,11 @@ En esta unidad empezamos con la programación de interfaces gráficas con Flutte
 
 ## Introducción. Interfaces declarativas e imperativas.
 
-El desarrollo tradicional de interfaces de usuario se ha basado en un estilo imperativo, en el que definimos qué deseamos que se represente a la interfaz y cómo queremos hacerlo. Tanto en aplicaciones de escritorio, como web o móviles solemos especificar la interfaz de usuario mediante ficheros basados en XML (XML puro, HTML, QML, etc.), que hay que transformar en elementos manipulables y enlazarlos de alguna manera con el código de la aplicación.
+El desarrollo tradicional de interfaces de usuario se ha basado en un **estilo imperativo**, en el que definimos qué deseamos que se represente a la interfaz y cómo queremos hacerlo. Tanto en aplicaciones de escritorio, como web o móviles solemos especificar la interfaz de usuario mediante ficheros basados en XML (XML puro, HTML, QML, etc.), que hay que transformar en elementos manipulables y enlazarlos de alguna manera con el código de la aplicación.
 
-En contraposición a esta visión, el paradigma declarativo, presente en el mundo de la programación desde la década de 1950, propone un mayor nivel de abstracción, y se centra en el *qué* y no en el *cómo*. Aplicado al diseño de interfaces, la idea es que nos centremos en *describir* el estado *actual* de la interfaz, y dejemos para el framework la representación del mismo y las transiciones entre estados. Es decir, la interfaz de usuario se genera en función del estado que queremos representar:
+En contraposición a esta visión, el **paradigma declarativo**, presente en el mundo de la programación desde la década de 1950, propone un mayor nivel de abstracción, y se centra en el *qué* y no en el *cómo*. Aplicado al diseño de interfaces, la idea es que nos centremos en *describir* el estado *actual* de la interfaz, y dejemos para el framework la representación del mismo y las transiciones entre estados. Es decir, la interfaz de usuario se genera en función del estado que queremos representar:
 
-![Interfície en funció de l'estat. Font: esflutter.dev, sota llicència CC by 4.0](./images/imagen2.png)
+![Interfaz en función del estado. Font: esflutter.dev, sota llicència CC by 4.0](./images/imagen2.png)
 
 La tendencia actual en el desarrollo de interfaces de usuario hacia interfaces declarativas surgió con frameworks como *React*, que introdujo los ficheros JSX, donde convivía código Javascript con HTML. Posteriormente, fue *Flutter* quien entró en acción en la Google I/O en 2017, y este cambio también ha llegado a Android nativo, con *Jetpack Compose* y las interfaces *componibles*, en iOS, con *SwiftUI*, e incluso en entornos como Unity, con *UIWidget*.
 
@@ -38,29 +41,35 @@ La tendencia actual en el desarrollo de interfaces de usuario hacia interfaces d
 
 Este cambio de tendencia requiere que cambiemos la forma de pensar a la hora de manipular las interfaces de usuario, y la introducción de una sintaxis declarativa para las mismas. Para ello haremos uso de una característica bien conocida de Dart: El paso de argumentos con nombre.
 
-Veamos un ejemplo simplificado. Imaginemos que queremos poner un texto de *Hola Mundo* centrado en pantalla. A grandes rasgos, con Android, por ejemplo tendríamos en el fichero de descripción de la interfaz el siguiente elemento de tipo `TextView`:
+Veamos unos ejemplo simplificados en los que se trabaja con la **filosofía imperativa**. Imaginemos que queremos poner un texto de *Hola Mundo* centrado en pantalla. A grandes rasgos, con Android, por ejemplo tendríamos en el fichero de descripción de la interfaz el siguiente elemento de tipo `TextView`:
 
 ```xml
 <TextView
-  android:id="@+id∕miTextView" android:layout\_width="wrap_content" android:layout\_height="wrap_content" app:layout\_constraintBottom\_toBottomOf="parent" app:layout\_constraintEnd\_toEndOf="parent" app:layout\_constraintStart\_toStartOf="parent" app:layout\_constraintTop\_toTopOf="parent" ∕>
+  android:id="@+id∕miTextView"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  app:layout_constraintBottom_toBottomOf="parent"
+  app:layout_constraintEnd_toEndOf="parent"
+  app:layout_constraintStart_toStartOf="parent"
+  app:layout_constraintTop_toTopOf="parent" ∕>
 ```
 
 En el código de la aplicación, cuando inicializamos la interfaz, deberíamos buscar este `TextView`, haciendo uso del método `findViewById`, que devuelve un objeto de tipo `View`, que es quien representa los elementos gráficos, hacer un casting de esta vista a un `TextView`, y finalmente, acceder a la propiedad texto del `TextView` y modificarla. En Kotlin esto se haría con el siguiente código:
 
 ```kotlin
-var elMeuTextView=findViewById<TextView>(R.id.miTextView) elMeuTextView.text="Hola Món"
+var myTextView=findViewById<TextView>(R.id.miTextView) elMeuTextView.text="Hola Mundo"
 ```
 
 Si nos encontramos en desarrollo web, podríamos tener el siguiente elemento de tipo div en el código HTML (ya con las propiedades CSS añadidas para centrar este contenedor en horizontal y vertical):
 
 ```css
-<div id="Contenidor"><∕div>
+<div id="Contenedor"><∕div>
 ```
 
-Que deberíamos manipular de forma parecida desde código Javascript para añadirle contenido, es decir, buscar el elemento a la interfaz, y modificarlo:
+Que deberíamos manipular de forma parecida desde código Javascript para añadirle contenido, es decir, buscar el elemento de la interfaz, y modificarlo:
 
 ```javascript
-let contenidor = document.getElementById("Contenidor"); contenidor.innerHTML = "Hola món!"
+let contenedor = document.getElementById("Contenedor"); contenedor.innerHTML = "Hola mundo!"
 ```
 
 Pues bien, el planteamiento de este problema **de forma declarativa** sería: *Quiero un texto "Hola Mundo" centrado en pantalla*. En código, esto se traduciría en algo parecido a lo siguiente:
@@ -80,7 +89,6 @@ Si prestamos un poco de atención al código, veremos que no estamos introducien
 - El constructor del elemento `Center` recibe un único argumento con nombre: `child`, que indica qué elemento tiene dentro. 
 - Este elemento interno es un `Text`, que recibe a su constructor como único argumento el texto *Hola Mundo*.
 
-[Article Start thinking declaratively](https://docs.flutter.dev/data-and-backend/state-mgmt/declarative), de la documentació de Flutter
 
 <div style="border: 1px solid black; padding: 10px;">
 
@@ -100,11 +108,13 @@ Disponemos de más informarción en los siguientes artículos:
 ## Conceptos
 
 ### **Widgets**
-El concepto fundamental en torno al cual gira todo el desarrollo de Flutter es el de *widget*. De hecho, en Flutter, salvo nuestras propias clases para mantener información y los modelos de datos, todo serán *widgets*.
+El concepto fundamental en torno al cual gira todo el desarrollo de Flutter es el de **widget**. De hecho, en Flutter, salvo nuestras propias clases para mantener información y los modelos de datos, todo serán *widgets*.
 
-Pero, ¿qué son entonces los *widgets*? Se trata de **clases de Dart cuyos constructores admiten tanto argumentos posicionales como argumentos con nombre, y que nos sirven para representar los elementos de nuestras interfaces**. En el ejemplo del apartado anterior, hemos presentado ya dos tipos de Widgets: `Center`, un *widget* de tipo contenedor y `Text`.
+Pero, ¿qué son entonces los *widgets*?  
+Se trata de **clases de Dart cuyos constructores admiten tanto argumentos posicionales como argumentos con nombre, y que nos sirven para representar los elementos de nuestras interfaces**. En el ejemplo del apartado anterior, hemos presentado ya dos tipos de Widgets: `Center`, un *widget* de tipo contenedor y `Text`.
 
-Los *widgets*, además, pueden componerse con el fin de crear una estructura en forma de árbol que representa la interfaz, y pueden ser widgets sin estado (*Stateless*) o con estado (*Stateful*), en función de si el widget necesita un estado asociado que pueda estar sometido a cambios. Por ejemplo, un botón o un texto estático, que no cambian, y pueden declararse como constantes, serían buenos candidatos para ser un widget sin estado, mientras que un componente que vaya a muestra el resultado de un llamamiento asíncrono, sería candidato a ser un widget con estado. Una diferencia importante entre ambos tipos es que los widgets con estado tienen la capacidad de *redibujarse* ellos mismos ante cualquier cambio de estado, mientras que los widgets sin estado no pueden hacerlo.
+Los *widgets*, además, pueden componerse con el fin de crear una estructura en forma de árbol que representa la interfaz, y pueden ser widgets sin estado (*`Stateless`*) o con estado (*`Stateful`*), en función de si el widget necesita un estado asociado que pueda estar sometido a cambios.  
+Por ejemplo, un botón o un texto estático, que no cambian, y pueden declararse como constantes, serían buenos candidatos para ser un widget sin estado, mientras que un componente que vaya a muestra el resultado de un llamamiento asíncrono, sería candidato a ser un widget con estado. Una diferencia importante entre ambos tipos es que los widgets con estado tienen la capacidad de *redibujarse* ellos mismos ante cualquier cambio de estado, mientras que los widgets sin estado no pueden hacerlo.
 
 ### **El árbol de Widgets**
 
@@ -130,7 +140,8 @@ En *el siguiente gist* podéis encontrar este código funcionando:
   frameborder="0">
 </iframe>
 
-
+<br>
+<br>
 
 # <a name="_apartado2"></a>2. Manos a la obra. Del Hola Mundo al Contador
 
@@ -146,9 +157,9 @@ En la primera unidad ya vimos cómo crear un proyecto con Flutter, tanto desde V
   
   - *¿Qué plantilla de Flutter?*:Application
   
-  - Ubicación de la carpeta del proyecto: La que vosotros deseáis por guardar los proyectos de Flutter.
+  - Ubicación de la carpeta del proyecto: La que vosotros deseéis para guardar los proyectos de Flutter.
   
-  - *Project Name*: *hola_mon* (Recordemos que como todo proyecto Dart, no puede contener mayúsculas, pero sí el símbolo `_` ).
+  - *Project Name*: *hola_mundo* (Recordemos que como todo proyecto Dart, no puede contener mayúsculas, pero sí el símbolo `_` ).
   
 - Si consultamos la salida para el proyecto hola_mon en el VSCode, veremos que se ha lanzado lo siguiente: 
 
@@ -159,7 +170,7 @@ En la primera unidad ya vimos cómo crear un proyecto con Flutter, tanto desde V
   - Desde una terminal, nos ubicamos en el directorio donde tenemos nuestros proyectos, y lanzamos la orden:
 
 ```
-flutter create --overwrite hola_mon
+flutter create --overwrite hola_mundo
 ```
 
   - Como vemos, hemos indicado el nombre del proyecto, en lugar de ., para que se nos genere el directorio hola_mon para el proyecto.
@@ -224,9 +235,9 @@ El funcionamiento de este programa es el siguiente:
   
 - La función `runApp` recibe como único argumento un objeto de tipo *Widget*, que será el principal uso de la aplicación, el que debe renderizar. En este caso se trata de un `Text`, con el contenido *Hola Mundo* (primer argumento posicional), y que se muestra de izquierda a derecha (argumento opcional con nombre *textoDirection* con valor `TextDirection.ltr`). Sin este argumento con nombre, nos da el siguiente error porque no sabe cómo renderizar el texto:
 
-![No Directionaly](Aspose.Words.6afd18e1-1b6b-4967-aff2-ff1b52208d70.008.png)
+![No Directionaly](./images/imagen7.png)
 
-Observamos que el widget `Text` se ha definido como constante, con `const`. En caso de no hacerlo así se nos mostraría el aviso *Prefer const with constante constructores*. En Flutter, los widgets que no van a ser modificados durante la ejecución (en este caso se trata de un texto creado directamente a partir de una cadena), conviene definirlos como constantes. De esta manera, indicamos a Flutter que un widget o un subárbol del árbol de widgets no debe reconstruirse, mejorando así la eficiencia en el renderizado.
+Observamos que el widget `Text` se ha definido como constante, con `const`. En caso de no hacerlo así se nos mostraría el aviso *Prefer const with constante constructores*. En Flutter, los widgets que no van a ser modificados durante la ejecución (en este caso se trata de un texto creado directamente a partir de una cadena), conviene definirlos como constantes. De esta manera, indicamos a Flutter que un widget o un subárbol del árbol de widgets no debe reconstruirse, **mejorando así la eficiencia en el renderizado**.
 
 La aplicación que hemos creado muestra el texto de *hola mundo* en la parte superior izquierda, por lo que, si lo ejecutamos desde un dispositivo móvil, aparece bajo la barra de notificaciones del sistema:
 
@@ -282,6 +293,23 @@ Podemos verlo aquí:
 
 Con ello, ya tendremos el texto centrado en la pantalla.
 
+<div style="border: 1px solid black; padding: 10px;">
+
+Si no nos avisa del tema de los const podemos añadir estas lineas al fichero `analysis_options.yaml`:
+
+```yaml
+
+include: package:flutter_lints/flutter.yaml
+
+...
+linter:
+  rules:
+    prefer_const_constructors: true
+    prefer_const_literals_to_create_immutables: true
+...
+```
+</div>
+
 ### **Creando nuestro widget**
 
 La función `runApp` que invocamos desde la función `main` se encarga de establecer el principal uso de la aplicación y vincularlo a la pantalla.
@@ -300,7 +328,7 @@ Esta declaración de la clase, tal y como está, nos da el error *non_abstract_c
 
 ![Error](./images/imagen10.png)
 
-Como vemos, nos dice que, si extendemos una clase de la clase *StatelessWidget*, debemos proporcionar una implementación al método *build*. Si seleccionamos la opción de *Corrección rápida (Quick Fix)* se nos mostrará un nuevo diálogo con las posibles correcciones. Seleccionaremos la primera *Create 1 missing Override*.
+Como vemos, nos dice que, si extendemos una clase de la clase *`StatelessWidget`*, debemos proporcionar una implementación al método *`build`*. Si seleccionamos la opción de *Corrección rápida (Quick Fix)* se nos mostrará un nuevo diálogo con las posibles correcciones. Seleccionaremos la primera *Create 1 missing Override*.
 
 ![Override](./images/imagen11.png)
 
@@ -316,11 +344,11 @@ class MyApp extends StatelessWidget {
 }
 ```
 
-Como vemos, el método `build` es un método que devuelve un `Widget`, y como su nombre indica, será el método que *construirá* éste. 
+Como vemos, el método `build` es un método que devuelve un `Widget`, y como su nombre indica, será el método que **construirá** éste. 
 
 Observamos también que este método recibe un argumento `context` de tipo `BuildContext`. Vamos a pararnos un poco en este concepto.
 
-¿Qué es el contexto?
+### ¿Qué es el contexto?
 
 Cuando hablamos del contexto en general hacemos referencia a la situación en que ocurre cierto acontecimiento. En Android, por ejemplo, este hace referencia al estado actual de una aplicación u objeto, a partir del cual podemos obtener cierta información sobre la aplicación, y nos permite acceder a determinados recursos, bases de datos o preferencias.
 
@@ -335,7 +363,11 @@ Disponemos de más información sobre el contexto en los siguientes artículos:
 - Sobre el context en Android: [Article Context in Android : Application Context vs Activity Context](https://www.oodlestechnologies.com/dev-blog/context-in-android-:-application-context-vs-activity-context/)
 </div>
 
+<br>
+
 Siguiendo con nuestro ejemplo práctico, ahora habría que añadir el código para construir el soporte principal de la aplicación dentro de este método `build`. Este método, como hemos dicho, construirá la interfaz principal en función de otros Widgets. Concretamente, devolverá el `Center` que estábamos proporcionándole directamente a `runApp`:
+
+<br>
 
 ```dart
 class MyApp extends StatelessWidget {
@@ -376,7 +408,7 @@ void main() => runApp(MyApp());
 
 Observad que para crea la instancia de `MyApp` solo es necesario llamar al constructor, sin hacer uso de la palabra `new`. De hecho, si lo hacemos nos mostraría el aviso *Unnecessary new keyword*.
 
-Con esto ya hemos creado nuestra primera clase de tipo Widget y la hemos utilizado como widget principal de la aplicación. Sin embargo, sigue apareciéndonos un aviso sobre la clase `MyApp`. Si nos situamos encima, veremos que este aviso nos indica Use key in widget constructors.
+Con esto ya hemos creado nuestra primera clase de tipo Widget y la hemos utilizado como widget principal de la aplicación. Sin embargo, sigue apareciéndonos un aviso sobre la clase `MyApp`. Si nos situamos encima, veremos que este aviso nos indica `Use key in widget constructors`.
 
 ![Constructores](./images/imagen12.png)
 
@@ -473,36 +505,37 @@ Podemos verlo en esta animación:
 
 Como sabemos, un *widget* es también una clase, de manera que podemos declarar en ella tantas propiedades como necesitamos, y además, proporcionarle valor mediante su constructor.
 
-Por ejemplo, vamos a hacer un widget sin estado muy sencillo, en el que definimos una propiedad llamada `propietatText`. El método `build` que construye el widget, simplemente devolverá un widget de tipo `Text` con el valor de la propiedad de texto:
+Por ejemplo, vamos a hacer un widget sin estado muy sencillo, en el que definimos una propiedad llamada `propiedadTexto`. El método `build` que construye el widget, simplemente devolverá un widget de tipo `Text` con el valor de la propiedad de texto:
 
 ```dart
 class MiWidgetPersonalizado extends StatelessWidget {
-  final String? propietatText;
-  const MiWidgetPersonalizado({required this.propietatText, super.key});
+  final String? propiedadTexto;
+
+  const MiWidgetPersonalizado({required this.propiedadTexto, super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Text("$propietatText");
+    return Text("$propiedadTexto");
   }
 }
 ```
 
-Observemos que la variable `propietatText` se ha definido como `final`, para poder definir al constructor como constante, de manera que el renderizado sea más eficiente. Si esta propiedad pudiera variar en el futuro, no podríamos definirla como `final` y el constructor no se podría definir como `const`. 
+Observemos que la variable `propiedadTexto` se ha definido como `final`, para poder definir al constructor como constante, de manera que el renderizado sea más eficiente. Si esta propiedad pudiera variar en el futuro, no podríamos definirla como `final` y el constructor no se podría definir como `const`. 
 
-Veamos también que la propiedad `propietatText` se inicializa en el propio constructor, de forma simplificada, y como argumento con nombre, junto con la clave (`key`) del widget, y que se nos incorpora automáticamente si generamos el widget a partir de los *snippets*. Aunque es posible eliminar la clave del constructor, Flutter nos recomienda siempre utilizar una.
+Veamos también que la propiedad `propiedadTexto` se inicializa en el propio constructor, de forma simplificada, y como argumento con nombre, junto con la clave (`key`) del widget, y que se nos incorpora automáticamente si generamos el widget a partir de los *snippets*. Aunque es posible eliminar la clave del constructor, Flutter nos recomienda siempre utilizar una.
 
 Con el fin de hacer uso de este widget, simplemente invocaríamos a su constructor tantas veces como fuera necesario, proporcionándole el valor de la propiedad. Por ejemplo, para incorporar un par de widgets en forma de columna, haríamos:
 
-``dart
+```dart
 Column(
   children: const [
-    MiWidgetPersonalizado(propietatText: "Text 1"),
-    MiWidgetPersonalizado(propietatText: "Text 2"),
+    MiWidgetPersonalizado(propiedadTexto: "Text 1"),
+    MiWidgetPersonalizado(propiedadTexto: "Text 2"),
   ],
 )
 ```
 
-Como veis, sólo hay que proporcionar la propiedad `propietatText`. La clave `key` será generada por el propio Flutter en función del tipo del widget y otros factores. 
+Como veis, sólo hay que proporcionar la propiedad `propiedadTexto`. La clave `key` será generada por el propio Flutter en función del tipo del widget y otros factores. 
 
 Si lo deseamos, también podemos proporcionar nosotros esta clave, mediante el constructor Key y proporcionándole un string:
 
@@ -518,6 +551,8 @@ Column(
 ```
 
 Como veréis, en este widget `Column`, hemos utilizado la palabra `children` en lugar de `child`, y además, le proporcionamos una lista de widgets, en lugar de uno solo. Esta es la forma que tienen de trabajar los widgets que admiten múltiples widgets hijos, como es esta `Column`, que organiza los widgets uno bajo del otro. Con estos widgets, aunque sólo haya un hijo, habrá que indicar el parámetro children en lugar de child y pasarle la lista de valores.
+
+<br>
 
 ## Aplicaciones Material Design
 
@@ -621,19 +656,25 @@ MaterialApp(
 
 Recordemos que los parámetros que proporcionamos al constructor son parámetros por nombre, no posicionales, de manera que no importa el orden en que añadimos estos.
 
-<div style="border: 1px solid black; padding: 10px;">
 
+<link rel="stylesheet" href="css/style.css">
+
+<p class = "bordeado">
 - [Documentación oficial sobre Material en Flutter](https://docs.flutter.dev/ui/widgets/material)
 - Artículo [Building user interfaces with Flutter](https://docs.flutter.dev/ui), de la documentación oficial de Flutter.
 - Referencia de la [clase MaterialApp en la API de Flutter](https://api.flutter.dev/flutter/material/MaterialApp-class.html)
 - Sitio Web de [Material Design](https://m3.material.io/)
   
-</div>
+</p>
+  
+  
+
+<br>
 
 ## Organizando el código
 
-Hasta ahora hemos estado utilizando un único fichero para todo el código de nuestra aplicación, que gestiona la parte lógica, el estado o el aspecto. Lo más recomendable, sobre todo cuando la aplicación crece es organizar el código fuente en diferentes ficheros y carpetas, según su funcionalidad. De esta manera, nuestras aplicaciones serán fáciles de mantener y apropiadas para trabajar en equipo.
-
+{: .caja}
+Hasta ahora hemos estado utilizando un único fichero para todo el código de nuestra aplicación, que gestiona la parte lógica, el estado o el aspecto. Lo más recomendable, sobre todo cuando la aplicación crece es organizar el código fuente en diferentes ficheros y carpetas, según su funcionalidad. De esta manera, nuestras aplicaciones serán fáciles de mantener y apropiadas para trabajar en equipo.  
 Una práctica habitual es crear una carpeta `screens` dentro del directorio `lib` del proyecto para ubicar las diferentes *pantallas* de la aplicación. Para ello, podemos hacerlo bien desde la terminal, o creando una nueva carpeta a través de la vista de ficheros de VSCode.
 
 Recordemos que el código fuente de nuestra aplicación se ubica en el directorio `lib`, y dentro del mismo, podemos crear tantos ficheros y carpetas como deseamos, de forma libre, o siguiendo algún patrón arquitectónico (MVC, MVVM, BLoC, Clean, etc.).
