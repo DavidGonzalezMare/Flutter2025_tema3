@@ -89,20 +89,14 @@ Si prestamos un poco de atención al código, veremos que no estamos introducien
 - El constructor del elemento `Center` recibe un único argumento con nombre: `child`, que indica qué elemento tiene dentro. 
 - Este elemento interno es un `Text`, que recibe a su constructor como único argumento el texto *Hola Mundo*.
 
+<link rel="stylesheet" href="css/style.css">
 
-<div style="border: 1px solid black; padding: 10px;">
-
+{: .caja}
 Disponemos de más informarción en los siguientes artículos:
-
 - Artículo [Start thinking declaratively](https://docs.flutter.dev/data-and-backend/state-mgmt/declarative), de la documentación de Flutter
-
 - Article [Introduction to declarative UI](https://docs.flutter.dev/get-started/flutter-for/declarative), de la documentació de Flutter.
-    
 - Artículo [Flutter: La imposición del Declarative UI o UI as Code](https://medium.com/comunidad-flutter/flutter-la-imposici%C3%B3n-del-declarative-ui-o-del-ui-as-code-5e5ec099ba84), en Medium
-  
 - Artículo [Programación imperativa vs declarativa: Google Jetpack Compose](https://www.deloitte.com/es/es/services/consulting/blogs/todo-tecnologia/programacion-imperativa-vs-declarativa-google-jetpack-compose.html)
-
-</div>
 
 
 ## Conceptos
@@ -293,12 +287,10 @@ Podemos verlo aquí:
 
 Con ello, ya tendremos el texto centrado en la pantalla.
 
-<div style="border: 1px solid black; padding: 10px;">
-
+{: .caja}
 Si no nos avisa del tema de los const podemos añadir estas lineas al fichero `analysis_options.yaml`:
 
 ```yaml
-
 include: package:flutter_lints/flutter.yaml
 
 ...
@@ -308,7 +300,6 @@ linter:
     prefer_const_literals_to_create_immutables: true
 ...
 ```
-</div>
 
 ### **Creando nuestro widget**
 
@@ -354,14 +345,10 @@ Cuando hablamos del contexto en general hacemos referencia a la situación en qu
 
 En Flutter, el `BuildContext` literalmente sería el *contexto de construcción*, es decir, el estado de la aplicación en el momento de construir el widget. Este estado viene representado por el camino en el árbol desde la raíz hasta el *nodo* que estamos creando, de manera que, mediante este camino, podemos obtener datos de los nodos superiores.
 
-<div style="border: 1px solid black; padding: 10px;">
-
+{: .caja}
 Disponemos de más información sobre el contexto en los siguientes artículos:
-
 - Sobre el BuildContext: [What is BuildContext in Flutter?](https://www.educative.io/answers/what-is-buildcontext-in-flutter)
-
 - Sobre el context en Android: [Article Context in Android : Application Context vs Activity Context](https://www.oodlestechnologies.com/dev-blog/context-in-android-:-application-context-vs-activity-context/)
-</div>
 
 <br>
 
@@ -657,8 +644,6 @@ MaterialApp(
 Recordemos que los parámetros que proporcionamos al constructor son parámetros por nombre, no posicionales, de manera que no importa el orden en que añadimos estos.
 
 
-<link rel="stylesheet" href="css/style.css">
-
 {: .caja}
 - [Documentación oficial sobre Material en Flutter](https://docs.flutter.dev/ui/widgets/material)  
 - Artículo [Building user interfaces with Flutter](https://docs.flutter.dev/ui), de la documentación oficial de Flutter.
@@ -671,7 +656,6 @@ Recordemos que los parámetros que proporcionamos al constructor son parámetros
 
 ## Organizando el código
 
-{: .caja}
 Hasta ahora hemos estado utilizando un único fichero para todo el código de nuestra aplicación, que gestiona la parte lógica, el estado o el aspecto. Lo más recomendable, sobre todo cuando la aplicación crece es organizar el código fuente en diferentes ficheros y carpetas, según su funcionalidad. De esta manera, nuestras aplicaciones serán fáciles de mantener y apropiadas para trabajar en equipo.  
 Una práctica habitual es crear una carpeta `screens` dentro del directorio `lib` del proyecto para ubicar las diferentes *pantallas* de la aplicación. Para ello, podemos hacerlo bien desde la terminal, o creando una nueva carpeta a través de la vista de ficheros de VSCode.
 
