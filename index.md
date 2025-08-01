@@ -659,14 +659,12 @@ Recordemos que los parámetros que proporcionamos al constructor son parámetros
 
 <link rel="stylesheet" href="css/style.css">
 
-<p class = "bordeado">
-- [Documentación oficial sobre Material en Flutter](https://docs.flutter.dev/ui/widgets/material)
+{: .caja}
+- [Documentación oficial sobre Material en Flutter](https://docs.flutter.dev/ui/widgets/material)  
 - Artículo [Building user interfaces with Flutter](https://docs.flutter.dev/ui), de la documentación oficial de Flutter.
 - Referencia de la [clase MaterialApp en la API de Flutter](https://api.flutter.dev/flutter/material/MaterialApp-class.html)
 - Sitio Web de [Material Design](https://m3.material.io/)
-  
-</p>
-  
+    
   
 
 <br>
