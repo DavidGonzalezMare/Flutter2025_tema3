@@ -91,8 +91,8 @@ Si prestamos un poco de atención al código, veremos que no estamos introducien
 
 <link rel="stylesheet" href="css/style.css">
 
-{: .caja}
 Disponemos de más informarción en los siguientes artículos:
+{: .caja}
 - Artículo [Start thinking declaratively](https://docs.flutter.dev/data-and-backend/state-mgmt/declarative), de la documentación de Flutter
 - Article [Introduction to declarative UI](https://docs.flutter.dev/get-started/flutter-for/declarative), de la documentació de Flutter.
 - Artículo [Flutter: La imposición del Declarative UI o UI as Code](https://medium.com/comunidad-flutter/flutter-la-imposici%C3%B3n-del-declarative-ui-o-del-ui-as-code-5e5ec099ba84), en Medium
@@ -345,10 +345,13 @@ Cuando hablamos del contexto en general hacemos referencia a la situación en qu
 
 En Flutter, el `BuildContext` literalmente sería el *contexto de construcción*, es decir, el estado de la aplicación en el momento de construir el widget. Este estado viene representado por el camino en el árbol desde la raíz hasta el *nodo* que estamos creando, de manera que, mediante este camino, podemos obtener datos de los nodos superiores.
 
-{: .caja}
+<hr>
+
 Disponemos de más información sobre el contexto en los siguientes artículos:
 - Sobre el BuildContext: [What is BuildContext in Flutter?](https://www.educative.io/answers/what-is-buildcontext-in-flutter)
 - Sobre el context en Android: [Article Context in Android : Application Context vs Activity Context](https://www.oodlestechnologies.com/dev-blog/context-in-android-:-application-context-vs-activity-context/)
+  
+<hr>
 
 <br>
 
@@ -589,6 +592,7 @@ class MyApp extends StatelessWidget {
 ```
 
 Podemos verlo en esta animación:
+
 ![MaterialAppAnimacion](./images/mateapp.gif)
 
 ### **El widget Scaffold**
@@ -657,6 +661,7 @@ Recordemos que los parámetros que proporcionamos al constructor son parámetros
 ## Organizando el código
 
 Hasta ahora hemos estado utilizando un único fichero para todo el código de nuestra aplicación, que gestiona la parte lógica, el estado o el aspecto. Lo más recomendable, sobre todo cuando la aplicación crece es organizar el código fuente en diferentes ficheros y carpetas, según su funcionalidad. De esta manera, nuestras aplicaciones serán fáciles de mantener y apropiadas para trabajar en equipo.  
+
 Una práctica habitual es crear una carpeta `screens` dentro del directorio `lib` del proyecto para ubicar las diferentes *pantallas* de la aplicación. Para ello, podemos hacerlo bien desde la terminal, o creando una nueva carpeta a través de la vista de ficheros de VSCode.
 
 Recordemos que el código fuente de nuestra aplicación se ubica en el directorio `lib`, y dentro del mismo, podemos crear tantos ficheros y carpetas como deseamos, de forma libre, o siguiendo algún patrón arquitectónico (MVC, MVVM, BLoC, Clean, etc.).
@@ -703,14 +708,17 @@ import 'package:hola_mon/screens/home_screen.dart';
 void main() => runApp(const HomeScreen());
 ```
 
-Como podremos comprobar, si reemplazamos `MyApp()` por `HomeScreen()` nos importa automáticamente el fichero `home_screen.dart`. Hay que notar que en la ruta al fichero incluye el nombre del paquete `hola_mon`, y la subcarpeta screens, pero no la carpeta lib, ya que se entiende que es ahí donde se ubica el código.
+Como podremos comprobar, si reemplazamos `MyApp()` por `HomeScreen()` nos importa automáticamente el fichero `home_screen.dart`. Hay que notar que en la ruta al fichero incluye el nombre del paquete `hola_mon`, y la subcarpeta *screens*, pero no la carpeta *lib*, ya que se entiende que es ahí donde se ubica el código.
+
+<br>
 
 ## Convirtiendo el Hola Mundo en la App de contador
 
 Vamos a pasar ya de este sencillo *Hola Mundo* a crear la aplicación de Contador. Para ello, será necesario básicamente modificar el diseño para añadir el número de *clicks* que se han hecho y el botón para hacer el incremento. Además, habrá que añadir esta funcionalidad al mismo botón.
+
 ### **Añadiendo el número de clicks**
 
-Para añadir el número de *clicks* debemos introducir antes un tipo especial de widgets, los *contenedores*, que sirven para organizar un conjunto de *widgets* atendiendo a diferentes tipos de organización (*layout*). Estos *widgets de diseño* suelen clasificarse en líneas generales en quienes tienen un único widget hijo, y que sirven para determinar cómo se muestra este, y los que tienen más de un widget hijo, que sirven para organizar diferentes widgets dentro de otro.
+Para añadir el número de *clicks* debemos introducir antes un tipo especial de widgets, los *contenedores*, que sirven para organizar un conjunto de *widgets* atendiendo a diferentes tipos de organización (*layout*). Estos *widgets de diseño* suelen clasificarse en líneas generales en quienes tienen un único widget hijo, y que sirven para determinar cómo se muestra éste, y los que tienen más de un widget hijo, que sirven para organizar diferentes widgets dentro de otro.
 
 El widget que usaremos pertenece a este segundo grupo y es el widget `Column`, que organiza diferentes widgets hijos en dirección vertical.
 
@@ -814,7 +822,7 @@ La funcionalidad será bastante sencilla, y consistirá en definir una variable 
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            comptador++;
+            contador++;
             debugPrint('[LOG]: Actualizando contador a $contador');
           },
           child: const Icon(Icons.add),
@@ -930,15 +938,15 @@ onPressed: () {
 }
 ```
 
-**En ressum**
+### En resumen
 
 En este apartado, hemos visto de forma práctica cómo crear un proyecto nuevo con un sencillo texto centrado de *Hola Mundo*, y lo hemos ido modificando hasta convertirlo en un contador parecido al que aparece en la aplicación predeterminada.
 
 Con esto, y a pesar de no haber entrado aún en profundidad con los widgets, hemos aprendido algunas cosas interesantes, como:
 
-- Crear proyectos Flutter, tanto desde la línea de órdenes como desde VSCode, así como especificar plataformas concretas para la aplicación,
+- **Crear proyectos Flutter**, tanto desde la línea de órdenes como desde VSCode, así como especificar plataformas concretas para la aplicación,
   
-- Ejecutar nuestro proyecto, tanto desde la línea de órdenes como desde VSCode,
+- **Ejecutar nuestro proyecto**, tanto desde la línea de órdenes como desde VSCode,
 - Las funciones `main` y `runApp` en un proyecto Flutter.
 - Cuando tenemos que utilizar widgets como constantes o no.
 - Cómo crear widgets personalizados mediante *snippets*.
@@ -960,6 +968,9 @@ Con esto, y a pesar de no haber entrado aún en profundidad con los widgets, hem
   - El componente `floatingActionButton` del `Scaffold` no necesariamente debe tener un componente de tipo `FloatingActionButton`, sino que puede contener, por ejemplo un contenedor de tipo `Row` o `Column`, y dentro de él podemos añadir varios botones.
   - Si deseas modificar la posición del componente `floatingActionButton`, podéis utilizar la propiedad del `Scaffold` `floatingActionButtonLocation`, cuyos posibles valores se encuentran en `FloatingActionButtonLocation`.
 
+
+<br>
+<br>
 
 # <a name="_apartado3"></a>3. El ciclo de vida de los widgets
 
@@ -1055,7 +1066,7 @@ En este punto ya tenemos el widget insertado en el árbol y renderizado según a
 - 5a. **Si ocurre algún acontecimiento (como un click en un botón) que modifique el estado**, se invoca al método `setState()`, que vuelve a marcar el estado con *dirty=true*, para que se reconstruya en el método build, proporcionándole el estado actualizado.
 - 5b. **Si un widget ascendente pide que se reconstruya su descendencia y eso implica el widget anterior** como argumento y marcando el estado como sucio, para que se reconstruya de nuevo.
 - 5c. **Si el widget depende de un *InheritedWidget* y este widget heredado cambia**, se invoca al método didChangeDependencies, reconstruyendo también el widget. Los widget heredados serían un tercer tipo de widget, que permite a un varón descendente acceder directamente a su estado, sin necesidad de ir ascendiendo en el árbol de widgets hasta llegar a él.
-- Si el widget no se utilizará más, se invoca a ' ' para destruirlo. En este método se deberán deternir las animaciones, cerrar conexiones, etc. 
+- 6a. Si el widget no se utilizará más, se invoca a `dispose` para destruirlo. En este método se deberán deternir las animaciones, cerrar conexiones, etc. 
 
 
 # <a name="_apartado4"></a>4. Widgets Básicos
@@ -1064,7 +1075,7 @@ En este punto ya tenemos el widget insertado en el árbol y renderizado según a
 
 Como hemos visto, los *widgets* son los componentes principales de diseño en Flutter, alrededor de los cuales crearemos nuestras aplicaciones. Existe una gran cantidad de widgets prediseñados, de manera que, además de conocer los principales, es importante saber cómo consultar el catálogo y la documentación sobre los widgets que nos ofrece el propio Flutter.
 
-El catàleg de widgets de Flutter el podem trobar al següent enllaç:
+Podemos encontrar el catálogo de widgets de Flutter en el siguiente enlace:
 
 - [Catálogo de Widgets de Flutter](https://docs.flutter.dev/development/ui/widgets)
 
@@ -1103,14 +1114,23 @@ Estos son:
 - El widget *AppBar*, para la barra superior de la aplicación,
   
 - El widget *Column*, para organizar un conjunto de varones hijos apilando estos uno debajo del otro,
+  
 - El widget *Container*, para crear un contenedor para otro widget con determinadas propiedades (posición, color, etc.)
+  
 - El widget *ElevatedButton* para añadir un botón,
+  
 - El widget *FlutterLogo*, con el logo de Flutter,
+  
 - El widget *Icon*, para representar iconos,
+  
 - El widget *Image* para incorporar imágenes,
+  
 - El widget *PlaceHolder*, que se utiliza durante el desarrollo para indicar que la interfaz no es completa, y nos dibuja una caja que representa el espacio donde añadir otros widgets.
+  
 - El widget *Row*, para organizar un conjunto de varones hijos apilando a estos uno al lado del otro,
+  
 - El widget *Scaffold* para definir la estructura de una aplicación Material,
+  
 - El widget *Text* para representar textos.
 
 Como dedicaremos posteriormente un apartado al diseño, dejaremos para más adelante los widgets para organizar contenido, y nos centraremos ahora en el resto de widgets básicos, empezando por los más sencillos.
@@ -1125,7 +1145,7 @@ const Text("Contingut del text");
 
 Según el contenido de la cadena, ésta puede dividirse automáticamente en varias líneas. 
 
-Además, recordemos que una cadena de texto puede incluir variables **interpoladas**, haciendo uso del símbolo `$` y si es necesario, también de las claves `{}`. En caso de que hagamos uso de interpolación, no deberemos indicar que el texto es *constante*. Veamos algunos ejemplos:
+Además, recordemos que una cadena de texto puede incluir variables **interpoladas**, haciendo uso del símbolo `$` y si es necesario, también de las llaves `{}`. En caso de que hagamos uso de interpolación, no deberemos indicar que el texto es *constante*. Veamos algunos ejemplos:
 
 ```dart
 String mi_texto="El meu text";
@@ -1147,6 +1167,7 @@ Vemos algunas propiedades que nos pueden ser de utilidad:
 - `overflow`: Se trata de una propiedad de tipo `TextOverflow`, que sirve para determinar qué hacer cuando el texto no cabe en el contenedor donde se encuentra. Este tipo `TextOverflow` es un enumerado (*enum*), con los posibles valores `clip` (recorta el contenido sobrante), `ellipsis` (afirmo puntos suspensivos), `fade` (recorta el contenido sobrante de forma difuminada) o `visible` (hace visible el contenido).
   
 - `textAlign`: Para determinar la alineación del texto, mediante el tipo enumerado `TextAlign`, que admite los valores `center` (centrado), `end` (final), `start` (inicio), `left` (izquierda), `right` (derecha) o `justified` (justificado). El hecho de distinguir entre *start/left* y *end/right* es para adaptar los textos a los sistemas de escritura de derecha a izquierda.
+  
 - `style`: Para determinar el estilo del texto, mediante un widget de tipo `TextStyle`. Este widget admite una gran cantidad de atributos, entre los que podemos destacar:
   - `color`: Para establecer el color del texto. Es un atributo del tipo `Color`, un valor de 32 bits expresado en formato ARGB (*Alpha-Red-Green-Blue*). Podemos expresar este color de diversas formas:
     - Directamente, en formato hexadecimal con `const Color(0xAARRGGBB)`, siendo *AA, RR, GG y BB*, respectivamente las cuantidades de transparencia (*Alpha*), Roig (*Red*), Verde (*Green*) y Azul (*Blue*). Por ejemplo, para un color azul sin transparencia: `const Color(0xFF42A5F5)`.
@@ -1165,6 +1186,8 @@ Aparte de estas, disponemos de muchas propiedades más con el fin de definir el 
 - [Referència de la classe TextStyle](https://api.flutter.dev/flutter/painting/TextStyle-class.html)
 - [Article sobre l'ús de fonts personalitzades als nostres projectes](https://docs.flutter.dev/cookbook/design/fonts)
 
+<br>
+
 ### **El widget Image**
 
 El widget Image muestra una imagen obtenida a través de un proveedor de imágenes. Básicamente, la sintaxis de este widget es la siguiente:
@@ -1172,7 +1195,7 @@ El widget Image muestra una imagen obtenida a través de un proveedor de imágen
 
 ```dart
 Image(
-  image: Proveïdor
+  image: Proveedor
 )
 ```
 
@@ -1200,23 +1223,28 @@ const Image(
     ));
 ```
 
-La clase `Image`, además, ofrece varios constructores con nombre, con el fin de crear las imágenes directamente sin especificar el atributo image:
+La clase `Image`, además, ofrece varios **constructores con nombre**, con el fin de crear las imágenes directamente sin especificar el atributo image:
 
 - `Image.asset(name)` es equivalente a `Image(image: AssetImage(name))`
+  
 - `Image.file(ruta)` és equivalent a `Image(image: FileImage(File(ruta)))`,
+  
 - `Image.network(url)` és equivalent to `Image(image: NetworkImage (url))`,
+  
 - `Image.memory(listaBytes)` es equivalente a `Imagen(imagen: MemoryImage (listaBytes))`.
 
 Flutter soporta de forma nativa diferentes formatos de imagen, como puedan ser JPEG, PNG, GIFs y WebP (tanto estáticos como animados), BMP y WBMP. Además, también puede soportar otros formatos si la plataforma en la que se está ejecutando ofrece una API para descodificarlos.
 
 [Referència de la classe Image](https://api.flutter.dev/flutter/widgets/Image-class.html)
 
+<br>
+
 ### **El widget Icon**
 
 El widget `Icon` nos permite mostrar iconos en nuestras aplicaciones a partir de tipografías específicas para iconos (*IconData*), como puedan ser los iconos predefinidos de Material con el enumerado `Icons`.
 
 ```dart
-icon: const Icon(Icons.access\_alarm));
+icon: const Icon(Icons.access_alarm));
 ```
 
 Hay que tener en cuenta que `Icon` lo único que hace es mostrar el icono, y que por ella misma no aporta ningún tipo de interacción. Para ello haremos uso de otros elementos, como pueda ser el IconButton:
@@ -1230,7 +1258,9 @@ IconButton(
 );
 ```
 
-[Referència de la classe Icon](https://api.flutter.dev/flutter/widgets/Icon-class.html)
+[Referencia de la classe Icon](https://api.flutter.dev/flutter/widgets/Icon-class.html)
+
+<br>
 
 ### **El widget ElevatedButton**
 
@@ -1250,9 +1280,10 @@ ElevatedButton(
 )
 ```
 
-Como vemos, el componente `onPressed` puede ser nulo, con lo cual, el botón no tendría ningún comportamiento asociado. El hecho de declarar este valor como nulo no es el mismo que declarar una función vacía. Si declaramos `onPressed:null`, el botón estaría desactivado, mientras que si declararemos `onPressed: () {}`, indicando la función, éste estaría activado, aunque no realizará ninguna acción.
+Como vemos, el componente `onPressed` puede ser nulo, con lo cual, el botón no tendría ningún comportamiento asociado.  
+El hecho de declarar este valor como nulo no es el mismo que declarar una función vacía. Si declaramos `onPressed:null`, el botón estaría desactivado, mientras que si declararemos `onPressed: () {}`, indicando la función, éste estaría activado, aunque no realizará ninguna acción.
 
-Aparte de estas dos propiedades requeridas, el `ElevatadButton` admite otras propiedades opcionales, entre las que podemos destacar:
+Aparte de estas dos propiedades requeridas, el `ElevatedButton` admite otras propiedades opcionales, entre las que podemos destacar:
 
 - `onLongPress`, con otra función de callback que se lanzará cuando se realice un click largo sobre el botón.
   
@@ -1274,9 +1305,13 @@ El uso de este tipo de botones no está recomendado en elementos que ya tengan e
 - [La classe ElevatedButton](https://api.flutter.dev/flutter/material/ElevatedButton-class.html)
   
 - [La classe ButtonStyle](https://api.flutter.dev/flutter/material/ButtonStyle-class.html)
+  
 - [La classe TextButton](https://api.flutter.dev/flutter/material/TextButton-class.html)
 
+<br>
+
 ### **El widget PlaceHolder**
+
 El `PlaceHolder` es un recuadro que marca un espacio de la interfaz como inacabada. Suele utilizarse durante el desarrollo para indicar la futura ubicación de un widget. El `PlaceHolder`, de manera predeterminada, tenderá a ocupar todo el espacio disponible de su contenedor.
 
 Entre las propiedades de este widget encontramos:
@@ -1284,9 +1319,12 @@ Entre las propiedades de este widget encontramos:
 - `color`: Para indicar el color de las líneas,
   
 - `strokeWidth`: Un valor numérico para indicar el grosor de las líneas,
+  
 - `child`: Un widget hijo para añadir contenido, como pueda ser un texto con la descripción del futuro widget.
 
 [La clase PlaceHolder](https://api.flutter.dev/flutter/widgets/Placeholder-class.html)
+
+<br>
 
 ### **El widget AppBar**
 
@@ -1303,13 +1341,18 @@ Algunas de las principales propiedades de este widget son:
 - `title`: Con el título de la barra,
   
 - `centerTitle`: Un booleano que indica si cal centrar o no el widget,
+  
 - `leading`: El widget que se mostrará antes del título de la barra,
+  
 - `elevation`: Determina mediante un valor numérico (*double*) la elevación (coordenada *z*) de la barra. Esta elevación, en *Material Design* determina la mayor o menor cantidad de sombra que proyecta el componente.
+  
 - `actions`: Con una lista de widgets, generalmente IconButton o TextButton,
 
 Disponemos de la información completa sobre este widget en la documentación oficial de Flutter, con varios ejemplos para probar a Dartpad.dev.
 
 - [Documentación AppBar](https://api.flutter.dev/flutter/material/AppBar-class.html)
+
+<br>
 
 ### **El widget Scaffold**
 
@@ -1323,23 +1366,27 @@ Vemos un ejemplo gráfico muy sencillo de los diferentes componentes del Scaffol
 
 ![Scaffold](./images/imagen30.png)
 
-En el ejemplo anterior vemos, además, cómo hemos añadido un *tooltip* al *FloatingActionButton*, y además cómo posicionar este e integrarlo con el Dock, con *FloatingActionButtonLocation*.
+En el ejemplo anterior vemos, además, cómo hemos añadido un *`tooltip`* al *`FloatingActionButton`*, y además cómo posicionar este e integrarlo con el Dock, con *`FloatingActionButtonLocation`*.
 
 Dispone de la información completa sobre este widget a la documentación oficial de Flutter, con varios ejemplos para probar a Dartpad.dev.
 
 - Clase Scaffold: <https://api.flutter.dev/flutter/material/Scaffold-class.html>
   
 - Clase Drawer: <https://api.flutter.dev/flutter/material/Drawer-class.html>
+  
 - Clase BottomAppBar: <https://api.flutter.dev/flutter/material/BottomAppBar-class.html>
+  
 - Clase FloatingActionButton: <https://api.flutter.dev/flutter/material/FloatingActionButton-class.html>
 
-**SnackBars y MaterialBanners**
+<br>
 
-Los *Snackbars* son mensajes informativos que nos muestra el sistema en la parte inferior de la pantalla, y que de manera opcional pueden contener alguna acción.
+### **SnackBars y MaterialBanners**
 
-Por su parte, los *MatarialBanners* son mensajes importantes que se muestran en la parte superior de la pantalla y que requieren la atención del usuario. 
+Los *`Snackbars`* son mensajes informativos que nos muestra el sistema en la parte inferior de la pantalla, y que de manera opcional pueden contener alguna acción.
 
-Para que estos mensajes se ajusten de forma consistente a la estructura visual requerida por Material Design, se utilizarán dentro de un *Scaffold*. 
+Por su parte, los *`MaterialBanners`* son mensajes importantes que se muestran en la parte superior de la pantalla y que requieren la atención del usuario. 
+
+Para que estos mensajes se ajusten de forma consistente a la estructura visual requerida por Material Design, se utilizarán dentro de un *`Scaffold`*. 
 
 El componente encargado proporcionar un ámbito común y de mostrar las animaciones de los *SnackBars* y *MaterialBanners* para que sean visibles incluso cuando cambiemos de pantalla es `ScaffoldMessenger`. Para utilizar estos componentes, debemos hacer uso del método `ScaffoldMessenger.of` del `BuildContext` actual para obtener una referencia al `ScaffoldMessengerState`, más cercano, que es quien nos proporciona los métodos `showSnackBar` y `showMaterialBanner`.
 
@@ -1379,7 +1426,9 @@ Podemos ver un ejemplo en el siguiente Gist:
   frameborder="0">
 </iframe>
 
-Hay que tener presente que el método `ScaffoldMessenger.of` busca un `ScaffoldMessenger` a partir del contexto. Es decir, desde el widget del árbol donde se encuentra, hacia la raíz, en dirección ascendente. Generalmente, el widget que ofrecerá este `ScaffolsMessenger` será la propia *MaterialApp*, a no ser que más abajo del árbol se declare un nuevo ámbito `ScaffoldMessenger`. 
+<br>
+
+Hay que tener presente que el método `ScaffoldMessenger.of` busca un `ScaffoldMessenger` a partir del contexto. Es decir, desde el widget del árbol donde se encuentra, hacia la raíz, en dirección ascendente. Generalmente, el widget que ofrecerá este `ScaffoldMessenger` será la propia *MaterialApp*, a no ser que más abajo del árbol se declare un nuevo ámbito `ScaffoldMessenger`. 
 
 Un error que podemos cometer, es intentar mostrar un *Snackbar* desde el propio widget *MaterialApp*, de manera que nos mostrará un error diciendo que no se ha encontrado ningún widget *ScaffoldMessenger* en sus nodos padres (ya que el padre de *MaterialApp* es la raíz *root* ).
 
@@ -1413,6 +1462,8 @@ En *el siguiente gist* podéis encontrar este código funcionando:
   frameborder="0">
 </iframe>
 
+<br>
+<br>
 
 # <a name="_apartado5"></a>5. Widgets básicos. Contenedores y diseños
 
