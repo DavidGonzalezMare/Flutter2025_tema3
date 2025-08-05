@@ -1467,7 +1467,9 @@ En *el siguiente gist* podéis encontrar este código funcionando:
 
 # <a name="_apartado5"></a>5. Widgets básicos. Contenedores y diseños
 
-Flutter ofrece muchísimos widgets para organizar el contenido. Si consultamos la [documentación sobre widgets de tipo *Layout*](https://docs.flutter.dev/development/ui/widgets/layout), veremos que estos se organizan en aquellos contenedores que pueden tener un elemento hijo (*Single-child layout widgets*), más de un hijo (*Multi-child layout widgets*) y aquellos que permiten realizar desplazamiento (*Sliver widgets*).
+Flutter ofrece muchísimos widgets para organizar el contenido. 
+
+Si consultamos la [documentación sobre widgets de tipo *Layout*](https://docs.flutter.dev/development/ui/widgets/layout), veremos que estos se organizan en aquellos contenedores que pueden tener un elemento hijo (*Single-child layout widgets*), más de un hijo (*Multi-child layout widgets*) y aquellos que permiten realizar desplazamiento (*Sliver widgets*).
 
 Vamos a ver algunos de los contenedores más comunes, centrándonos en los dos primeros tipos (*single-child* y *multi-child*). Los widgets principales que permiten mostrar múltiples elementos ya permitirán desplazamiento de forma automática, de manera que, de momento, no es necesario profundizar en este último grupo.
 
@@ -1475,11 +1477,11 @@ Vamos a ver algunos de los contenedores más comunes, centrándonos en los dos p
 
 Estos widgets permiten crear contenedores para un único hijo, con diferentes propiedades.
 
-### **Container**
+### Container
 
 El widget `Container` crea un elemento visual rectangular, para rodear otros widgets y aplicarles estilos. Podemos hacer uso del widget `BoxDecoration` para incorporarle el color de fondo, y personalizar sus bordes o la sombra. También podemos incorporar márgenes o restricciones aplicadas al tamaño.
 
-Vemos un ejemplo donde creamos un contenedor de 300x200 (tamaño en píxeles lógicos, independientes del dispositivo), al que le añadimos color de fondo, radio, sombra y bordes mediante un widget de tipo *BoxDecoration*, con diferentes propiedades, y ajustamos el *padding* (espacio entre el borde y el contenido), el *margin* (espacio entre el contenedor y el widget que lo contiene),  así como una transformación consistente en una rotación.
+Vemos un **ejemplo** donde creamos un contenedor de 300x200 (tamaño en píxeles lógicos, independientes del dispositivo), al que le añadimos color de fondo, radio, sombra y bordes mediante un widget de tipo *BoxDecoration*, con diferentes propiedades, y ajustamos el *padding* (espacio entre el borde y el contenido), el *margin* (espacio entre el contenedor y el widget que lo contiene),  así como una transformación consistente en una rotación.
 
 ```dart
 Container(
@@ -1516,12 +1518,16 @@ En *el siguiente gist* podéis encontrar este código funcionando:
   frameborder="0">
 </iframe>
 
+<br>
+<br>
 
-**EdgeInsets**
+### EdgeInsets
 
 En el ejemplo anterior hemos utilizado un widget `EdgeInsets` para especificar las propiedades `padding` y `margin` del contenedor. Como podemos intuir, este widget sirve para especificar desplazamientos en términos de los ejes visuales: `left`, `top`, `right`, y `bottom`. Si queremos respetar el sentido de la escritura, podemos hacer uso de `EdgeInsetsDirectional`, que hace uso de `start`, `top`, `end`, y `bottom`. Podemos especificar todos los ejes con `EdgeInsets.all`, ejes simétricos con `EdgeInsets.symetric`, o sólo un eje con `EdgeInsets.only`.
 
-### **SizedBox**
+<br>
+
+### SizedBox
 
 Se trata de una caja con unas dimensiones específicas, determinadas por las propiedades `width` y `height`, y que puede contener además un elemento hijo (`child`) que se adaptará a estas dimensiones. Algunos widgets, como puedan ser la pantalla de la aplicación o los propios SizedBox obligan a los hijos a ocupar todo el espacio disponible, por lo que un SizedBox que esté ubicado directamente en la pantalla o dentro de otro SizedBox ignorará estos valores de alto y ancho. 
 
@@ -1554,6 +1560,7 @@ En *el siguiente gist* podéis encontrar este código funcionando:
   frameborder="0">
 </iframe>
 
+<br>
 
 ### **Otros widgets contenedores con un único hijo**
 Otros widgets de este tipo son:
@@ -1561,16 +1568,23 @@ Otros widgets de este tipo son:
 - **Center**: Como ya hemos visto, se trata de un widget que centra a su hijo dentro de él. En principio, este widget se expande a todo el contenido de su padre. 
   
 - **Expanded**: Se trata de un widget utilizado dentro de otros widgets de tipo Row, Column o Flex de manera que se expande con el fin de ocupar todo el espacio disponible a lo largo del eje principal (horizontal para una fila y vertical para una columna). Si existen varios widgets *Expanded* dentro del mismo Row o Column, el espacio disponible se distribuye entre ellos en función de un valor *flex*.
+  
 - [Referència de la classe Center](https://api.flutter.dev/flutter/widgets/Center-class.html)
+- 
 - [Referència de la classe Expanded](https://api.flutter.dev/flutter/widgets/Expanded-class.html)
 
+<br>
+<br>
 
 ## Widgets contenedores con varios hijos
 
 Este tipo de widgets nos sirven para organizar varios widgets hijos dentro de un mismo widget padre.
-### **Row y Column**
 
-Los widgets Row y Column nos permiten crear diseños flexibles, tanto en horizontal (*Row*) como en vertical (*Column*). Su diseño se basa en el modelo de layout flexbox de CSS para la web. Veamos un ejemplo:
+<br>
+
+### Row y Column
+
+Los widgets `Row` y `Column` nos permiten crear diseños flexibles, tanto en horizontal (*Row*) como en vertical (*Column*). Su diseño se basa en el modelo de layout flexbox de CSS para la web. Veamos un ejemplo:
 
 ```dart
 Column(                                                     // (1)
@@ -1591,7 +1605,9 @@ Column(                                                     // (1)
 
 ![Row y Column](./images/imagen31.png)
 
-### **ListView**
+<br>
+
+### ListView
 
 Este contenedor nos permite mostrar una lista de elementos desplazable de forma horizontal o vertical. Se trata de uno de los widgets más utilizados para múltiples fines. Veamos un ejemplo:
 
@@ -1616,11 +1632,11 @@ Podéis ver un ejemplo con *Rows*, *Columns* y *Expanded*, junto con el *ListVie
   frameborder="0">
 </iframe>
 
+<br>
 
+### El constructor ListView.builder()
 
-### **El constructor ListView.builder()**
-
-El componente ListView muestra toda su potencia con el constructor con nombre `ListView.builder()`, que nos permite generar un `ListView` a partir de una lista de valores, que puede ser, incluso infinita.
+El componente `ListView` muestra toda su potencia con el constructor con nombre `ListView.builder()`, que nos permite generar un `ListView` a partir de una lista de valores, que puede ser incluso infinita.
 
 Este constructor requiere la propiedad `itemBuilder`, que consiste en una función anónima que devuelve la composición de cada elemento de la lista. Además, también es importante, aunque no estrictamente necesario, proporcionar un valor a la propiedad `itemCount`, con la que informamos al `ListView` del número de ítems, para mejorar el rendimiento en el desplazamiento de la lista.
 
@@ -1667,9 +1683,11 @@ En *el siguiente gist* podemos ver el funcionamiento del widget:
   frameborder="0">
 </iframe>
 
-### **Stack**
+<br>
 
-El widget Stack permite superponer los widgets, unos sobre otros, en el orden en que estos se renderizan. Para posicionar los widgets en relación a los bordes, podemos utilizar el widget `Positioned`. Estos widgets se basan en el modelo de *layout* de posicionamiento absoluto del CSS para la web.
+### Stack
+
+El widget `Stack` permite superponer los widgets, unos sobre otros, en el orden en que estos se renderizan. Para posicionar los widgets en relación a los bordes, podemos utilizar el widget `Positioned`. Estos widgets se basan en el modelo de *layout* de posicionamiento absoluto del CSS para la web.
 
 En *el siguiente gist* podemos ver el funcionamiento del widget: 
 [https://dartpad.dev/embed-flutter.html?id=ddf76ce3a827b70c4aea94ee8902020d](https://dartpad.dev/embed-flutter.html?id=ddf76ce3a827b70c4aea94ee8902020d)
@@ -1681,17 +1699,22 @@ En *el siguiente gist* podemos ver el funcionamiento del widget:
   frameborder="0">
 </iframe>
 
+<hr>
 
-Documentación general sobre diseño.
+### Documentación general sobre diseño.
 
-- [Referència general del layouts](https://docs.flutter.dev/development/ui/widgets/layout#Sliver%20widgets)
-- [Creació de Layouts](https://docs.flutter.dev/development/ui/layout)
+- [Referencia general de los layouts](https://docs.flutter.dev/development/ui/widgets/layout#Sliver%20widgets)
+- [Creación de Layouts](https://docs.flutter.dev/development/ui/layout)
 - [Tutorial sobre Layouts](https://docs.flutter.dev/development/ui/layout/tutorial)
-- [Galeria d'exemples de Flutter](https://gallery.flutter.dev/#/)
+- [Galeria de ejemplos de Flutter](https://gallery.flutter.dev/#/)
 
-### **El component SingleChildScrollView**
+<hr>
 
-Anteriormente hemos visto el componente ListView con el fin de mostrar una lista de elementos, y poder realizar un desplazamiento entre ellos.
+<br>
+
+### El componente SingleChildScrollView
+
+Anteriormente hemos visto el componente `ListView` con el fin de mostrar una lista de elementos, y poder realizar un desplazamiento entre ellos.
 
 Cuando hacemos uso de contenedores de tipo *Row*, y sobre todo *Column*, que contienen varios elementos para contener una vista, es fácil que estos rebosen por los márgenes del área visible, y se produzcan errores en el renderizado, del tipo: *A RenderFlex overflowed by X pixels on the bottom*, mostrando un recuadro rayado bastante característico:
 
@@ -1710,14 +1733,20 @@ SingleChildScrollView(
 ```
 
 En este gif podemos ver su funcionamiento:
+<br>
+
 ![SingleChildScrollView](./images/SingleChildScrollView.gif)
+
+<br>
 
 SingleChildScrollView class. <https://api.flutter.dev/flutter/widgets/SingleChildScrollView-class.html>
 
+<br>
+<br>
 
 ## Otros widgets de Material Design
 
-### **El widget Divider**
+### El widget Divider
 
 Este widget no se trata de ningún tipo de contenedor, sino de un widget específico de la librería Material, diseñado para servir como separador de widgets. Sus propiedades son:
 
@@ -1726,7 +1755,9 @@ Este widget no se trata de ningún tipo de contenedor, sino de un widget especí
 - `thickness`: Define el grosor de la línea divisoria. Su valor por defecto es 0.0, el cual equivale a un píxel dependiendo del dispositivo.
   
 - `indent`: Define el espacio que se deja al principio de la línea,
+  
 - `endIndent`: Define el espacio que se deja al final de la línea
+  
 - `color`: Especifica el color de la línia.
 
 Veamos un pequeño ejemplo:
@@ -1741,8 +1772,9 @@ Divider(
 )
 ```
 
+<br>
 
-### **El widget ListTile**
+### El widget ListTile
 
 Este widget, que podríamos nombrar como un *mostrador de lista*, consiste en una fila de altura fija que contiene generalmente texto e iconos u otros widgets al principio o al final, y que como el nombre indica, generalmente se usa para mostrar los elementos de una lista.
 
@@ -1773,16 +1805,17 @@ ListTile(
 
 ![Listtile](./images/imagen33.png)
 
-- [Referència de la classe ListTile](https://api.flutter.dev/flutter/material/ListTile-class.html)
-- 
+[Referencia de la clase ListTile](https://api.flutter.dev/flutter/material/ListTile-class.html)
+  
+<br>
 
-### **El widget Card**
+### El widget Card
 
-Las tarjetas o ***Cards*** son un componente de las especificaciones de diseño Material Design utilizado para mostrar información diversa relacionada entre ella, como pueda ser un contacto, una ubicación, un libro, película, etc.
+Las tarjetas o ***Cards*** son un componente de las especificaciones de diseño *Material Design* utilizado para mostrar información diversa relacionada entre ella, como pueda ser un contacto, una ubicación, un libro, película, etc.
 
 Gráficamente, se trata de un contenedor con los bordes ligeramente redondeados y una sombra con elevación.
 
-Algunas de las propiedades que podemos añadir a su constructor son color para el color de fondo de la tarjeta, `shadowColor`, para el color de la sombra, o `elevation`, para especificar la elevación (lo que afecta a la sombra que proyecta).
+Algunas de las propiedades que podemos añadir a su constructor son `color` para el color de fondo de la tarjeta, `shadowColor`, para el color de la sombra, o `elevation`, para especificar la elevación (lo que afecta a la sombra que proyecta).
 
 Vemos un par de ejemplos con tarjetas combinadas con otros elementos, como los ListTiles, imágenes o botones:
 
@@ -1813,12 +1846,17 @@ Card(
   ]),
 )
 ```
+
+<br>
+
 ![Card](./images/imagen35.png)
 
 
-### **El widget CircleAvatar**
+<br>
 
-El widget CircleAvatar de la librería Material nos proporciona un contenedor con forma redonda y que contiene una imagen. Generalmente este widget representa un usuario y se utiliza con la imagen de perfil del usuario o con sus iniciales.
+### El widget CircleAvatar
+
+El widget `CircleAvatar` de la librería Material nos proporciona un contenedor con forma redonda y que contiene una imagen. Generalmente este widget representa un usuario y se utiliza con la imagen de perfil del usuario o con sus iniciales.
 
 Algunas de las principales propiedades de este widget son:
 
@@ -1838,7 +1876,7 @@ CircleAvatar(
     backgroundImage: NetworkImage("https://picsum.photos/400"),
 ),
 ```
-- Un CircleAvatar amb color de fons i un text:
+- Un `CircleAvatar` amb color de fons i un text:
 
 ```dart
 CircleAvatar(
@@ -1847,7 +1885,7 @@ CircleAvatar(
 )
 ```
 
-Un **CircleAvatar** dins un element **ListTile**:
+Un `CircleAvatar` dins un element `ListTile`:
 
 ```dart
 ListTile(
@@ -1861,7 +1899,9 @@ ListTile(
 
 [La clase CircleAvatar](https://api.flutter.dev/flutter/material/CircleAvatar-class.html)
 
-**Detección de gestos. El widget GestureDetector**
+<br>
+
+### Detección de gestos. El widget GestureDetector
 
 Algunos widgets, como puedan ser los botones, ofrecen una respuesta a eventos por parte del usuario a través de propiedades como `onClick` u `onTap`, a las que especificamos con una función anónima o flecha la acción a realizar ante este evento.
 
@@ -1888,13 +1928,16 @@ Por otro lado, este widget, además de detectar *Clicks* puede usarse para detec
 [https://api.flutter.dev/flutter/widgets/GestureDetector-class.html](https://api.flutter.dev/flutter/widgets/GestureDetector-class.html)
 
 
+<br>
+<br>
+
 # <a name="_apartado6"></a>6. Trabajando con recursos
 
-Las aplicaciones, aparte del código fuente, pueden incluir recursos de diversa naturaleza, como puedan ser iconos, imágenes, tipografías o ficheros, entre otros. Estos recursos suelen conocerse como ***assets***, y aunque pueden estar ubicados en cualquier ubicación de nuestro proyecto, generalmente los encontraremos en una carpeta llamada assets.
+Las aplicaciones, aparte del código fuente, pueden incluir recursos de diversa naturaleza, como puedan ser iconos, imágenes, tipografías o ficheros, entre otros. Estos recursos suelen conocerse como ***assets***, y aunque pueden estar ubicados en cualquier ubicación de nuestro proyecto, generalmente los encontraremos en una carpeta llamada `assets`.
 
 ## Trabajando con recursos
 
-### **Especificación de recursos**
+### Especificación de recursos
 
 Los recursos se especifican en el mismo fichero de configuración del proyecto `pubspec.yaml`, dentro de la subsección `assets` de la sección `flutter`, y enumeran los diferentes recursos requeridos por la aplicación en una lista. Esta lista contendrá la ruta relativa de cada recurso respecto al fichero `pubspec.yaml` -o lo que es lo mismo en la raíz del proyecto-, y puede tratarse bien de un fichero concreto, o bien en una carpeta. En este segundo caso, se cogerán como recursos todos los ficheros ubicados directamente en la carpeta, pero no en las subcarpetas. Así pues, habrá que añadir una entrada más a la lista por cada subdirectorio que deseamos incorporar.
 
@@ -1914,8 +1957,9 @@ En este ejemplo, se incorporan al proyecto como recursos los ficheros `assets/co
 
 Cuando se realiza la compilación del proyecto, los diferentes recursos se agrupan en un paquete de recursos (*Asset Bundle*), que es el que usan las aplicaciones en tiempo de ejecución. Así pues, realmente no importa ni el orden en que definimos los recursos, ni la carpeta real donde se ubican estos.
 
+<br>
 
-### **Variantes de recursos**
+### Variantes de recursos
 
 Una variante de un recurso es una versión diferente del mismo, preparada para mostrarse en un contexto diferente. Un caso bastante ejemplificador de variantes serían los iconos de la aplicación, que suelen ofrecerse en diferentes densidades, de manera que según la resolución del dispositivo se usa una imagen u otra.
 
@@ -1950,7 +1994,9 @@ flutter:
     - graphics/
 ```
 
-### **Imágenes adaptables a la resolución**
+<br>
+
+### Imágenes adaptables a la resolución
 
 Cuando creamos aplicaciones que puedan ejecutarse en diferentes dispositivos, es habitual hacer uso de imágenes con diferente densidad de píxeles, de manera que se adapten a la resolución del dispositivo.
 
@@ -2015,7 +2061,7 @@ Cuando lanzamos la aplicación sobre el navegador web, o en general sobre el esc
 
 Por otro lado, si hacemos zoom sobre el navegador y ampliamos un 10%, la relación de aspecto sube al 1.1, y por lo tanto se coge la imagen a resolución 2x, para no ampliar el logotipo original y evitar así el pixelado.
 
-
+<br>
 
 ## Estableciendo el icono para el lanzador de la aplicación
 
@@ -2104,6 +2150,8 @@ Creating Icons for MacOS...
 
 ✓ Successfully generated launcher icons
 ```
+
+<br>
 
 ## Incorporando familias tipográficas como recurso
 
@@ -2211,6 +2259,8 @@ Center(
 );
 ```
 
+<br>
+<br>
 
 # <a name="_apartado7"></a>7. Trabajando con temas
 
@@ -2232,6 +2282,7 @@ La clase `ThemeData` es la clase que usa Flutter para definir los temas de la ap
 Cuando definimos una aplicación `MaterialApp`, ésta admite en el constructor un parámetro `theme`, de tipo `ThemeData` con el tema a utilizar. Si no se especifica un `theme`, hará uso del tema predeterminado.
 
 El tema predeterminado de Material 3 es un tema dinámico, lo que significa que los colores del tema se adaptan al fondo del dispositivo. Por ejemplo, si el fondo del dispositivo es oscuro, los colores del tema serán más claros, y si el fondo es claro los colores del tema serán oscuros.
+
 
 ### **Definiendo un tema**
 
@@ -2269,7 +2320,7 @@ MaterialApp(
 ```
 
 
-### **Adaptando un tema**
+### Adaptando un tema
 
 Para no definir un tema desde cero, Flutter nos proporciona varias opciones interesantes. Una de ellas es realizar una copia de un tema y modificar sólo aquellas propiedades que deseamos cambiar. Para ello, hacemos uso del método `copyWith`.
 
@@ -2284,7 +2335,7 @@ MaterialApp(
 )
 ```
 
-Amb això, hem agafat el tema *light()* com a base i l'hem copiat, amb les modificacions que proporcionem com a argument dins el mètode **copyWith().**
+De esta manera, hemos cogido el tema *`light()`* como base y lo hemos copiado, con las modificaciones que proporcionamos como arumento dentro del método *`copyWith()`.*
 
 ### **Utilización de muestras: PrimarySwatch**
 
@@ -2317,7 +2368,7 @@ ThemeData(
 );
 ```
 
-**Tipos de fuentes**
+### Tipos de fuentes
 
 El `ThemeData` también nos permite definir los aspectos tipográficos de nuestras aplicaciones. Para ello, podemos hacer uso de las propiedades `fontFamily` que especifica la letra tipográfica en general para la aplicación, y `textTheme`, que nos permite definir la temática para los diferentes textos.
 
@@ -2336,14 +2387,14 @@ ThemeData(
 
 Con ello hemos definido en general la fuente *Lato* para toda la aplicación, así como tres estilos de texto, para los estilos *displayLarge*, *titleLarge* y *bodyMedium*, con tamaños, grosores y tipografíes específicos. Para más información sobre las propiedades de los temas de texto podéis consultar [la documentación de la clase TextTheme oficial de Flutter](https://api.flutter.dev/flutter/material/TextTheme-class.html).
 
-### **Definiendo el tema aparte**
+### Definiendo el tema aparte
 
 Para mantener el código lo más limpio posible, podemos definir los temas de manera independiente, y hacer uso de ellos dentro de la aplicación Material. 
 
 Por ejemplo, definiríamos el tema como:
 
 ```dart
-ThemeData TemaPersonalitzat = ThemeData(
+ThemeData TemaPersonalizado = ThemeData(
   primarySwatch: Colors.amber,
   scaffoldBackgroundColor: Colors.yellow,
   fontFamily: 'Lato',
@@ -2360,7 +2411,7 @@ Y hacer uso de él cuando definimos la aplicación Material:
 ```dart
 MaterialApp(
     title: 'Ejemplo de tema',
-    theme: TemaPersonalitzat,
+    theme: TemaPersonalizado,
     home: /*...*/,
 );
 ```
@@ -2369,7 +2420,7 @@ Por otro lado, si queremos aplicar el tema a un widget concreto, por ejemplo a u
 
 ```dart
 Theme(
-    data: TemaPersonalitzat,
+    data: TemaPersonalizado,
     child: ElevatedButton(
         onPressed: () {...},
         child: const Text("Texto del botón"),
@@ -2389,6 +2440,8 @@ A modo de ejemplo, podéis consultar y modificar el siguiente gist  con algunas 
   frameborder="0">
 </iframe>
 
+<br>
+<hr>
 
 Podéis encontrar más información sobre la creación de temas en los siguientes enlaces:
 
@@ -2396,5 +2449,7 @@ Podéis encontrar más información sobre la creación de temas en los siguiente
 - Codelab [Haz que tu app de Flutter pase de aburrida a atractiva](https://codelabs.developers.google.com/codelabs/flutter-boring-to-beautiful?hl=es-419#0)
 - Artículo [Material 3 for Flutter](https://medium.com/flutter/material-3-for-flutter-d417a8a65564)
 - Artículo [Migrating a Flutter app to Material 3](https://blog.codemagic.io/migrating-a-flutter-app-to-material-3/)
+
+<hr>
 
 
