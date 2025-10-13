@@ -718,7 +718,7 @@ Vamos a pasar ya de este sencillo *Hola Mundo* a crear la aplicación de Contado
 
 ### **Añadiendo el número de clicks**
 
-Para añadir el número de *clicks* debemos introducir antes un tipo especial de widgets, los *contenedores*, que sirven para organizar un conjunto de *widgets* atendiendo a diferentes tipos de organización (*layout*). Estos *widgets de diseño* suelen clasificarse en líneas generales en quienes tienen un único widget hijo, y que sirven para determinar cómo se muestra éste, y los que tienen más de un widget hijo, que sirven para organizar diferentes widgets dentro de otro.
+Para añadir el número de *clicks* debemos introducir antes un tipo especial de widgets, los *contenedores*, que sirven para organizar un conjunto de *widgets* atendiendo a diferentes tipos de organización (*layout*). Estos *widgets de diseño* suelen clasificarse en líneas generales en **quienes tienen un único widget hijo**, y que sirven para determinar cómo se muestra éste, y **los que tienen más de un widget hijo**, que sirven para organizar diferentes widgets dentro de otro.
 
 El widget que usaremos pertenece a este segundo grupo y es el widget `Column`, que organiza diferentes widgets hijos en dirección vertical.
 
@@ -1095,7 +1095,7 @@ El catálogo de widgets está ordenado en las siguientes secciones:
 - **Material 2 Componentes**: Con los widgets correspondientes a las especificaciones y guíes de Material 2,
 - **Material Componentes**: Con los widgets, comportamiento y aspecto visual especificados en las guíes de Material 3 (predeterminadas desde la versión 3.16),
 - **Painting and effects**: Para aplicar efectos dentro de un widget,
-- **Scrolling**: Con widgets para aplicar scroll entre los varones hijos de un varón,
+- **Scrolling**: Con widgets para aplicar scroll entre los widgets hijos de otro,
 - **Styling**: Con widgets para gestionar el aspecto visual de nuestra aplicación,
 - **Texto**: Con widgets para estilizar y mostrar textos.
 
@@ -1111,27 +1111,27 @@ Los widgets básicos que nos presenta Flutter en su catálogo son los siguientes
 
 Estos son:
 
-- El widget *AppBar*, para la barra superior de la aplicación,
+- El widget *`AppBar`*, para la barra superior de la aplicación,
   
-- El widget *Column*, para organizar un conjunto de varones hijos apilando estos uno debajo del otro,
+- El widget *`Column`*, para organizar un conjunto de widgets hijos apilando estos uno debajo del otro,
   
-- El widget *Container*, para crear un contenedor para otro widget con determinadas propiedades (posición, color, etc.)
+- El widget *`Container`*, para crear un contenedor para otro widget con determinadas propiedades (posición, color, etc.)
   
-- El widget *ElevatedButton* para añadir un botón,
+- El widget *`ElevatedButton`* para añadir un botón,
   
-- El widget *FlutterLogo*, con el logo de Flutter,
+- El widget *`FlutterLogo`*, con el logo de Flutter,
   
-- El widget *Icon*, para representar iconos,
+- El widget *`Icon`*, para representar iconos,
   
-- El widget *Image* para incorporar imágenes,
+- El widget *`Image`* para incorporar imágenes,
   
-- El widget *PlaceHolder*, que se utiliza durante el desarrollo para indicar que la interfaz no es completa, y nos dibuja una caja que representa el espacio donde añadir otros widgets.
+- El widget *`PlaceHolder`*, que se utiliza durante el desarrollo para indicar que la interfaz no es completa, y nos dibuja una caja que representa el espacio donde añadir otros widgets.
   
-- El widget *Row*, para organizar un conjunto de varones hijos apilando a estos uno al lado del otro,
+- El widget *`Row`*, para organizar un conjunto de widgets hijos apilando a estos uno al lado del otro,
   
-- El widget *Scaffold* para definir la estructura de una aplicación Material,
+- El widget *`Scaffold`* para definir la estructura de una aplicación Material,
   
-- El widget *Text* para representar textos.
+- El widget *`Text`* para representar textos.
 
 Como dedicaremos posteriormente un apartado al diseño, dejaremos para más adelante los widgets para organizar contenido, y nos centraremos ahora en el resto de widgets básicos, empezando por los más sencillos.
 
@@ -1140,7 +1140,7 @@ Como dedicaremos posteriormente un apartado al diseño, dejaremos para más adel
 El widget `Text` nos sirve para crear textos con estilo. Como ya hemos visto en ejemplos anteriores, se trata de una clase, cuyo constructor requiere como mínimo un argumento posicional, con el texto a representar. Así, la forma más sencilla de representar un texto es con:
 
 ```dart
-const Text("Contingut del text");
+const Text("Contenido del texto");
 ```
 
 Según el contenido de la cadena, ésta puede dividirse automáticamente en varias líneas. 
@@ -1148,7 +1148,7 @@ Según el contenido de la cadena, ésta puede dividirse automáticamente en vari
 Además, recordemos que una cadena de texto puede incluir variables **interpoladas**, haciendo uso del símbolo `$` y si es necesario, también de las llaves `{}`. En caso de que hagamos uso de interpolación, no deberemos indicar que el texto es *constante*. Veamos algunos ejemplos:
 
 ```dart
-String mi_texto="El meu text";
+String mi_texto="Este es mi texto";
 
 // Mostramos directamente la variable
 Text(mi_texto);
@@ -1164,7 +1164,7 @@ Text("Escribo ${mi_texto} con más texto a continuación");
 
 Vemos algunas propiedades que nos pueden ser de utilidad:
 
-- `overflow`: Se trata de una propiedad de tipo `TextOverflow`, que sirve para determinar qué hacer cuando el texto no cabe en el contenedor donde se encuentra. Este tipo `TextOverflow` es un enumerado (*enum*), con los posibles valores `clip` (recorta el contenido sobrante), `ellipsis` (afirmo puntos suspensivos), `fade` (recorta el contenido sobrante de forma difuminada) o `visible` (hace visible el contenido).
+- `overflow`: Se trata de una propiedad de tipo `TextOverflow`, que sirve para determinar qué hacer cuando el texto no cabe en el contenedor donde se encuentra. Este tipo `TextOverflow` es un enumerado (*enum*), con los posibles valores `clip` (recorta el contenido sobrante), `ellipsis` (puntos suspensivos), `fade` (recorta el contenido sobrante de forma difuminada) o `visible` (hace visible el contenido).
   
 - `textAlign`: Para determinar la alineación del texto, mediante el tipo enumerado `TextAlign`, que admite los valores `center` (centrado), `end` (final), `start` (inicio), `left` (izquierda), `right` (derecha) o `justified` (justificado). El hecho de distinguir entre *start/left* y *end/right* es para adaptar los textos a los sistemas de escritura de derecha a izquierda.
   
@@ -1181,10 +1181,10 @@ Vemos algunas propiedades que nos pueden ser de utilidad:
 
 Aparte de estas, disponemos de muchas propiedades más con el fin de definir el estilo. Puede consultarlas todas de manera detallada en la documentación de Flutter.
 
-- [Referència de la classe Text](https://api.flutter.dev/flutter/widgets/Text-class.html)
-- [Referència de la classe Color](https://api.flutter.dev/flutter/dart-ui/Color-class.html)
-- [Referència de la classe TextStyle](https://api.flutter.dev/flutter/painting/TextStyle-class.html)
-- [Article sobre l'ús de fonts personalitzades als nostres projectes](https://docs.flutter.dev/cookbook/design/fonts)
+- [Referencia de la clase Text](https://api.flutter.dev/flutter/widgets/Text-class.html)
+- [Referencia de la clase Color](https://api.flutter.dev/flutter/dart-ui/Color-class.html)
+- [Referencia de la clase TextStyle](https://api.flutter.dev/flutter/painting/TextStyle-class.html)
+- [Articulo sobre el uso de fuentes personalizadas en nuestros proyectos](https://docs.flutter.dev/cookbook/design/fonts)
 
 <br>
 
@@ -1227,15 +1227,15 @@ La clase `Image`, además, ofrece varios **constructores con nombre**, con el fi
 
 - `Image.asset(name)` es equivalente a `Image(image: AssetImage(name))`
   
-- `Image.file(ruta)` és equivalent a `Image(image: FileImage(File(ruta)))`,
+- `Image.file(ruta)` es equivalente a `Image(image: FileImage(File(ruta)))`,
   
-- `Image.network(url)` és equivalent to `Image(image: NetworkImage (url))`,
+- `Image.network(url)` es equivalente a `Image(image: NetworkImage (url))`,
   
 - `Image.memory(listaBytes)` es equivalente a `Imagen(imagen: MemoryImage (listaBytes))`.
 
 Flutter soporta de forma nativa diferentes formatos de imagen, como puedan ser JPEG, PNG, GIFs y WebP (tanto estáticos como animados), BMP y WBMP. Además, también puede soportar otros formatos si la plataforma en la que se está ejecutando ofrece una API para descodificarlos.
 
-[Referència de la classe Image](https://api.flutter.dev/flutter/widgets/Image-class.html)
+[Referencia de la clase Image](https://api.flutter.dev/flutter/widgets/Image-class.html)
 
 <br>
 
@@ -1258,7 +1258,7 @@ IconButton(
 );
 ```
 
-[Referencia de la classe Icon](https://api.flutter.dev/flutter/widgets/Icon-class.html)
+[Referencia de la clase Icon](https://api.flutter.dev/flutter/widgets/Icon-class.html)
 
 <br>
 
@@ -1276,7 +1276,7 @@ Por ejemplo, un botón muy sencillo con un texto simple dentro tendría la forma
 ```dart
 ElevatedButton(
   onPressed: null,
-  child: const Text('Text del botó'),
+  child: const Text('Texto del botón'),
 )
 ```
 
@@ -1292,12 +1292,14 @@ Aparte de estas dos propiedades requeridas, el `ElevatedButton` admite otras pro
 Por ejemplo, para cambiar el color del fondo (**backgroundColor**) y del primer plano del botón (**foregroundColor**), deberíamos hacer:
 
 ```dart
-ElevatedButton(
-        onPressed: () {},
-        child: const Text('Texto del botón'),
-        style: ButtonStyle(
-            backgroundColor: MaterialStatePropertyAll<Color>(Colors.amber),
-            foregroundColor: MaterialStatePropertyAll<Color>(Colors.indigo)));
+    ElevatedButton(
+      onPressed: () {},
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.amber,
+        foregroundColor: Colors.indigo,
+      ),
+      child: const Text('Texto del botón'),
+    ),
 ```
 
 El uso de este tipo de botones no está recomendado en elementos que ya tengan elevación, como los diálogos, las tarjetas o la propia barra de la aplicación (en Material 2). En estos casos, para mostrar de manera más integrada el botón con el resto de contenido, se recomienda hacer uso del botón TextButton, que se usa de la misma manera, con la diferencia de que no presenta elevación.
@@ -1340,7 +1342,7 @@ Algunas de las principales propiedades de este widget son:
 
 - `title`: Con el título de la barra,
   
-- `centerTitle`: Un booleano que indica si cal centrar o no el widget,
+- `centerTitle`: Un booleano que indica si se debe centrar o no el widget,
   
 - `leading`: El widget que se mostrará antes del título de la barra,
   
@@ -1361,6 +1363,8 @@ Este widget contiene la estructura de un diseño típico de una aplicación basa
 - `bottomNavigationBar`: Se trata de una barra de navegación (generalmente un widget `BottomAppBar`) que se afianza en la parte inferior del `Scaffold`. La trataremos en la siguiente unidad.
   
 - `drawer`: La traducción literal de un *Drawer* es *cajonera*, y consiste en un panel vertical, que generalmente se muestra a la izquierda del `body`, y que suele desplegarse mediante un botón ubicado en la misma `AppBar`.
+
+Estos dos componentes los estudiaremos en el tema 4.
 
 Vemos un ejemplo gráfico muy sencillo de los diferentes componentes del Scaffold:
 
@@ -1388,7 +1392,7 @@ Por su parte, los *`MaterialBanners`* son mensajes importantes que se muestran e
 
 Para que estos mensajes se ajusten de forma consistente a la estructura visual requerida por Material Design, se utilizarán dentro de un *`Scaffold`*. 
 
-El componente encargado proporcionar un ámbito común y de mostrar las animaciones de los *SnackBars* y *MaterialBanners* para que sean visibles incluso cuando cambiemos de pantalla es `ScaffoldMessenger`. Para utilizar estos componentes, debemos hacer uso del método `ScaffoldMessenger.of` del `BuildContext` actual para obtener una referencia al `ScaffoldMessengerState`, más cercano, que es quien nos proporciona los métodos `showSnackBar` y `showMaterialBanner`.
+El componente encargado proporcionar un ámbito común y de mostrar las animaciones de los *SnackBars* y *MaterialBanners* para que sean visibles incluso cuando cambiemos de pantalla es `ScaffoldMessenger`. Para utilizar estos componentes, debemos hacer uso del método `ScaffoldMessenger.of`, del `BuildContext` actual para obtener una referencia al `ScaffoldMessengerState`, más cercano, que es quien nos proporciona los métodos `showSnackBar` y `showMaterialBanner`.
 
 Para mostrar un Snackbar, lo que haremos será:
 
