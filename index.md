@@ -3,7 +3,7 @@
 
 # Unidad 3. Widgets
 
-En esta unidad empezamos a trabajar con la programación de interfaces gráficas con Flutter.  
+**En esta unidad** empezamos a trabajar con la programación de interfaces gráficas con Flutter.  
 Flutter sigue una **filosofía declarativa** a la hora de crear interfaces, a diferencia de la filosofía imperativa tradicional. El concepto alrededor del cual girará todo el desarrollo de interfaces en Flutter es el *widget*, que representará básicamente un componente gráfico. En los siguientes apartados veremos los diferentes tipos de widgets y algunos de los más importante o comunes.
 
 ![Flutter](./images/imagen1.jpeg)
@@ -127,12 +127,15 @@ Uno de los aspectos más complejos que encontraremos a la hora de trabajar con F
 En *el siguiente gist* podéis encontrar este código funcionando: 
 [https://dartpad.dev/embed-flutter.html?id=a61b6f2bdc57458f6f7e074d031d3c77](https://dartpad.dev/embed-flutter.html?id=a61b6f2bdc57458f6f7e074d031d3c77)
 
-<iframe
-  src="https://dartpad.dev/embed-inline.html?id=a61b6f2bdc57458f6f7e074d031d3c77"
-  width="100%"
-  height="500px"
-  frameborder="0">
-</iframe>
+<div style="overflow-x: auto; width: 100%;">
+  <iframe
+    src="https://dartpad.dev/embed-inline.html?id=a61b6f2bdc57458f6f7e074d031d3c77"
+    width="100%"
+    height="500px"
+    loading="lazy"    
+    frameborder="0">
+  </iframe>
+</div>
 
 <br>
 <br>
@@ -1423,12 +1426,15 @@ ScaffoldMessenger.of(context).hideCurrentSnackBar();
 Podemos ver un ejemplo en el siguiente Gist:
 [https://dartpad.dev/embed-flutter.html?id=a61b6f2bdc57458f6f7e074d031d3c77](https://dartpad.dev/embed-flutter.html?id=55a1de399ea917bc747a9046dcf1cb40)
 
-<iframe
-  src="https://dartpad.dev/embed-inline.html?id=55a1de399ea917bc747a9046dcf1cb40"
-  width="100%"
-  height="500px"
-  frameborder="0">
-</iframe>
+<div style="overflow-x: auto; width: 100%;">
+  <iframe
+    src="https://dartpad.dev/embed-inline.html?id=55a1de399ea917bc747a9046dcf1cb40"
+    width="100%"
+    height="500px"
+    loading="lazy"
+    frameborder="0">
+  </iframe>
+</div>
 
 <br>
 
@@ -1459,12 +1465,15 @@ ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
 En *el siguiente gist* podéis encontrar este código funcionando: 
 [https://dartpad.dev/embed-flutter.html?id=a61b6f2bdc57458f6f87200d943251ba529418b352d3148f3d7e074d031d3c77](https://dartpad.dev/embed-flutter.html?id=87200d943251ba529418b352d3148f3d)
 
-<iframe
-  src="https://dartpad.dev/embed-inline.html?id=87200d943251ba529418b352d3148f3d"
-  width="100%"
-  height="500px"
-  frameborder="0">
-</iframe>
+<div style="overflow-x: auto; width: 100%;">
+  <iframe
+    src="https://dartpad.dev/embed-inline.html?id=87200d943251ba529418b352d3148f3d"
+    width="100%"
+    height="500px"
+    loading="lazy"
+    frameborder="0">
+  </iframe>
+</div>
 
 <br>
 <br>
@@ -1515,12 +1524,15 @@ Container(
 En *el siguiente gist* podéis encontrar este código funcionando: 
 [https://dartpad.dev/embed-flutter.html?id=af9984930d71bd598f2c234f46f7644b](https://dartpad.dev/embed-flutter.html?id=af9984930d71bd598f2c234f46f7644b)
 
-<iframe
-  src="https://dartpad.dev/embed-inline.html?id=af9984930d71bd598f2c234f46f7644b"
-  width="100%"
-  height="500px"
-  frameborder="0">
-</iframe>
+<div style="overflow-x: auto; width: 100%;">
+  <iframe
+    src="https://dartpad.dev/embed-inline.html?id=af9984930d71bd598f2c234f46f7644b"
+    width="100%"
+    height="500px"
+    loading="lazy"
+    frameborder="0">
+  </iframe>
+</div>
 
 <br>
 <br>
@@ -1557,12 +1569,15 @@ SizedBox(
 En *el siguiente gist* podéis encontrar este código funcionando: 
 [https://dartpad.dev/embed-flutter.html?id=126b91ef9e0c94a9f66d3e51b720ae56](https://dartpad.dev/embed-flutter.html?id=126b91ef9e0c94a9f66d3e51b720ae56)
 
-<iframe
-  src="https://dartpad.dev/embed-inline.html?id=126b91ef9e0c94a9f66d3e51b720ae56"
-  width="100%"
-  height="500px"
-  frameborder="0">
-</iframe>
+<div style="overflow-x: auto; width: 100%;">
+  <iframe
+    src="https://dartpad.dev/embed-inline.html?id=126b91ef9e0c94a9f66d3e51b720ae56"
+    width="100%"
+    height="500px"
+    loading="lazy"
+    frameborder="0">
+  </iframe>
+</div>
 
 <br>
 
@@ -1629,12 +1644,15 @@ ListView(
 Podéis ver un ejemplo con *Rows*, *Columns* y *Expanded*, junto con el *ListView* en el siguiente Gist: 
 [https://dartpad.dev/embed-flutter.html?id=b9a246da643bf1ab46ab93b78c8e0995](https://dartpad.dev/embed-flutter.html?id=b9a246da643bf1ab46ab93b78c8e0995)
 
-<iframe
-  src="https://dartpad.dev/embed-inline.html?id=b9a246da643bf1ab46ab93b78c8e0995"
-  width="100%"
-  height="500px"
-  frameborder="0">
-</iframe>
+<div style="overflow-x: auto; width: 100%;">
+  <iframe
+    src="https://dartpad.dev/embed-inline.html?id=b9a246da643bf1ab46ab93b78c8e0995"
+    width="100%"
+    height="500px"
+    loading="lazy"
+    frameborder="0">
+  </iframe>
+</div>
 
 <br>
 
@@ -1680,12 +1698,15 @@ Como podéis comprobar, la propiedad `itemCount` se establece con la longitud de
 En *el siguiente gist* podemos ver el funcionamiento del widget: 
 [https://dartpad.dev/embed-flutter.html?id=ddd29d915a523e3648f54750585c990d](https://dartpad.dev/embed-flutter.html?id=ddd29d915a523e3648f54750585c990d)
 
-<iframe
-  src="https://dartpad.dev/embed-inline.html?id=ddd29d915a523e3648f54750585c990d"
-  width="100%"
-  height="500px"
-  frameborder="0">
-</iframe>
+<div style="overflow-x: auto; width: 100%;">
+  <iframe
+    src="https://dartpad.dev/embed-inline.html?id=ddd29d915a523e3648f54750585c990d"
+    width="100%"
+    height="500px"
+    loading="lazy"
+    frameborder="0">
+  </iframe>
+</div>
 
 <br>
 
@@ -1696,12 +1717,15 @@ El widget `Stack` permite superponer los widgets, unos sobre otros, en el orden 
 En *el siguiente gist* podemos ver el funcionamiento del widget: 
 [https://dartpad.dev/embed-flutter.html?id=ddf76ce3a827b70c4aea94ee8902020d](https://dartpad.dev/embed-flutter.html?id=ddf76ce3a827b70c4aea94ee8902020d)
 
-<iframe
-  src="https://dartpad.dev/embed-inline.html?id=ddf76ce3a827b70c4aea94ee8902020d"
-  width="100%"
-  height="500px"
-  frameborder="0">
-</iframe>
+<div style="overflow-x: auto; width: 100%;">
+  <iframe
+    src="https://dartpad.dev/embed-inline.html?id=ddf76ce3a827b70c4aea94ee8902020d"
+    width="100%"
+    height="500px"
+    loading="lazy"
+    frameborder="0">
+  </iframe>
+</div>
 
 <hr>
 
@@ -2092,8 +2116,9 @@ dev_dependencies:
 ```
 
 Una vez añadida, descargaremos las dependencias con:
-
+```
 $ flutter pub get
+```
 
 - **Paso 2**. Una vez tenemos la dependencia descargada, creamos el fichero de configuración. En [la misma web de la herramienta](https://pub.dev/packages/flutter_launcher_icons) y en [su Github](https://github.com/fluttercommunity/flutter_launcher_icons/) disponemos de ejemplos de configuración.
 
@@ -2432,17 +2457,19 @@ Theme(
 )
 ```
 
-// TO DO ...
 A modo de ejemplo, podéis consultar y modificar el siguiente gist  con algunas personalizaciones. Podéis descargaros el texto y utilizarlo en un proyecto vuestro para ver también el resultado del uso de fuentes:
 
 [https://dartpad.dev/embed-flutter.html?id=f9966f04efa931ab83ac3b5b30542e45](https://dartpad.dev/embed-flutter.html?id=f9966f04efa931ab83ac3b5b30542e45)
 
-<iframe
-  src="https://dartpad.dev/embed-inline.html?id=f9966f04efa931ab83ac3b5b30542e45"
-  width="100%"
-  height="500px"
-  frameborder="0">
-</iframe>
+<div style="overflow-x: auto; width: 100%;">
+  <iframe
+    src="https://dartpad.dev/embed-inline.html?id=f9966f04efa931ab83ac3b5b30542e45"
+    width="100%"
+    height="500px"
+    loading="lazy"
+    frameborder="0">
+  </iframe>
+</div>
 
 <br>
 <hr>
