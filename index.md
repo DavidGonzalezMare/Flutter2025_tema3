@@ -124,18 +124,40 @@ Como podemos imaginar, a medida que vamos añadiendo widgets a nuestra interfaz 
 
 Uno de los aspectos más complejos que encontraremos a la hora de trabajar con Flutter será cómo gestionar la información y hacerla llegar de unas partes del árbol a otras, sobre todo si éstas se encuentran en ramas diferentes. 
 
+Aquí tenemos el código completo:
+```dart
+import 'package:flutter/material.dart';
+
+void main() => runApp(const MyApp());
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'App Material',
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            'Barra de aplicación',
+          ),
+        ),
+        body: const Center(
+          child: Text('Hola Mundo'),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {},
+          child: const Icon(Icons.add),
+        ),
+      ),
+    );
+  }
+}
+```
+
 En *el siguiente gist* podéis encontrar este código funcionando: 
 [https://dartpad.dev/embed-flutter.html?id=a61b6f2bdc57458f6f7e074d031d3c77](https://dartpad.dev/embed-flutter.html?id=a61b6f2bdc57458f6f7e074d031d3c77)
 
-<div style="overflow-x: auto; width: 100%;">
-  <iframe
-    src="https://dartpad.dev/embed-inline.html?id=a61b6f2bdc57458f6f7e074d031d3c77"
-    width="100%"
-    height="500px"
-    loading="lazy"    
-    frameborder="0">
-  </iframe>
-</div>
 
 <br>
 <br>
@@ -1426,16 +1448,6 @@ ScaffoldMessenger.of(context).hideCurrentSnackBar();
 Podemos ver un ejemplo en el siguiente Gist:
 [https://dartpad.dev/embed-flutter.html?id=a61b6f2bdc57458f6f7e074d031d3c77](https://dartpad.dev/embed-flutter.html?id=55a1de399ea917bc747a9046dcf1cb40)
 
-<div style="overflow-x: auto; width: 100%;">
-  <iframe
-    src="https://dartpad.dev/embed-inline.html?id=55a1de399ea917bc747a9046dcf1cb40"
-    width="100%"
-    height="500px"
-    loading="lazy"
-    frameborder="0">
-  </iframe>
-</div>
-
 <br>
 
 Hay que tener presente que el método `ScaffoldMessenger.of` busca un `ScaffoldMessenger` a partir del contexto. Es decir, desde el widget del árbol donde se encuentra, hacia la raíz, en dirección ascendente. Generalmente, el widget que ofrecerá este `ScaffoldMessenger` será la propia *MaterialApp*, a no ser que más abajo del árbol se declare un nuevo ámbito `ScaffoldMessenger`. 
@@ -1465,15 +1477,6 @@ ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
 En *el siguiente gist* podéis encontrar este código funcionando: 
 [https://dartpad.dev/embed-flutter.html?id=a61b6f2bdc57458f6f87200d943251ba529418b352d3148f3d7e074d031d3c77](https://dartpad.dev/embed-flutter.html?id=87200d943251ba529418b352d3148f3d)
 
-<div style="overflow-x: auto; width: 100%;">
-  <iframe
-    src="https://dartpad.dev/embed-inline.html?id=87200d943251ba529418b352d3148f3d"
-    width="100%"
-    height="500px"
-    loading="lazy"
-    frameborder="0">
-  </iframe>
-</div>
 
 <br>
 <br>
@@ -1524,16 +1527,6 @@ Container(
 En *el siguiente gist* podéis encontrar este código funcionando: 
 [https://dartpad.dev/embed-flutter.html?id=af9984930d71bd598f2c234f46f7644b](https://dartpad.dev/embed-flutter.html?id=af9984930d71bd598f2c234f46f7644b)
 
-<div style="overflow-x: auto; width: 100%;">
-  <iframe
-    src="https://dartpad.dev/embed-inline.html?id=af9984930d71bd598f2c234f46f7644b"
-    width="100%"
-    height="500px"
-    loading="lazy"
-    frameborder="0">
-  </iframe>
-</div>
-
 <br>
 <br>
 
@@ -1569,15 +1562,6 @@ SizedBox(
 En *el siguiente gist* podéis encontrar este código funcionando: 
 [https://dartpad.dev/embed-flutter.html?id=126b91ef9e0c94a9f66d3e51b720ae56](https://dartpad.dev/embed-flutter.html?id=126b91ef9e0c94a9f66d3e51b720ae56)
 
-<div style="overflow-x: auto; width: 100%;">
-  <iframe
-    src="https://dartpad.dev/embed-inline.html?id=126b91ef9e0c94a9f66d3e51b720ae56"
-    width="100%"
-    height="500px"
-    loading="lazy"
-    frameborder="0">
-  </iframe>
-</div>
 
 <br>
 
@@ -1646,7 +1630,7 @@ Podéis ver un ejemplo con *Rows*, *Columns* y *Expanded*, junto con el *ListVie
 
 <div style="overflow-x: auto; width: 100%;">
   <iframe
-    src="https://dartpad.dev/embed-inline.html?id=b9a246da643bf1ab46ab93b78c8e0995"
+    src="https://dartpad.dev/embed-flutter.html?id=b9a246da643bf1ab46ab93b78c8e0995"
     width="100%"
     height="500px"
     loading="lazy"
@@ -1698,15 +1682,6 @@ Como podéis comprobar, la propiedad `itemCount` se establece con la longitud de
 En *el siguiente gist* podemos ver el funcionamiento del widget: 
 [https://dartpad.dev/embed-flutter.html?id=ddd29d915a523e3648f54750585c990d](https://dartpad.dev/embed-flutter.html?id=ddd29d915a523e3648f54750585c990d)
 
-<div style="overflow-x: auto; width: 100%;">
-  <iframe
-    src="https://dartpad.dev/embed-inline.html?id=ddd29d915a523e3648f54750585c990d"
-    width="100%"
-    height="500px"
-    loading="lazy"
-    frameborder="0">
-  </iframe>
-</div>
 
 <br>
 
@@ -1714,18 +1689,62 @@ En *el siguiente gist* podemos ver el funcionamiento del widget:
 
 El widget `Stack` permite superponer los widgets, unos sobre otros, en el orden en que estos se renderizan. Para posicionar los widgets en relación a los bordes, podemos utilizar el widget `Positioned`. Estos widgets se basan en el modelo de *layout* de posicionamiento absoluto del CSS para la web.
 
+Vemos el siguiente ejemplo de código que trabaja con Stack:
+
+```dart
+import 'package:flutter/material.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+            appBar: AppBar(
+              title: const Text('Ejemplo con Stack'),
+            ),
+            body: Center(
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    width: 150,
+                    height: 150,
+                    color: Colors.red,
+                  ),
+                  Positioned(
+                    left: 15,
+                    top: 15,
+                    child: Container(
+                      width: 120,
+                      height: 120,
+                      color: Colors.green,
+                    ),
+                  ),
+                  Positioned(
+                    left: 30,
+                    top: 30,
+                    child: Container(
+                      width: 90,
+                      height: 90,
+                      color: Colors.blue,
+                    ),
+                  ),
+                ],
+              ),
+          )
+        )
+    );
+  }
+}
+
+```
+
 En *el siguiente gist* podemos ver el funcionamiento del widget: 
 [https://dartpad.dev/embed-flutter.html?id=ddf76ce3a827b70c4aea94ee8902020d](https://dartpad.dev/embed-flutter.html?id=ddf76ce3a827b70c4aea94ee8902020d)
 
-<div style="overflow-x: auto; width: 100%;">
-  <iframe
-    src="https://dartpad.dev/embed-inline.html?id=ddf76ce3a827b70c4aea94ee8902020d"
-    width="100%"
-    height="500px"
-    loading="lazy"
-    frameborder="0">
-  </iframe>
-</div>
 
 <hr>
 
@@ -2461,15 +2480,6 @@ A modo de ejemplo, podéis consultar y modificar el siguiente gist  con algunas 
 
 [https://dartpad.dev/embed-flutter.html?id=f9966f04efa931ab83ac3b5b30542e45](https://dartpad.dev/embed-flutter.html?id=f9966f04efa931ab83ac3b5b30542e45)
 
-<div style="overflow-x: auto; width: 100%;">
-  <iframe
-    src="https://dartpad.dev/embed-inline.html?id=f9966f04efa931ab83ac3b5b30542e45"
-    width="100%"
-    height="500px"
-    loading="lazy"
-    frameborder="0">
-  </iframe>
-</div>
 
 <br>
 <hr>
